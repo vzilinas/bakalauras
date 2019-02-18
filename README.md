@@ -12,7 +12,7 @@
  1. Įsirašyti ```xelatex``` ir ```biber``` ([Šito](http://stefanocoretta.altervista.org/xelatex-linguistics/installation/) užteko)
  2. Sukompiliuoti naudojant: 
     - [Visual Studio Code](https://code.visualstudio.com/) ir [LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop) (Nustatymai - .vscode/setting.json)
-    - Leidžiant komandas:
+    - Komandas:
         ```	
         xelatex bakalaurinis.tex
         biber bakalaurinis
