@@ -130,10 +130,10 @@
      \begin{flushright}
         \large
         \singlespacing
-        {\begin{tabular}[t]{l l}%
+        {\begin{tabular}[t]{l l l}%
         \bigskip Atliko: &\; \@author \hfill \@signatureplace \\
         \bigskip Darbo vadovas: &\; \@supervisor \hfill  \@signatureplace \\
-        % Darbo recenzentas: &\; \@reviewer \hfill \@signatureplace
+        % Recenzentas: &\; \@reviewer \hfill \@signatureplace    
         \end{tabular} \par}%
      \end{flushright}
      \vskip 4cm
@@ -142,7 +142,7 @@
      \begin{flushright}
         \large
         \singlespacing
-        {\begin{tabular}[t]{l l}%
+        {\begin{tabular}[t]{l l l}%
         \bigskip Atliko: &\; \@author \hfill \@signatureplace \\
         \bigskip &\; \@secondauthor \hfill \@signatureplace \\
         \bigskip Darbo vadovas: &\; \@supervisor \hfill  \@signatureplace \\
