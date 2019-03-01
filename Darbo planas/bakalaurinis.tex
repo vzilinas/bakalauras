@@ -14,7 +14,6 @@
 \usepackage{wrapfig}
 
 \usepackage{enumitem}
-%PAKEISTA, tarpai tarp sąrašo elementų
 \setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
 \setenumerate{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
 
@@ -27,7 +26,6 @@
 \titleineng{Generation of Stream Processing Modules upon Change of Indicator Data Structure}
 \author{Vytautas Žilinas}
 \supervisor{lekt. Andrius Adamonis}
-% \reviewer{doc. dr. Vardauskas Pavardauskas}
 \date{Vilnius – \the\year}
 
 % Nustatymai
@@ -41,23 +39,19 @@
 \setcounter{page}{2}
 
 \section{Tyrimo objektas ir aktualumas}
-Įvade nurodomas darbo tikslas ir uždaviniai, kuriais bus įgyvendinamas tikslas,
-aprašomas temos aktualumas, apibrėžiamas tiriamasis objektas akcentuojant
-neapibrėžtumą, kuris bus išspręstas darbe, aptariamos teorinės darbo prielaidos
-bei metodika, apibūdinami su tema susiję literatūros ar kitokie šaltiniai,
-temos analizės tvarka, darbo atlikimo aplinkybės, pateikiama žinių apie
-naudojamus instrumentus (programas ir kt., jei darbe yra eksperimentinė dalis).
-Darbo įvadas neturi būti dėstymo santrauka. Įvado apimtis 2–4 puslapiai.
+Šiame darbe nagrinėjami rodiklių duomenys. Šiuos duomenis galima transformuoti, analizuoti ir grupuoti pagal pasirinktus rodiklius, pavyzdžiui: bazinė mėnesinė alga, mirusiųjų skaičius pagal mirties priežastis, krituliai per metus. 
+Rodiklių duomenų bazės pasižymi tuo, kad duomenys į jas patenka iš daug skirtingų tiekėjų ir patekimo laikas tarp tiekėjų nėra sinchronizuojamas, o suagreguotą informaciją vartotojai gali užklausti bet kurio metu. Todėl darbo tikslas - sukurti ir išbandyti srautinio apdorojimo sprendimą, kuris generuoja modulius kintant duomenų struktūrai. \par
+Šiuo metu pasaulyje vis didėja duomenų kiekis, kuriuos turi apdoroti kompiuteriai[DataTrend]. Dėl šios priežasties vis labiau paklausus tampa duomenų apdorojimo specialistai[https://www.forbes.com/sites/louiscolumbus/2017/05/13/ibm-predicts-demand-for-data-scientists-will-soar-28-by-2020/#d8cf3f27e3bd]. Vienas iš būdų apdoroti didelius kiekius duomenų gyvai (angl. Real-time data processing) yra srautinis duomenų apdorojimas [BigData, StreamProcessingInData]. Dabartinės srautinio architektūros leidžia kurti modulius, kurie apdoroja duomenis ir apdorotus talpina į atskirą talpyklą [8Requirements]. Šiame darbe kuriamas sprendimas yra aktualus tokiais atvejais, kai dažnai kinta duomenų struktūra, kadangi jis prisitaiko prie pokyčių kurdamas naujus apdorojimo modulius.
 
 \section{Darbo tikslas}
 Darbo tikslas: Sukurti bandomąjį rodiklinių duomenų srautinio apdorojimo modulių 
 generavimo sistemos modelį ir eksperimento būdu palyginti jo tinkamumą apibrėžtam 
-uždaviniui spręsti su rankiniu srautinio apdrorojimo modulių rašymu.
+uždaviniui spręsti su rankiniu srautinio apdorojimo modulių rašymu.
 
 \section{Uždaviniai}
 Uždaviniai:
 \begin{enumerate}
-  \item Atlikti skirtingų srautinio duomenų apdorojimo sprendimo architektūrų analizę ir pasirinkti vieną iš jų ekperimentui.
+  \item Atlikti skirtingų srautinio duomenų apdorojimo sprendimo architektūrų analizę ir pasirinkti vieną iš jų eksperimentui.
   \item Sukurti testinių duomenų generatorių.
   \item Realizuoti dinaminį srautinio duomenų apdorojimo architektūros modulių kūrimo sprendimą.
 	\item Palyginti sukurtą sprendimą su alternatyvomis.
@@ -65,7 +59,7 @@ Uždaviniai:
 
 \section{Laukiami rezultatai}
     \begin{enumerate}
-        \item Sukurtas testinių duomenų generatorius ir sukurtas pasirinktos srautinio apdorojimo architekturos sprendimas.
+        \item Sukurtas testinių duomenų generatorius ir sukurtas pasirinktos srautinio apdorojimo architektūros sprendimas.
         \item Išmatuota sukurto sprendimo greitaveiką.
         \item Padaryta sprendimo vertės ir kainos analize ir palyginta su rankiniu srautinių duomenų apdorojimo moduliu kūrimo sprendimu. 
     \end{enumerate}
@@ -76,7 +70,7 @@ Uždaviniai:
 Numatomas eksperimentinis tyrimo metodas.
 Darbo atlikimo procesas:
 \begin{enumerate}
-    \item Išanalizuotos esamos srautinio apdorojimo architekūros ir pasirinkta tinkamiausia architektūra sprendimui pagal:
+    \item Išanalizuotos esamos srautinio apdorojimo architektūros ir pasirinkta tinkamiausia architektūra sprendimui pagal:
     	\begin{itemize}
 		\item Galimybę pridėti modulį ir atnaujinti apdorojimą.
 		\item Modulių kūrimo paprastumą.
@@ -90,6 +84,9 @@ Darbo atlikimo procesas:
 
 \section{Darbui aktualus literatūros šaltiniai}
 Aktualu: https://github.com/manuzhang/awesome-streaming \\
+https://recruitloop.com/blog/rise-big-data-data-science-infographic/ \\
+https://wso2.com/library/articles/2018/02/stream-processing-101-from-sql-to-streaming-sql-in-ten-minutes/ \\
+https://dataconomy.com/2017/03/care-big-data-care-stream-processing/ \\
 Possible frameworks: \\
  Python - https://github.com/robinhood/faust \\
  Python - https://github.com/WallarooLabs/wallaroo \\
