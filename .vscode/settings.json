@@ -3,6 +3,8 @@
         {
             "name": "Darbo planas",
             "tools": [
+                "xelatex",
+                "biber",
                 "xelatex"
             ]
         }

@@ -17,6 +17,8 @@
 \setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
 \setenumerate{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
 
+% Ignore all trivial warnings
+\hbadness=5000
 % Titulinio aprašas
 \university{Vilniaus universitetas}
 \faculty{Matematikos ir informatikos fakultetas}
@@ -30,7 +32,7 @@
 
 % Nustatymai
 % \setmainfont{Palemonas}   % Pakeisti teksto šriftą į Palemonas (turi būti įdiegtas sistemoje)
-% \bibliography{bibliografija}
+\bibliography{bibliografija}
 
 \begin{document} 
 \maketitle
@@ -39,9 +41,16 @@
 \setcounter{page}{2}
 
 \section{Tyrimo objektas ir aktualumas}
-Šiame darbe nagrinėjami rodiklių duomenys. Šiuos duomenis galima transformuoti, analizuoti ir grupuoti pagal pasirinktus rodiklius, pavyzdžiui: bazinė mėnesinė alga, mirusiųjų skaičius pagal mirties priežastis, krituliai per metus. 
-Rodiklių duomenų bazės pasižymi tuo, kad duomenys į jas patenka iš daug skirtingų tiekėjų ir patekimo laikas tarp tiekėjų nėra sinchronizuojamas, o suagreguotą informaciją vartotojai gali užklausti bet kurio metu. Todėl darbo tikslas - sukurti ir išbandyti srautinio apdorojimo sprendimą, kuris generuoja modulius kintant duomenų struktūrai. \par
-Šiuo metu pasaulyje vis didėja duomenų kiekis, kuriuos turi apdoroti kompiuteriai[DataTrend]. Dėl šios priežasties vis labiau paklausus tampa duomenų apdorojimo specialistai[https://www.forbes.com/sites/louiscolumbus/2017/05/13/ibm-predicts-demand-for-data-scientists-will-soar-28-by-2020/#d8cf3f27e3bd]. Vienas iš būdų apdoroti didelius kiekius duomenų gyvai (angl. Real-time data processing) yra srautinis duomenų apdorojimas [BigData, StreamProcessingInData]. Dabartinės srautinio architektūros leidžia kurti modulius, kurie apdoroja duomenis ir apdorotus talpina į atskirą talpyklą [8Requirements]. Šiame darbe kuriamas sprendimas yra aktualus tokiais atvejais, kai dažnai kinta duomenų struktūra, kadangi jis prisitaiko prie pokyčių kurdamas naujus apdorojimo modulius.
+Šiame darbe nagrinėjami rodiklių duomenys. Šiuos duomenis galima transformuoti, analizuoti ir grupuoti pagal pasirinktus rodiklius, 
+pavyzdžiui: bazinė mėnesinė alga, mirusiųjų skaičius pagal mirties priežastis, krituliai per metus. 
+Rodiklių duomenų bazės pasižymi tuo, kad duomenys į jas patenka iš daug skirtingų tiekėjų ir patekimo laikas tarp tiekėjų nėra 
+sinchronizuojamas, o suagreguotą informaciją vartotojai gali užklausti bet kurio metu. Todėl darbo tikslas - sukurti ir išbandyti 
+srautinio apdorojimo sprendimą, kuris generuoja modulius kintant duomenų struktūrai. \par
+Šiuo metu pasaulyje vis didėja duomenų kiekis, kuriuos turi apdoroti kompiuteriai \cite{DataTrend}. 
+Dėl šios priežasties vis labiau paklausus tampa duomenų apdorojimo specialistai \cite{IBMprediction}. 
+Vienas iš būdų apdoroti didelius kiekius duomenų gyvai (angl. Real-time data processing) yra srautinis duomenų apdorojimas \cite{BigData, StreamProcessingInData}. 
+Dabartinės srautinio architektūros leidžia kurti modulius, kurie apdoroja duomenis ir apdorotus talpina į atskirą talpyklą \cite{8Requirements}. 
+Šiame darbe kuriamas sprendimas yra aktualus tokiais atvejais, kai dažnai kinta duomenų struktūra, kadangi jis prisitaiko prie pokyčių kurdamas naujus apdorojimo modulius.
 
 \section{Darbo tikslas}
 Darbo tikslas: Sukurti bandomąjį rodiklinių duomenų srautinio apdorojimo modulių 
@@ -82,15 +91,17 @@ Darbo atlikimo procesas:
     ar naudoti rankinę.  
 \end{enumerate}
 
-\section{Darbui aktualus literatūros šaltiniai}
-Aktualu: https://github.com/manuzhang/awesome-streaming \\
-https://recruitloop.com/blog/rise-big-data-data-science-infographic/ \\
-https://wso2.com/library/articles/2018/02/stream-processing-101-from-sql-to-streaming-sql-in-ten-minutes/ \\
-https://dataconomy.com/2017/03/care-big-data-care-stream-processing/ \\
-Possible frameworks: \\
- Python - https://github.com/robinhood/faust \\
- Python - https://github.com/WallarooLabs/wallaroo \\
- Storm with python - https://github.com/Parsely/streamparse \\
- Maybe just KSQL - https://github.com/confluentinc/ksql \\
+% \section{Darbui aktualus literatūros šaltiniai}
+% Aktualu: https://github.com/manuzhang/awesome-streaming \\
+% https://recruitloop.com/blog/rise-big-data-data-science-infographic/ \\
+% https://wso2.com/library/articles/2018/02/stream-processing-101-from-sql-to-streaming-sql-in-ten-minutes/ \\
+% https://dataconomy.com/2017/03/care-big-data-care-stream-processing/ \\
+% Possible frameworks: \\
+%  Python - https://github.com/robinhood/faust \\
+%  Python - https://github.com/WallarooLabs/wallaroo \\
+%  Storm with python - https://github.com/Parsely/streamparse \\
+%  Maybe just KSQL - https://github.com/confluentinc/ksql \\
  
+\printbibliography[heading=bibintoc] 
+
 \end{document}
