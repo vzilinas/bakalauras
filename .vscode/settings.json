@@ -28,4 +28,13 @@
             ]
         }
     ],
+    "spellright.language": [
+        "en",
+        "lt"
+    ],
+    "spellright.documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext"
+    ],
 }
