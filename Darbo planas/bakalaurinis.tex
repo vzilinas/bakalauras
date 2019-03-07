@@ -41,7 +41,8 @@
 \setcounter{page}{2}
 
 \section{Tyrimo objektas ir aktualumas}
-Šiame darbe nagrinėjami rodiklių duomenų apdorojimas. Šiuos duomenis galima transformuoti, analizuoti ir grupuoti pagal pasirinktus rodiklius, 
+Šiame darbe nagrinėjami rodiklių duomenų apdorojimas. Rodiklių duomenimis vadiname duomenis, aprašančius kažkokių objektų savybes arba veiklos procesų rezultatus, 
+duomenis galima transformuoti, analizuoti ir grupuoti pagal pasirinktus rodiklius, 
 pavyzdžiui: bazinė mėnesinė alga, mirusiųjų skaičius pagal mirties priežastis, krituliai per metus. 
 Rodiklių duomenų bazės pasižymi tuo, kad duomenys į jas patenka iš daug skirtingų tiekėjų ir patekimo laikas tarp tiekėjų nėra 
 sinchronizuojamas, o suagreguotą informaciją vartotojai gali užklausti bet kurio metu.  \par
@@ -51,24 +52,24 @@ Dabartinės srautinio apdorojimo architektūros leidžia kurti modulius, kurie a
 prie duomenų pokyčių kurdamas naujus apdorojimo modulius.
 
 \subsection{Darbo tikslas}
-Darbo tikslas: Sukurti bandomąjį rodiklinių duomenų srautinio apdorojimo modulių 
-generavimo sistemos modelį ir eksperimento būdu palyginti jo tinkamumą apibrėžtam 
-uždaviniui spręsti su rankiniu srautinio apdorojimo modulių rašymu.
+Parodyti būdą, kaip rodiklių duomenų apdorojimo programas galima generuoti atsižvelgiant į realiu laiku įeinančių duomenų struktūrą.
 
 \subsection{Uždaviniai}
-Uždaviniai:
 \begin{enumerate}
-    \item Atlikti kelių skirtingų srautinio duomenų apdorojimo sprendimo architektūrų analizę ir pasirinkti vieną iš jų eksperimentui.
-    \item Sukurti testinių duomenų generatorių.
-    \item Realizuoti dinaminį srautinio duomenų apdorojimo architektūros modulių kūrimo sprendimą.
-    \item Palyginti sukurtą sprendimą su rankiniu srautinio apdorojimo modulių rašymu.
+    \item Apibrėžti rodiklių duomenų modelį ir galimus rodiklių duomenų rinkinio pokyčius.
+    \item Nustatyti, kaip duomenų struktūrą aprašyti deklaratyviai ir kaip atrodys aprašymas, kai keisis rodiklių duomenų struktūra.
+    \item Pasirinkti srautinio duomenų apdorojimo architektūrą, tinkančia sprendimui kurti.
+    \item Sukurti kintančių rodiklių duomenų generatorių.
+    \item Sukurti sprendimą su pasirinkta srautinio duomenų apdorojimo architektūra.   
+    \item Išanalizuoti sprendimo sugeneruota kodą.
 \end{enumerate}
 
 \subsection{Laukiami rezultatai}
     \begin{enumerate}
-        \item Sukurtas testinių duomenų generatorius ir sukurtas pasirinktos srautinio apdorojimo architektūros sprendimas.
-        \item Išmatuota sukurto sprendimo greitaveiką.
-        \item Padaryta sprendimo vertės ir kainos analize ir palyginta su rankiniu srautinių duomenų apdorojimo moduliu kūrimo sprendimu. 
+        \item Apibrėžtas duomenų struktūros ir duomenų struktūros pokyčių aprašymas.
+        \item Sukurtas kintančių rodiklių duomenų generatorius.
+        \item Pasirinkta srautinio apdorojimo architektūra ir su ją sukurtas srautinio apdorojimo programų generavimo sprendimas. 
+        \item Išanalizuotas sprendimo sugeneruotas kodas. 
     \end{enumerate}
     \vspace{1 mm}
 % Tikimasi, kad pasiūlytas sprendimas bus naudingas dažnai nežymiai kintant duomenų struktūrai. Taip pat pasirinkta srautinio 
@@ -84,7 +85,7 @@ Darbo atlikimo procesas:
 		\item Modulių kūrimo sudėtingumą.
 		\item Dokumentaciją.
 	\end{itemize}
-    \item Sukurtas testinių duomenų generatorius, kuris periodiškai keičia duomenų struktūrą (prideda ir šalina laukus) .
+    \item Aprašyta duomenų struktūros ir duomenų struktūros pokyčių  
     \item Su pasirinkta architektūra sukurtas sprendimas eksperimentui ir fiksuojamas laikas ir atliktos užduotis.
     \item Pagal surinktus duomenis atliekama analizė, kuri parodo ar verta kurti dinamišką srautinio duomenų apdorojimo sprendimą 
     ar naudoti rankinę.  
