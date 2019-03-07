@@ -24,7 +24,7 @@
 \faculty{Matematikos ir informatikos fakultetas}
 \department{Programų sistemų katedra}
 \papertype{Bakalauro baigiamojo darbo planas}
-\title{Srautinio apdorojimo modulių generavimas kintant rodiklinių duomenų struktūrai}
+\title{Srautinio apdorojimo modulių generavimas kintant rodiklių duomenų struktūrai}
 \titleineng{Generation of Stream Processing Modules upon Change of Indicator Data Structure}
 \author{Vytautas Žilinas}
 \supervisor{lekt. Andrius Adamonis}
@@ -41,15 +41,13 @@
 \setcounter{page}{2}
 
 \section{Tyrimo objektas ir aktualumas}
-Šiame darbe nagrinėjami rodiklių duomenys. Šiuos duomenis galima transformuoti, analizuoti ir grupuoti pagal pasirinktus rodiklius, 
+Šiame darbe nagrinėjami rodiklių duomenų apdorojimas. Šiuos duomenis galima transformuoti, analizuoti ir grupuoti pagal pasirinktus rodiklius, 
 pavyzdžiui: bazinė mėnesinė alga, mirusiųjų skaičius pagal mirties priežastis, krituliai per metus. 
 Rodiklių duomenų bazės pasižymi tuo, kad duomenys į jas patenka iš daug skirtingų tiekėjų ir patekimo laikas tarp tiekėjų nėra 
 sinchronizuojamas, o suagreguotą informaciją vartotojai gali užklausti bet kurio metu.  \par
-Šiuo metu pasaulyje vis didėja duomenų kiekis, kuriuos gali apdoroti kompiuteriai \cite{DataTrend}. 
-Dėl šios priežasties vis labiau paklausus tampa duomenų apdorojimo specialistai \cite{IBMprediction}. 
 Vienas iš būdų apdoroti didelius kiekius duomenų gyvai (angl. Real-time data processing) yra srautinis duomenų apdorojimas \cite{BigData, StreamProcessingInData}. 
 Dabartinės srautinio apdorojimo architektūros leidžia kurti modulius, kurie apdoroja duomenis ir talpina juos į atskirą talpyklą \cite{8Requirements}. 
-Šiame darbe kuriamas sprendimas yra aktualus, kai dažnai kinta duomenų struktūra, kadangi šis sprendimas prisitaiko 
+Šiame darbe kuriamas sprendimas yra aktualus, kai kinta duomenų struktūra ir norėtume šis sprendimas prisitaiko 
 prie duomenų pokyčių kurdamas naujus apdorojimo modulius.
 
 \subsection{Darbo tikslas}
@@ -60,7 +58,7 @@ uždaviniui spręsti su rankiniu srautinio apdorojimo modulių rašymu.
 \subsection{Uždaviniai}
 Uždaviniai:
 \begin{enumerate}
-    \item Atlikti skirtingų srautinio duomenų apdorojimo sprendimo architektūrų analizę ir pasirinkti vieną iš jų eksperimentui.
+    \item Atlikti kelių skirtingų srautinio duomenų apdorojimo sprendimo architektūrų analizę ir pasirinkti vieną iš jų eksperimentui.
     \item Sukurti testinių duomenų generatorių.
     \item Realizuoti dinaminį srautinio duomenų apdorojimo architektūros modulių kūrimo sprendimą.
     \item Palyginti sukurtą sprendimą su rankiniu srautinio apdorojimo modulių rašymu.
