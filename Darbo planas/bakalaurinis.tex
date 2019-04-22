@@ -21,7 +21,7 @@
 \hbadness=5000
 % Titulinio aprašas
 \university{Vilniaus universitetas}
-\faculty{Matematikos ir informatikos fakultetas}
+\faculty{Informatikos institutas}
 \department{Programų sistemų katedra}
 \papertype{Bakalauro baigiamojo darbo planas}
 \title{Srautinio apdorojimo modulių generavimas kintant rodiklių duomenų struktūrai}
@@ -41,7 +41,7 @@
 \setcounter{page}{2}
 
 \section{Tyrimo objektas ir aktualumas}
-Šiame darbe nagrinėjami rodiklių duomenų apdorojimas. Rodiklių duomenimis vadiname duomenis, aprašančius kažkokių objektų savybes arba veiklos procesų rezultatus, 
+Šiame darbe nagrinėjamas rodiklių duomenų apdorojimas. Rodiklių duomenimis vadiname duomenis, aprašančius kažkokių objektų savybes arba veiklos procesų rezultatus, 
 duomenis galima transformuoti, analizuoti ir grupuoti pagal pasirinktus rodiklius, 
 pavyzdžiui: bazinė mėnesinė alga, mirusiųjų skaičius pagal mirties priežastis, krituliai per metus. Taip pat rodiklių struktūra gali keistis laikui bėgant: 
 objektų atributų taksonomija (pvz. mirties priežasčių sąrašas, finansinių sąskaitų sąrašas) arba įrašo atributų sąrašai.
@@ -59,13 +59,13 @@ Sukurti rodiklių duomenų srautinio apdorojimo platformos architektūrą, dinam
 \begin{enumerate}
     \item Apibrėžti rodiklių duomenų modelį ir galimus rodiklių duomenų struktūros pokyčius.
     \item Apibrėžti, kaip specifikuoti duomenų struktūrą ir duomenų struktūrų versijų specifikacijų apjungimo ir skirtumo operacijas.
-    \item Pasirinkti srautinio duomenų apdorojimo sistemą, joje sukurti sudarytos architektūros sprendimą ir atlikti bandymus.
+    \item Atlikus šaltinių analizę pasirinkti srautinio duomenų apdorojimo sistemą, joje sukurti sudarytos architektūros sprendimą ir atlikti bandymus.
 \end{enumerate}
 
 \subsection{Laukiami rezultatai}
 \begin{enumerate}
-    \item Apibrėžta rodiklių duomenų struktūrą ir galimi duomenų struktūros pokyčiai.
-    \item Srautinio duomenų apdorojimo sistema sukurtu sprendimu atliktų eksperimentų rezultatai, pademonstuojantys generuojamo kodo savybes. 
+    \item Apibrėžta rodiklių duomenų struktūra ir galimi duomenų struktūros pokyčiai.
+    \item Pasirinktai srautinio duomenų apdorojimo sistemai sukurto sprendimo atliktų eksperimentų rezultatai - generuojamas kodas ir jo savybes. 
     
 \end{enumerate}
 % Tikimasi, kad pasiūlytas sprendimas bus naudingas dažnai nežymiai kintant duomenų struktūrai. Taip pat pasirinkta srautinio 
@@ -77,7 +77,8 @@ Numatomas tyrimo metodas: eksperimentas, kurio metu bus aprašytos duomenų stru
 
 \subsection{Darbo atlikimo procesas}
 \begin{enumerate}
-    \item Apibrėžtas rodiklių duomenų modelis, XML arba JSON formatu keliaujantys duomenys.
+    \item Apibrėžtas rodiklių duomenų modelis, XML arba JSON (Protobuff netinka iš esmės, kadangi jie automatiškai ignoruoja duomenis, kurie nėra 
+    '.proto' apraše) formatu keliaujantys duomenys.
     \item Apibrėžtas būdas stebėti duomenų pokyčius, lyginimas įeinančių duomenų su schema arba kitaip aprašyta struktūra.
     \item Išanalizuotos esamos srautinio apdorojimo sistemos ir pasirinkta tinkamiausia sistema sprendimui pagal:
     	\begin{itemize}
