@@ -1,0 +1,18 @@
+{
+    "Name" : "doctor-salary-indicator",
+    "VersionId" : "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
+    "ActiveFrom" : "2019-04-30T00:00:00+00:00", 
+    "ActiveTo" : null,
+    "Indices" : [
+        {
+            "FieldName" : "Profesija",
+            "Value" : "Gydytojas",
+            "ActiveFrom" : "2019-04-30T00:00:00+00:00",
+            "VersionId" : "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
+            "Operator" : "CMP",
+            "LowerLevel" : [
+                
+            ]
+        }
+    ]
+}
