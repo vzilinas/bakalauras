@@ -6,77 +6,68 @@
     "Indices": [
         {
             "FieldName": "Profesija",
-            "Value": "Gydytojas",
+            "Value": "Gydytojas.Sritis",
             "ActiveFrom": "2019-04-30T00:00:00+00:00",
             "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-            "Operator": "CMP",
+            "Operator": "AVG",
             "LowerLevel": [
                 {
-                    "FieldName": "Sritis",
+                    "FieldName": "Alga",
                     "Value": "",
                     "ActiveFrom": "2019-04-30T00:00:00+00:00",
                     "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-                    "Operator": "AVG",
+                    "Operator": "SUM",
                     "LowerLevel": [
                         {
-                            "FieldName": "Alga",
-                            "Value": "",
+                            "FieldName": "Metai",
+                            "Value": "2019",
                             "ActiveFrom": "2019-04-30T00:00:00+00:00",
                             "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-                            "Operator": "SUM",
-                            "LowerLevel": [
-                                {
-                                    "FieldName": "Metai",
-                                    "Value": "2019",
-                                    "ActiveFrom": "2019-04-30T00:00:00+00:00",
-                                    "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-                                    "Operator": "EQU"
-                                },
-                                {
-                                    "FieldName": "Metai",
-                                    "Value": "2018",
-                                    "ActiveFrom": "2019-04-30T00:00:00+00:00",
-                                    "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-                                    "Operator": "EQU"
-                                },
-                                {
-                                    "FieldName": "Metai",
-                                    "Value": "2017",
-                                    "ActiveFrom": "2019-04-30T00:00:00+00:00",
-                                    "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-                                    "Operator": "EQU"
-                                }
-                            ]
+                            "Operator": "EQU"
                         },
                         {
-                            "FieldName": "Atostoginiai",
-                            "Value": "",
+                            "FieldName": "Metai",
+                            "Value": "2018",
                             "ActiveFrom": "2019-04-30T00:00:00+00:00",
                             "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-                            "Operator": "SUB",
-                            "LowerLevel": [
-                                {
-                                    "FieldName": "Metai",
-                                    "Value": "2019",
-                                    "ActiveFrom": "2019-04-30T00:00:00+00:00",
-                                    "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-                                    "Operator": "EQU"
-                                },
-                                {
-                                    "FieldName": "Metai",
-                                    "Value": "2018",
-                                    "ActiveFrom": "2019-04-30T00:00:00+00:00",
-                                    "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-                                    "Operator": "EQU"
-                                },
-                                {
-                                    "FieldName": "Metai",
-                                    "Value": "2017",
-                                    "ActiveFrom": "2019-04-30T00:00:00+00:00",
-                                    "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-                                    "Operator": "EQU"
-                                }
-                            ]
+                            "Operator": "EQU"
+                        },
+                        {
+                            "FieldName": "Metai",
+                            "Value": "2017",
+                            "ActiveFrom": "2019-04-30T00:00:00+00:00",
+                            "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
+                            "Operator": "EQU"
+                        }
+                    ]
+                },
+                {
+                    "FieldName": "Atostoginiai",
+                    "Value": "",
+                    "ActiveFrom": "2019-04-30T00:00:00+00:00",
+                    "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
+                    "Operator": "SUB",
+                    "LowerLevel": [
+                        {
+                            "FieldName": "Metai",
+                            "Value": "2019",
+                            "ActiveFrom": "2019-04-30T00:00:00+00:00",
+                            "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
+                            "Operator": "EQU"
+                        },
+                        {
+                            "FieldName": "Metai",
+                            "Value": "2018",
+                            "ActiveFrom": "2019-04-30T00:00:00+00:00",
+                            "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
+                            "Operator": "EQU"
+                        },
+                        {
+                            "FieldName": "Metai",
+                            "Value": "2017",
+                            "ActiveFrom": "2019-04-30T00:00:00+00:00",
+                            "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
+                            "Operator": "EQU"
                         }
                     ]
                 }

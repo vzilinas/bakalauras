@@ -16,9 +16,13 @@ class KafkaInputSpout(Spout):
     # Generate next tuple sequence for this spout
     def next_tuple(self):
         for msg in self.consumer:
-            message = msg.value
-            self.logger.info([message])
-            self.emit([message])
+            input_dict = msg.value
+            self.logger.info([input_dict])
+            <%SpoutFilteredDict%>
+            {
+                input_dict['Comparator'] = "<%SpoutComparator%>"
+            }
+            self.emit([input_dict])
             self.logger.info("Emit success!")
 
     def ack(self, tup_id):

@@ -6,6 +6,8 @@ namespace HeronGenerator.Models
         SUB,
         CMP,
         AVG,
-        EQU
+        EQU,
+        AND,
+        OR
     }
 }
