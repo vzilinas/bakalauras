@@ -6,68 +6,84 @@
     "Indices": [
         {
             "FieldName": "Profesija",
-            "Value": "Gydytojas.Sritis",
+            "Value": "Gydytojas",
             "ActiveFrom": "2019-04-30T00:00:00+00:00",
             "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-            "Operator": "AVG",
+            "Operator": "EQU"
+        },
+        {
+            "FieldName": "Sritis",
+            "Value": "",
+            "ActiveFrom": "2019-04-30T00:00:00+00:00",
+            "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
+            "Operator": "CMP",
             "LowerLevel": [
                 {
-                    "FieldName": "Alga",
+                    "FieldName": "Uždarbis",
                     "Value": "",
                     "ActiveFrom": "2019-04-30T00:00:00+00:00",
                     "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-                    "Operator": "SUM",
+                    "Operator": "AVG",
                     "LowerLevel": [
                         {
-                            "FieldName": "Metai",
-                            "Value": "2019",
+                            "FieldName": "Alga",
+                            "Value": "",
                             "ActiveFrom": "2019-04-30T00:00:00+00:00",
                             "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-                            "Operator": "EQU"
+                            "Operator": "SUM",
+                            "LowerLevel": [
+                                {
+                                    "FieldName": "Metai",
+                                    "Value": "2019",
+                                    "ActiveFrom": "2019-04-30T00:00:00+00:00",
+                                    "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
+                                    "Operator": "EQU"
+                                },
+                                {
+                                    "FieldName": "Metai",
+                                    "Value": "2018",
+                                    "ActiveFrom": "2019-04-30T00:00:00+00:00",
+                                    "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
+                                    "Operator": "EQU"
+                                },
+                                {
+                                    "FieldName": "Metai",
+                                    "Value": "2017",
+                                    "ActiveFrom": "2019-04-30T00:00:00+00:00",
+                                    "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
+                                    "Operator": "EQU"
+                                }
+                            ]
                         },
                         {
-                            "FieldName": "Metai",
-                            "Value": "2018",
+                            "FieldName": "Atostoginiai",
+                            "Value": "",
                             "ActiveFrom": "2019-04-30T00:00:00+00:00",
                             "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-                            "Operator": "EQU"
-                        },
-                        {
-                            "FieldName": "Metai",
-                            "Value": "2017",
-                            "ActiveFrom": "2019-04-30T00:00:00+00:00",
-                            "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-                            "Operator": "EQU"
-                        }
-                    ]
-                },
-                {
-                    "FieldName": "Atostoginiai",
-                    "Value": "",
-                    "ActiveFrom": "2019-04-30T00:00:00+00:00",
-                    "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-                    "Operator": "SUB",
-                    "LowerLevel": [
-                        {
-                            "FieldName": "Metai",
-                            "Value": "2019",
-                            "ActiveFrom": "2019-04-30T00:00:00+00:00",
-                            "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-                            "Operator": "EQU"
-                        },
-                        {
-                            "FieldName": "Metai",
-                            "Value": "2018",
-                            "ActiveFrom": "2019-04-30T00:00:00+00:00",
-                            "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-                            "Operator": "EQU"
-                        },
-                        {
-                            "FieldName": "Metai",
-                            "Value": "2017",
-                            "ActiveFrom": "2019-04-30T00:00:00+00:00",
-                            "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-                            "Operator": "EQU"
+                            "Operator": "SUB",
+                            "LowerLevel": [
+                                {
+                                    "FieldName": "Metai",
+                                    "Value": "2019",
+                                    "ActiveFrom": "2019-04-30T00:00:00+00:00",
+                                    "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
+                                    "Operator": "EQU"
+                                },
+                                {
+                                    "FieldName": "Metai",
+                                    "Value": "2018",
+                                    "ActiveFrom": "2019-04-30T00:00:00+00:00",
+                                    "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
+                                    "Operator": "EQU"
+                                },
+                                {
+                                    "FieldName": "Metai",
+                                    "Value": "2017",
+                                    "ActiveFrom": "2019-04-30T00:00:00+00:00",
+                                    "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
+                                    "Operator": "EQU"
+                                }
+                            ]
                         }
                     ]
                 }

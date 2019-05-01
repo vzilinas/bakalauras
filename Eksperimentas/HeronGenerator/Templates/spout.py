@@ -20,7 +20,7 @@ class KafkaInputSpout(Spout):
             self.logger.info([input_dict])
             <%SpoutFilteredDict%>
             {
-                input_dict['Comparator'] = "<%SpoutComparator%>"
+                input_dict['Comparator'] = '<%SpoutComparator%>'
             }
             self.emit([input_dict])
             self.logger.info("Emit success!")

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using HeronGenerator.Generators;
 using HeronGenerator.Models;
+using Newtonsoft.Json;
 
 namespace HeronGenerator
 {
@@ -10,31 +12,10 @@ namespace HeronGenerator
     {
         static void Main(string[] args)
         {
-            var result = SpoutGenerator.GenerateSpout(new List<Indice>{
-                new Indice
-                    {
-                        FieldName = "Profesija",
-                        Value = "Gydytojas",
-                        VersionId = 1651564,
-                        Operator = Operator.EQU
-                    },
-                new Indice
-                    {
-                        FieldName = "Lytis",
-                        Value = "Vyras",
-                        VersionId = 1651564,
-                        Operator = Operator.EQU
-                    },
-                new Indice
-                    {
-                        FieldName = "Sritis",
-                        Value = "",
-                        VersionId = 1651564,
-                        Operator = Operator.CMP
-                    }
-                }, "doctor-salary"
-            );
-            Console.WriteLine(result.First());
+            var exampleText = File.ReadAllText(@"Examples/doctor-salary-indicator.json");
+            var indicator = JsonConvert.DeserializeObject<Indicator>(exampleText);
+            var result = SpoutGenerator.GenerateSpout(indicator.Indices, indicator.Name);
+            Console.WriteLine(result);
             Console.WriteLine("Hello World!");
         }
     }
