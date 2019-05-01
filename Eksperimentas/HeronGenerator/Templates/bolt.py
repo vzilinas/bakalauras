@@ -14,7 +14,6 @@ class <%BoltName%>(Bolt):
     def process(self, tup):
         self.logger.info("Incoming" + tup)
         data = tup.values[0]
-        self.logger.info("Caught raw data from spout:" + buy)
-
+        self.logger.info("Caught raw data:" + data)
         <%BoltFunction%>
 

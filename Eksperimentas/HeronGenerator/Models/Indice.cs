@@ -11,5 +11,6 @@ namespace HeronGenerator.Models
         public string VersionId { get; set; }
         public Operator Operator { get; set; }
         public List<Indice> LowerLevel { get; set; }
+        public List<Modifier> Modifiers { get; set; }
     }
 }

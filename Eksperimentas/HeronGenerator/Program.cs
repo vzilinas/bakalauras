@@ -14,8 +14,16 @@ namespace HeronGenerator
         {
             var exampleText = File.ReadAllText(@"Examples/doctor-salary-indicator.json");
             var indicator = JsonConvert.DeserializeObject<Indicator>(exampleText);
-            var result = SpoutGenerator.GenerateSpout(indicator.Indices, indicator.Name);
-            Console.WriteLine(result);
+            foreach(var spoutIndice in indicator.Indices)
+            {
+                var (spout, boltIndices) = SpoutGenerator.GenerateSpout(spoutIndice);
+                Console.WriteLine(spout);
+                foreach(var boltIndice in boltIndices)
+                {
+                    var bolts = BoltGenerator.GenerateBolts(boltIndice, new List<string>(), new List<string>());
+                    bolts.Item2.ForEach(x=>Console.WriteLine(x));                
+                }   
+            }
             Console.WriteLine("Hello World!");
         }
     }

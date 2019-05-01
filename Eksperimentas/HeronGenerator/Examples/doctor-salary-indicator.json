@@ -5,18 +5,19 @@
     "ActiveTo": null,
     "Indices": [
         {
-            "FieldName": "Profesija",
-            "Value": "Gydytojas",
-            "ActiveFrom": "2019-04-30T00:00:00+00:00",
-            "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-            "Operator": "EQU"
-        },
-        {
             "FieldName": "Sritis",
             "Value": "",
             "ActiveFrom": "2019-04-30T00:00:00+00:00",
             "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
             "Operator": "CMP",
+            "Modifiers" :[
+                {
+                    "FieldName" : "Profesija",
+                    "Value" : "Gydytojas",
+                    "Operator" : "EQU",
+                    "Type" : "STRING"
+                }
+            ],
             "LowerLevel": [
                 {
                     "FieldName": "Uždarbis",
@@ -34,24 +35,66 @@
                             "LowerLevel": [
                                 {
                                     "FieldName": "Metai",
-                                    "Value": "2019",
+                                    "Value": "",
                                     "ActiveFrom": "2019-04-30T00:00:00+00:00",
                                     "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-                                    "Operator": "EQU"
+                                    "Operator": "EQU",
+                                    "Modifiers" : [
+                                        {
+                                            "FieldName" : "Alga",
+                                            "Value" : "0.78",
+                                            "Operator" : "MUL",
+                                            "Type" : "DOUBLE"
+                                        },
+                                        {
+                                            "FieldName" : "Metai",
+                                            "Value" : "2019",
+                                            "Operator" : "EQU",
+                                            "Type" : "DOUBLE"
+                                        }
+                                    ]
                                 },
                                 {
                                     "FieldName": "Metai",
                                     "Value": "2018",
                                     "ActiveFrom": "2019-04-30T00:00:00+00:00",
                                     "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-                                    "Operator": "EQU"
+                                    "Operator": "EQU",
+                                    "Modifiers" : [
+                                        {
+                                            "FieldName" : "Alga",
+                                            "Value" : "0.63",
+                                            "Operator" : "MUL",
+                                            "Type" : "DOUBLE"
+                                        },
+                                        {
+                                            "FieldName" : "Metai",
+                                            "Value" : "2018",
+                                            "Operator" : "EQU",
+                                            "Type" : "DOUBLE"
+                                        }
+                                    ]
                                 },
                                 {
                                     "FieldName": "Metai",
                                     "Value": "2017",
                                     "ActiveFrom": "2019-04-30T00:00:00+00:00",
                                     "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-                                    "Operator": "EQU"
+                                    "Operator": "EQU",
+                                    "Modifiers" : [
+                                        {
+                                            "FieldName" : "Alga",
+                                            "Value" : "0.63",
+                                            "Operator" : "MUL",
+                                            "Type" : "DOUBLE"
+                                        },
+                                        {
+                                            "FieldName" : "Metai",
+                                            "Value" : "2017",
+                                            "Operator" : "EQU",
+                                            "Type" : "DOUBLE"
+                                        } 
+                                    ]
                                 }
                             ]
                         },
@@ -61,27 +104,24 @@
                             "ActiveFrom": "2019-04-30T00:00:00+00:00",
                             "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
                             "Operator": "SUB",
-                            "LowerLevel": [
+                            "Modifiers": [
                                 {
                                     "FieldName": "Metai",
                                     "Value": "2019",
-                                    "ActiveFrom": "2019-04-30T00:00:00+00:00",
-                                    "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-                                    "Operator": "EQU"
+                                    "Operator": "EQU",
+                                    "Type" : "INTEGER"
                                 },
                                 {
                                     "FieldName": "Metai",
                                     "Value": "2018",
-                                    "ActiveFrom": "2019-04-30T00:00:00+00:00",
-                                    "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-                                    "Operator": "EQU"
+                                    "Operator": "EQU",
+                                    "Type" : "INTEGER"
                                 },
                                 {
                                     "FieldName": "Metai",
                                     "Value": "2017",
-                                    "ActiveFrom": "2019-04-30T00:00:00+00:00",
-                                    "VersionId": "1-32c24420-afbd-44fb-b045-ef72c48cb04e",
-                                    "Operator": "EQU"
+                                    "Operator": "EQU",
+                                    "Type" : "INTEGER"
                                 }
                             ]
                         }

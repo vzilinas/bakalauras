@@ -8,6 +8,10 @@ namespace HeronGenerator.Models
         AVG,
         EQU,
         AND,
-        OR
+        OR,
+        MUL,
+        DIV,
+        MOD,
+        COUNT
     }
 }

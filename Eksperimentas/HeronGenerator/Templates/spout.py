@@ -20,9 +20,8 @@ class KafkaInputSpout(Spout):
             self.logger.info([input_dict])
             <%SpoutFilteredDict%>
             {
-                input_dict['Comparator'] = '<%SpoutComparator%>'
+                self.emit([input_dict])
             }
-            self.emit([input_dict])
             self.logger.info("Emit success!")
 
     def ack(self, tup_id):
