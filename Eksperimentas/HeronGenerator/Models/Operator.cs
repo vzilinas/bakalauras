@@ -1,5 +1,11 @@
-public enum Operator
+namespace HeronGenerator.Models
 {
-    ADD,
-    SUB
+    public enum Operator
+    {
+        SUM,
+        SUB,
+        CMP,
+        AVG,
+        EQU
+    }
 }

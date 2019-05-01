@@ -1,4 +1,6 @@
 ﻿using System;
+using HeronGenerator.Generators;
+using HeronGenerator.Models;
 
 namespace HeronGenerator
 {
@@ -6,6 +8,7 @@ namespace HeronGenerator
     {
         static void Main(string[] args)
         {
+            SpoutGenerator.GenerateSpout(new Indice());
             Console.WriteLine("Hello World!");
         }
     }
