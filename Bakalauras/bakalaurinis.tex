@@ -12,6 +12,7 @@
 \usepackage{listings}
 \usepackage{subfig}
 \usepackage{wrapfig}
+\usepackage{tikz}
 
 \usepackage{enumitem}
 \setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
@@ -87,8 +88,8 @@ Uždaviniai:
 
 \section{Rodiklių duomenys}
 
-Rodiklių duomenys - tai duomenis, kurie apibrėžia bet kokius gyvenimiškus duomenis, kuriuos galime grupuoti pagal tam tikrus raktinius elementus. Rodiklį sudaro pirminis raktas arba raktų rinkinys ir reikšmių sąrašas, kurį galime grupuoti pagal apibrėžtus raktus.      
-
+Rodiklių duomenys - tai duomenis, kurie apibrėžia bet kokius duomenis, kuriuos galime grupuoti pagal tam kitus elementus. Rodiklį sudaro pirminis raktas, kuris susideda iš vieno arba daug duomenų ir reikšmių sąrašas, kurį galime grupuoti pagal apibrėžtą raktą.      
+Rodiklių duomenų gali būti daug todėl reikia bendro modelio, kuris gali apibrėžti visus įmanomus rodiklius. 
 \subsection{Rodiklių duomenų modelis}
 
 Darbo tikslui išpildyti buvo sukurtas modelis, kurio pagalba galime apibrėžti rodiklį. Pagal šį apibrėžimą bus generuojama srautinio apdorojimo architektūra.
@@ -100,8 +101,48 @@ Darbo tikslui išpildyti buvo sukurtas modelis, kurio pagalba galime apibrėžti
     \label{img:rodiklis}
 \end{figure}
 
+Šiame darbe šis rodiklis bus užrašomas skaidant į dvi dalis: \\
+Raktas ir apribojimai:
+\[ [\text{Raktas 1, Raktas N}]
+    \>\> ; \>\>  
+    \begin{array}{|c|c|}
+        \hline
+        \text{Apribojimas 1} & \text{Apribojimas N} \\ 
+        \hline
+        \text{Reikšmė 1} & \text{Reikšmė N} \\ 
+        \text{Operatorius 1} & \text{Operatorius N} \\
+        \text{Riba 1} & \text{Riba N} \\
+        \hline 
+   \end{array}
+\]
+Reikšmės: \\
+\[
+    \begin{tikzpicture}[sibling distance=7em,
+        every node/.style = {shape=rectangle, rounded corners,
+                             draw, align=center,
+                             top color=white, bottom color=white}]
+        \node {Reikšmė 1}
+                child { node {Reikšmė 1.1} 
+                    child { node { Reikšmė 1.1.n} } }
+                child { node {Reikšmė 1.n} } ;
+    \end{tikzpicture} 
+    \>\>\>\>\>\>\>\>
+    \begin{tikzpicture}[sibling distance=10em,
+        every node/.style = {shape=rectangle, rounded corners,
+            draw, align=center,
+            top color=white, bottom color=white}]]
+        \node {Reikšmė n} ;
+    \end{tikzpicture}  
+\]
+\section{Rodiklių duomenų pokyčiai}
 
-\subsection{Rodiklių duomenų struktūros pokyčiai}
+Kadangi einant laiku duomenis gali keistis ir atitinkamai gali keistis ir rodiklių duomenų tipas, kuriuos reikia surinkti. Pavyzdžiui, jei atsiranda naujas įstatymas, kuris fiksuoja, kad žmogaus pajamos susidaro ne tik iš gaunamo atlygimo ir premijų, bet ir iš loterijose laimėtų pinigų. Mūsų rodiklis, turėtų atsinaujinti atitinkamai:
+
+
+
+\subsection{Pirminis raktas}
+
+
 
 \section{Medžiagos darbo tema dėstymo skyriai}
 Medžiagos darbo tema dėstymo skyriuose išsamiai pateikiamos nagrinėjamos temos
