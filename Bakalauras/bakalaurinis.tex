@@ -56,8 +56,15 @@ Santrauka anglų kalba. Santraukos apimtis ne didesnė nei 0,5 puslapio.
 \tableofcontents
 
 \sectionnonum{Įvadas}
-
+ 
 % TODO: Įžangoje apžvelgti srautinį apdorojimą ir kodo generavimą.
+Srautinis duomenų apdorojimas (angl. stream processing) – programavimo paradigma, kuri yra ekvivalenti duomenų srauto programavimo (angl. dataflow programming) paradigmai \cite{shortstreamproc}. 
+Duomenų tėkmės programavimo paradigmos idėja yra, kad visa programa susidaro iš skirtingu modulių, kurie nepriklauso vienas nuo kito, ir būtent tai leidžia sukonstruoti paraleliai skaičiuojančias programas. 
+Vienas iš pirmųjų duomenų tėkmės programavimo kompiliatorių yra BLODI - blokų diagramų kompiliatorius (angl. BLOck DIagram compiler), su kuriuo buvo kompiliuojamos 
+BLODI programavimo kalba parašytos programos \cite{kelly1961block}.  Šia kalba parašytos programos atitinka inžinerinę elektros grandinės schemą, 
+kur duomenys keliauja per komponentus kaip ir elektros grandinėje. BLODI kalbos autoriai teigia, kad vienas iš šios programavimo kalbos privalumų yra tas, 
+kad ją galėjo išmokti žmonės, kurie nebuvo programavimo ekspertai.\par
+Kodo generavimas - todo \par
 Šiame darbe nagrinėjamas rodiklių duomenų apdorojimas. Rodiklių duomenimis vadiname duomenis, aprašančius kažkokių objektų savybes arba veiklos procesų rezultatus, 
 duomenis galima transformuoti, analizuoti ir grupuoti pagal pasirinktus rodiklius, 
 pavyzdžiui: bazinė mėnesinė alga, mirusiųjų skaičius pagal mirties priežastis, krituliai per metus. Taip pat rodiklių struktūra gali keistis laikui bėgant: 
@@ -69,7 +76,7 @@ Dabartinės srautinio apdorojimo sistemos leidžia kurti modulius, kurie apdoroj
 Šiame darbe kuriamas sprendimas yra aktualus, kai kinta duomenų struktūra ir norėtume šis sprendimas prisitaiko 
 prie duomenų pokyčių kurdamas naujus apdorojimo modulius.
 
-Tikslas: Sukurti rodiklių duomenų srautinio apdorojimo platformos architektūrą, kuri naudojant kodo generavimą dinamiškai prisitaiko prie rodiklių duomenų struktūrų pokyčių.
+Tikslas: Sukurti rodiklių duomenų srautinio apdorojimo platformos architektūrą, kuri, naudojant kodo generavimą, dinamiškai prisitaiko prie rodiklių duomenų struktūrų pokyčių.
 
 Uždaviniai:
 \begin{enumerate}
@@ -77,6 +84,24 @@ Uždaviniai:
     \item Apibrėžti, kaip specifikuoti duomenų struktūrą ir duomenų struktūrų versijų specifikacijų apjungimo ir skirtumo operacijas.
     \item Atlikus šaltinių analizę pasirinkti srautinio duomenų apdorojimo sistemą, joje sukurti sudarytos architektūros sprendimą ir atlikti bandymus.
 \end{enumerate}
+
+\section{Rodiklių duomenys}
+
+Rodiklių duomenys - tai duomenis, kurie apibrėžia bet kokius gyvenimiškus duomenis, kuriuos galime grupuoti pagal tam tikrus raktinius elementus. Rodiklį sudaro pirminis raktas arba raktų rinkinys ir reikšmių sąrašas, kurį galime grupuoti pagal apibrėžtus raktus.      
+
+\subsection{Rodiklių duomenų modelis}
+
+Darbo tikslui išpildyti buvo sukurtas modelis, kurio pagalba galime apibrėžti rodiklį. Pagal šį apibrėžimą bus generuojama srautinio apdorojimo architektūra.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{img/Rodiklis}
+    \caption{Rodiklis}
+    \label{img:rodiklis}
+\end{figure}
+
+
+\subsection{Rodiklių duomenų struktūros pokyčiai}
 
 \section{Medžiagos darbo tema dėstymo skyriai}
 Medžiagos darbo tema dėstymo skyriuose išsamiai pateikiamos nagrinėjamos temos
