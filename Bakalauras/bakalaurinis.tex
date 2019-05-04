@@ -136,8 +136,64 @@ Reikšmės: \\
 \]
 \section{Rodiklių duomenų pokyčiai}
 
-Kadangi einant laiku duomenis gali keistis ir atitinkamai gali keistis ir rodiklių duomenų tipas, kuriuos reikia surinkti. Pavyzdžiui, jei atsiranda naujas įstatymas, kuris fiksuoja, kad žmogaus pajamos susidaro ne tik iš gaunamo atlygimo ir premijų, bet ir iš loterijose laimėtų pinigų. Mūsų rodiklis, turėtų atsinaujinti atitinkamai:
+Kadangi einant laiku duomenis gali keistis ir atitinkamai gali keistis ir rodiklių duomenų tipas, kuriuos reikia surinkti. Tarkime mes turime rodiklį, kuris apibrėžia žmogaus, kuris dirba pagal terminuotą darbo sutartį, metines pajamas, kurios susideda iš gaunamo atlyginimo ir premijų:
+Raktas ir apribojimai:
+\[ [\text{Žmogus, Metai}]
+    \>\> ; \>\>  
+    \begin{array}{|c|}
+        \hline
+        \text{Terminuotą darbo sutartis}  \\ 
+        \hline
+        \text{Darbo sutarties tipas} \\ 
+        \text{LYGU}  \\
+        \text{TERMINUOTA} \\
+        \hline 
+   \end{array}
+\]
+Reikšmės: \\
+\[
+    \begin{tikzpicture}[sibling distance=7em,
+        every node/.style = {shape=rectangle, rounded corners,
+                             draw, align=center,
+                             top color=white, bottom color=white}]
+        \node {Metinės pajamos}
+                child { node {Atlyginimas} }
+                child { node {Premijos} } ;
+    \end{tikzpicture} 
+\]
+Pavyzdžiui, jei atsiranda poreikis fiksuoti, ne tik iš gaunama atlygimą ir premiją, bet ir iš loterijose laimėtus pinigus. Taip pat tarkime, jog terminuota darbo sutartis buvo išskaidyta į terminuotą darbo sutartį ir laikinojo darbo sutartį ir mums reikia įtraukti duomenis pagal abu apribojimus. Mūsų rodiklis, turėtų atsinaujinti atitinkamai:
 
+Raktas ir apribojimai:
+\[ [\text{Žmogus, Metai}]
+    \>\> ; \>\>  
+    \begin{array}{|c|c|}
+        \hline
+        \text{Terminuotą darbo sutartis} & \text{Laikinojo darbo sutartis} \\ 
+        \hline
+        \text{Darbo sutarties tipas} & \text{Darbo sutarties tipas} \\ 
+        \text{LYGU} & \text{LYGU} \\
+        \text{TERMINUOTA} & \text{LAIKINOJI} \\
+        \hline 
+   \end{array}
+\]
+Reikšmės: \\
+\[
+    \begin{tikzpicture}[sibling distance=7em,
+        every node/.style = {shape=rectangle, rounded corners,
+                             draw, align=center,
+                             top color=white, bottom color=white}]
+        \node {Metinės pajamos}
+            child { node {Atlyginimas} }
+            child { node {Premijos} } ;
+    \end{tikzpicture} 
+    \>\>\>\>\>\>\>\>
+    \begin{tikzpicture}[sibling distance=10em,
+        every node/.style = {shape=rectangle, rounded corners,
+            draw, align=center,
+            top color=white, bottom color=white}]]
+        \node {Loterijų laimėjimai} ;
+    \end{tikzpicture}  
+\]
 
 
 \subsection{Pirminis raktas}
