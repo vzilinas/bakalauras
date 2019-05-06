@@ -4,7 +4,10 @@
 
  * Darbo planas (iki Kovo 10 d.)
  * Darbas (iki Gegužės vidurio)
+     * [Bakalauro darbas](https://docs.google.com/viewer?url=${https://raw.githubusercontent.com/vzilinas/bakalauras/master/Bakalauras/bakalaurinis.pdf})
  * Praktinė dalis (iki Gegužės vidurio) 
+
+
 
 ## Paleidimas:
 
