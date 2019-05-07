@@ -11,27 +11,32 @@ namespace HeronGenerator.Generators
     {
         private static readonly string _queueName = "statistics-queue";
         private static readonly string _spoutFileName = @"Templates/spout.py";
-        public static (string, List<Indice>) GenerateSpout(Indice spoutIndice)
+        public static string GenerateSpout(Indicator indicator)
         {
-
-            var filterModifiers = spoutIndice.Modifiers.Where(x => x.Operator == Operator.EQU);
-            var filteredDict = new StringBuilder("if (");
-            foreach (var filter in filterModifiers)
+            var filteredDict = new StringBuilder("if ");
+            if (indicator.Filters?.Any() == true)
             {
-                filteredDict.Append($"inputDict['{filter.FieldName}'] == '{filter.Value}' or ");
+                var firstFilter = indicator.Filters.First();
+                filteredDict.Append($"input_dict['{firstFilter.FieldName}'] {Converter.Op(firstFilter.Operator)} '{firstFilter.Value}'");
+                foreach (var filter in indicator.Filters.Skip(1))
+                {
+                    filteredDict.Append($" or input_dict['{filter.FieldName}'] {Converter.Op(firstFilter.Operator)} '{filter.Value}'");
+                }
+                filteredDict.Append(":");
             }
-            filteredDict.Append(")");
-            var filtered = filteredDict.ToString();
-            var lastAnd = filtered.LastIndexOf(" or ");
-            filtered = filtered.Remove(lastAnd, 5);
+            else
+            {
+                filteredDict.Append("True:");
+            }
             var text = new StringBuilder(File.ReadAllText(_spoutFileName));
 
             text.Replace("<%KafkaQueue%>", _queueName);
-            text.Replace("<%VersionId%>", spoutIndice.VersionId);
-            text.Replace("<%SpoutOutputs%>", spoutIndice.FieldName + spoutIndice.Operator);
-            text.Replace("<%SpoutFilteredDict%>", filtered);
+            text.Replace("<%IndicatorId%>", indicator.IndicatorId.ToString());
+            text.Replace("<%IndicatorName%>", indicator.Name);
+            text.Replace("<%IndicatorVersion%>", indicator.VersionId);
+            text.Replace("<%SpoutFilteredDict%>", filteredDict.ToString());
 
-            return (text.ToString(), spoutIndice.LowerLevel);
+            return text.ToString();
 
         }
     }

@@ -2,16 +2,29 @@ namespace HeronGenerator.Models
 {
     public enum Operator
     {
-        SUM,
-        SUB,
-        CMP,
-        AVG,
         EQU,
-        AND,
-        OR,
-        MUL,
-        DIV,
-        MOD,
-        COUNT
+        NEQU,
+        MORE,
+        LESS
+
+    }
+    static class Converter
+    {
+        public static string Op(this Operator op)
+        {
+            switch (op)
+            {
+                case Operator.EQU:
+                    return "==";
+                case Operator.NEQU:
+                    return "!=";        
+                case Operator.MORE:                   
+                    return ">";            
+                case Operator.LESS:
+                    return "<";
+                default:
+                    return "?!";
+            }
+        }
     }
 }

@@ -7,7 +7,6 @@ import heronpy.api.api_constants as constants
 from kafka_input_spout import KafkaInputSpout
 <%TopologyBoltImports%>
 # from report_aggregation_bolt import ReportAggregationBolt
-# from price_calculation_bolt import PriceCalculationBolt
 
 if __name__ == '__main__':
     # Define the topology name.
