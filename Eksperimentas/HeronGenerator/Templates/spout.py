@@ -21,11 +21,15 @@ class KafkaInputSpout(Spout):
         for msg in self.consumer:
             input_dict = msg.value
             self.logger.info(input_dict)
-            
+            primary_key = f"<%PrimaryKey%>" 
+            primary_key_array = [<%PrimaryKeyArray%>]
             <%SpoutFilteredDict%>
                 ouput_dict = {}
                 ouput_dict["data"] = input_dict
-                ouput_dict["result"] = {}
+                ouput_dict["result"] = {
+                    "primary_key" : primary_key,
+                    "primary_key_array" : primary_key_array
+                }
                 self.emit([ouput_dict])
 
             self.logger.info("Emit success!")

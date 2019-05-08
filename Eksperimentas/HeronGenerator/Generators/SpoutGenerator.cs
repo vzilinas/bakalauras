@@ -28,15 +28,26 @@ namespace HeronGenerator.Generators
             {
                 filteredDict.Append("True:");
             }
-            var text = new StringBuilder(File.ReadAllText(_spoutFileName));
+            var primaryKey = new StringBuilder("{input_dict['");
+            primaryKey.AppendJoin("']}_{input_dict['", indicator.PrimaryKey);
+            primaryKey.Append("']}");
 
-            text.Replace("<%KafkaQueue%>", _queueName);
-            text.Replace("<%IndicatorId%>", indicator.IndicatorId.ToString());
-            text.Replace("<%IndicatorName%>", indicator.Name);
-            text.Replace("<%IndicatorVersion%>", indicator.VersionId);
-            text.Replace("<%SpoutFilteredDict%>", filteredDict.ToString());
+            var primaryKeyArray = new StringBuilder("[input_dict['");
+            primaryKeyArray.AppendJoin("'], input_dict['", indicator.PrimaryKey);
+            primaryKeyArray.Append("']");
 
-            return text.ToString();
+            var spoutFile = new StringBuilder(File.ReadAllText(_spoutFileName));
+
+            spoutFile.Replace("<%KafkaQueue%>", _queueName);
+            spoutFile.Replace("<%IndicatorId%>", indicator.IndicatorId.ToString());
+            spoutFile.Replace("<%IndicatorName%>", indicator.Name);
+            spoutFile.Replace("<%IndicatorVersion%>", indicator.VersionId);
+            spoutFile.Replace("<%SpoutFilteredDict%>", filteredDict.ToString());
+
+            spoutFile.Replace("<%PrimaryKey%>", primaryKey.ToString());
+            spoutFile.Replace("<%PrimaryKeyArray%>", primaryKeyArray.ToString());
+
+            return spoutFile.ToString();
 
         }
     }
