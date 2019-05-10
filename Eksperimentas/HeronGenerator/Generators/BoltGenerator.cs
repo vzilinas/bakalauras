@@ -28,6 +28,8 @@ namespace HeronGenerator.Generators
             text.Replace("<%BoltOutputs%>", value.FieldName + "_" + value.Id);
             if (value.NextValues == null || !value.NextValues.Any())
             {
+                text.Replace("<%Combined%>", "False");
+                text.Replace("<%CombinedCheck%>", "'empty'");
                 text.Replace("<%InputValue%>", $"input_dict['data']['{value.FieldName}']");
                 return new GeneratedBolt
                 {
@@ -42,6 +44,9 @@ namespace HeronGenerator.Generators
             else
             {
                 var combinationDefinition = ParseFormula(value);
+                text.Replace("<%Combined%>", "True");
+                var combinedCheck = value.NextValues.Select(x => $"'{x.FieldName}_{x.Id}'");
+                text.Replace("<%CombinedCheck%>", string.Join(", ", combinedCheck));
                 text.Replace("<%InputValue%>", combinationDefinition);
                 return new GeneratedBolt
                 {

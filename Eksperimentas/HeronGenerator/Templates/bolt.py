@@ -10,7 +10,7 @@ class <%BoltName%>(Bolt):
     total = 0
     lowers, highers = [], []
     mode_dict = {}
-
+    temp_combination = {}
 
     def initialize(self, config, context):
         # A log context is provided in the context of the spout
@@ -21,6 +21,10 @@ class <%BoltName%>(Bolt):
         self.logger.info("Incoming" + tup)
         input_dict = tup.values[0]
         self.logger.info("Caught raw data:" + input_dict)
+        if <%Combined%>:
+            temp_combination[input_dict['uniqueId']] = {input_dict['result'][tup.stream] : input_dict['result'][tup.stream]['last_value']}
+            if !({<%CombinedCheck%>} <= set(temp_combination[input_dict['uniqueId']])):
+                return
         input_value = <%InputValue%>
         total += input_value
         count += 1
