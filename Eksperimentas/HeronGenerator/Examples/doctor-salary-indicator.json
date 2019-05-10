@@ -25,7 +25,7 @@
     "Values": [
         {
             "Id" : "416f51b5-2b8a-4cb0-9978-f713d5990c52",
-            "FieldName": "Uždarbis",
+            "FieldName": "Uzdarbis",
             "Type": "DOUBLE",
             "Formula" : "%c5df16a0-679a-4756-93da-df87b278efca% + %49e661dd-1d6a-496e-bac5-22d4358145a9%",
             "NextValues": [
@@ -43,7 +43,7 @@
         },
         {
             "Id" : "d05508c3-0549-499d-be01-7c25fd2b3e95",
-            "FieldName": "LoterijosLaimėjimai",
+            "FieldName": "LoterijosLaimejimai",
             "Type": "DOUBLE"
         }
     ]
