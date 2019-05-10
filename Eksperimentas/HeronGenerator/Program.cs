@@ -18,14 +18,35 @@ namespace HeronGenerator
 
             var spout = SpoutGenerator.GenerateSpout(indicator);
 
-            Console.WriteLine(spout);
-
             var bolts = BoltGenerator.GenerateBolts(indicator);
 
-            //Console.WriteLine(JsonConvert.SerializeObject(bolts));
-            var result = bolts.Select(x => Print(x)).ToList();
-            result.ForEach(x=> Console.WriteLine(x));
+            var emitterBolt = BoltGenerator.GenerateEmitterBolt(indicator);
+
+            var topology = TopologyGenerator.GenerateTopology(indicator.Name, bolts, emitterBolt);
+            
+            File.WriteAllText(@"Generated/kafka_input_spout.py", spout);
+            bolts.ForEach(x=> SaveToFile(x));
+            File.WriteAllText(@"Generated/emitter_bolt.py", emitterBolt.GeneratedBoltText);
+            File.WriteAllText(@"Generated/" + indicator.Name + ".py", topology);
+
             Console.WriteLine();
+        }
+        public static void SaveToFile(GeneratedBolt bolt)
+        {
+            File.WriteAllText(@"Generated/" + bolt.BoltName + ".py", bolt.GeneratedBoltText);
+
+            if (bolt.NextBolts == null || bolt.NextBolts.Count == 0)
+            {
+                return;
+            }
+            else
+            {
+                foreach (var child in bolt.NextBolts)
+                {
+                    SaveToFile(child);
+                }
+                return;
+            }
         }
         public static string Print(GeneratedBolt bolt)
         {

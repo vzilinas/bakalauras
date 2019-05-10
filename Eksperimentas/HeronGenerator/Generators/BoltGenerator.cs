@@ -11,6 +11,18 @@ namespace HeronGenerator.Generators
     public static class BoltGenerator
     {
         private static readonly string _boltFileName = @"Templates/bolt.py";
+        private static readonly string _emitterBoltFileName = @"Templates/emitter_bolt.py";
+        public static GeneratedBolt GenerateEmitterBolt(Indicator indicator)
+        {
+            var text = new StringBuilder(File.ReadAllText(_emitterBoltFileName));
+            text.Replace("<%IndicatorName%>", indicator.Name);
+            return new GeneratedBolt
+            {
+                BoltName = "emitter_bolt",
+                GeneratedBoltText = text.ToString(),
+                Inputs = indicator.Values.Select( x=> x.FieldName + "_" + x.Id).ToList()
+            };
+        }
         public static List<GeneratedBolt> GenerateBolts(Indicator indicator)
         {
             var results = new List<GeneratedBolt>();
