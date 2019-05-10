@@ -69,7 +69,7 @@ namespace HeronGenerator.Generators
             foreach (var element in elements)
             {
                 var definition = value.NextValues.First(x => x.Id == new Guid(element.ToString().Trim('%')));
-                parsed.Replace(element.ToString(), $"input_dict['result']['{definition.FieldName + "_" + definition.Id}']['last_value']");
+                parsed.Replace(element.ToString(), $"output_dict['result']['{definition.FieldName + "_" + definition.Id}']['last_value']");
             }
             return parsed.ToString();
         }

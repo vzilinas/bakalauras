@@ -21,10 +21,18 @@ class <%BoltName%>(Bolt):
         self.logger.info("Incoming" + tup)
         input_dict = tup.values[0]
         self.logger.info("Caught raw data:" + input_dict)
+        output_dict = {
+                'primary_key' : input_dict['primary_key'],
+                'primary_key_array' : input_dict['primary_key_array'],
+                'unique_id' : input_dict['unique_id'],
+                'result' : {}
+            }
         if <%Combined%>:
-            temp_combination[input_dict['uniqueId']] = {input_dict['result'][tup.stream] : input_dict['result'][tup.stream]['last_value']}
-            if !({<%CombinedCheck%>} <= set(temp_combination[input_dict['uniqueId']])):
+            temp_combination[input_dict['unique_id']] = {**temp_combination[input_dict['unique_id']], **input_dict['result']}
+            if !({<%CombinedCheck%>} <= set(temp_combination[input_dict['unique_id']])):
                 return
+            else:
+                output_dict['result'] = temp_combination[input_dict['unique_id']]
         input_value = <%InputValue%>
         total += input_value
         count += 1
@@ -36,5 +44,5 @@ class <%BoltName%>(Bolt):
             "Count" : count,
             "last_value" : input_value 
         }
-        input_dict['result']['<%BoltName%>'] = result
-        self.emit([input_dict])
+        output_dict['result']['<%BoltName%>'] = result
+        self.emit([output_dict])
