@@ -1,6 +1,7 @@
 # Import Bolt type from heronpy
 from heronpy.api.bolt.bolt import Bolt
 import helpers
+import pickle
 
 # class that inherits from heron Bolt
 class Uzdarbis416f51b52b8a4c(Bolt):
@@ -19,7 +20,7 @@ class Uzdarbis416f51b52b8a4c(Bolt):
     # Process incoming tuple and emit output
     def process(self, tup):
         self.logger.info("Incoming" + tup)
-        input_dict = tup.values[0]
+        input_dict = pickle.loads(tup.values[0])
         self.logger.info("Caught raw data:" + input_dict)
         output_dict = {
                 'primary_key' : input_dict['primary_key'],
@@ -46,4 +47,5 @@ class Uzdarbis416f51b52b8a4c(Bolt):
             "last_value" : input_value 
         }
         output_dict['result']['Uzdarbis416f51b52b8a4c'] = result
-        self.emit([output_dict])
+        self.emit([pickle.dumps(output_dict)])
+        self.logger.info("Emited:" + json.dumps(output_dict))

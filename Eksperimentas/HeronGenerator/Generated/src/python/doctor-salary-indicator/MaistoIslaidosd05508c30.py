@@ -4,9 +4,9 @@ import helpers
 import pickle
 
 # class that inherits from heron Bolt
-class <%BoltName%>(Bolt):
+class MaistoIslaidosd05508c30(Bolt):
     # Important : Define output field tags for the Bolt
-    outputs = ["<%BoltOutputs%>"]
+    outputs = ["MaistoIslaidos_d05508c3-0549-499d-bc01-7c25fd2b3e95"]
     count = 0
     total = 0
     lowers, highers = [], []
@@ -15,7 +15,7 @@ class <%BoltName%>(Bolt):
 
     def initialize(self, config, context):
         # A log context is provided in the context of the spout
-        self.log("Initializing <%BoltName%>...")
+        self.log("Initializing MaistoIslaidosd05508c30...")
 
     # Process incoming tuple and emit output
     def process(self, tup):
@@ -28,14 +28,14 @@ class <%BoltName%>(Bolt):
                 'unique_id' : input_dict['unique_id'],
                 'result' : {}
             }
-        if <%Combined%>:
+        if True:
             temp_combination[input_dict['unique_id']] = helpers.merge_two_dicts(temp_combination[input_dict['unique_id']], input_dict['result'])
-            if not({<%CombinedCheck%>} <= set(temp_combination[input_dict['unique_id']])):
+            if not({'SuvalgytasMaistas_d05508c3-0549-499d-bc02-7c25fd2b3e95', 'IsmestasMaistas_d05508c3-0549-499d-bc01-7c25fd2b3e85'} <= set(temp_combination[input_dict['unique_id']])):
                 return
             else:
                 output_dict['result'] = temp_combination[input_dict['unique_id']]
                 temp_combination.pop(input_dict['unique_id'])
-        input_value = <%InputValue%>
+        input_value = (output_dict['result']['SuvalgytasMaistas_d05508c3-0549-499d-bc02-7c25fd2b3e95']['last_value'] * 0.9) + output_dict['result']['IsmestasMaistas_d05508c3-0549-499d-bc01-7c25fd2b3e85']['last_value']
         total += input_value
         count += 1
         result = {
@@ -46,6 +46,6 @@ class <%BoltName%>(Bolt):
             "Count" : count,
             "last_value" : input_value 
         }
-        output_dict['result']['<%BoltName%>'] = result
+        output_dict['result']['MaistoIslaidosd05508c30'] = result
         self.emit([pickle.dumps(output_dict)])
         self.logger.info("Emited:" + json.dumps(output_dict))

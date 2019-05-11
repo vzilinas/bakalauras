@@ -28,9 +28,9 @@ namespace HeronGenerator.Generators
             {
                 filteredDict.Append("True:");
             }
-            var primaryKey = new StringBuilder("input_dict['");
-            primaryKey.AppendJoin("'] + '_' + input_dict['", indicator.PrimaryKey);
-            primaryKey.Append("']");
+            var primaryKey = new StringBuilder("str(input_dict['");
+            primaryKey.AppendJoin("']) + '_' + str(input_dict['", indicator.PrimaryKey);
+            primaryKey.Append("'])");
 
             var primaryKeyArray = new StringBuilder("input_dict['");
             primaryKeyArray.AppendJoin("'], input_dict['", indicator.PrimaryKey);
