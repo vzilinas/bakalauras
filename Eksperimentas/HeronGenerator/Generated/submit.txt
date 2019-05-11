@@ -1,0 +1,7 @@
+./pants binary src/python/doctor-salary-indicator
+
+heron kill local doctor-salary-indicator
+
+heron submit local \
+  ./dist/doctor-salary-indicator.pex \
+  - doctor-salary-indicator

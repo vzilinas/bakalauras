@@ -23,7 +23,7 @@ namespace HeronGenerator.Generators
         private static string GenerateInputs(GeneratedBolt emitter)
         {
             var inputs = new StringBuilder();
-            inputs.AppendJoin(", ", emitter.Inputs.Select(x=> $"{GetClassName(x).ToLower()}_bolt : Grouping.fields('{x}')"));
+            inputs.AppendJoin(", ", emitter.Inputs.Select(x=> $"{Helper.GetClassName(x).ToLower()}_bolt : Grouping.fields('{x}')"));
             return inputs.ToString();
         }
         private static string GenerateTopologyImports(List<GeneratedBolt> bolts)
@@ -35,7 +35,7 @@ namespace HeronGenerator.Generators
         }
         private static string GenerateImport(GeneratedBolt bolt)
         {
-            var printable = new StringBuilder($"from {bolt.BoltName} import {GetClassName(bolt.BoltName)}\n");
+            var printable = new StringBuilder($"from {bolt.BoltName} import {bolt.BoltName}\n");
             if (bolt.NextBolts == null || bolt.NextBolts.Count == 0)
             {
                 return(printable.ToString());
@@ -49,13 +49,7 @@ namespace HeronGenerator.Generators
                 return printable.ToString();
             }
         }
-        private static string GetClassName(string boltName)
-        {
-            var className = new StringBuilder(boltName.Substring(0,25));
-            className.Replace("_", string.Empty);
-            className.Replace("-", string.Empty);
-            return className.ToString();
-        }
+
         private static string GenerateTopologyDefinitions(List<GeneratedBolt> bolts)
         {
             var inputs = new StringBuilder();
@@ -65,9 +59,9 @@ namespace HeronGenerator.Generators
         }
         private static string GenerateDefinition(GeneratedBolt bolt)
         {
-            var boltName = GetClassName(bolt.BoltName).ToLower();
+            var boltName = bolt.BoltName.ToLower();
             var printable = new StringBuilder(
-                $"    {boltName}_bolt = builder.add_bolt('{boltName}', {GetClassName(bolt.BoltName)}, par=2)\n");
+                $"    {boltName}_bolt = builder.add_bolt('{boltName}', {bolt.BoltName}, par=2)\n");
             if (bolt.NextBolts == null || bolt.NextBolts.Count == 0)
             {
                 printable.Append("\tinputs = {kafka_input_spout : Grouping.fields('SpoutOutput');})\n");

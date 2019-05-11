@@ -1,0 +1,9 @@
+buildroot: /home/adminas/Documents/bakalauras/Eksperimentas/HeronGenerator/Generated
+timestamp: 1557518622.11
+datetime: Friday May 10, 2019 23:03:42
+machine: adminas-VirtualBox
+version: 1.6.0
+user: root
+path: /home/adminas/Documents/bakalauras/Eksperimentas/HeronGenerator/Generated
+id: pants_run_2019_05_10_23_03_42_111_e0235b148a764e4882fac4ed68fd0d9f
+cmd_line: pants binary src/python/doctor-salary-indicator

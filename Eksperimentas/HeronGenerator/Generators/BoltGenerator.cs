@@ -35,7 +35,7 @@ namespace HeronGenerator.Generators
         public static GeneratedBolt GenerateBolt(Value value)
         {
             var text = new StringBuilder(File.ReadAllText(_boltFileName));
-            text.Replace("<%BoltName%>", value.FieldName + "_" + value.Id);
+            text.Replace("<%BoltName%>", Helper.GetClassName(value.FieldName + "_" + value.Id));
             // text.Replace("<%VersionId%>", boltIndice.VersionId);
             text.Replace("<%BoltOutputs%>", value.FieldName + "_" + value.Id);
             if (value.NextValues == null || !value.NextValues.Any())
@@ -45,7 +45,7 @@ namespace HeronGenerator.Generators
                 text.Replace("<%InputValue%>", $"input_dict['data']['{value.FieldName}']");
                 return new GeneratedBolt
                 {
-                    BoltName = value.FieldName + "_" + value.Id,
+                    BoltName = Helper.GetClassName(value.FieldName + "_" + value.Id),
                     Id = value.Id,
                     Output = value.FieldName + "_" + value.Id,
                     Inputs = null,
@@ -62,7 +62,7 @@ namespace HeronGenerator.Generators
                 text.Replace("<%InputValue%>", combinationDefinition);
                 return new GeneratedBolt
                 {
-                    BoltName = value.FieldName + "_" + value.Id,
+                    BoltName = Helper.GetClassName(value.FieldName + "_" + value.Id),
                     Id = value.Id,
                     Output = value.FieldName + "_" + value.Id,
                     Inputs = value.NextValues.Select(x => x.FieldName + "_" + x.Id).ToList(),

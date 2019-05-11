@@ -24,16 +24,17 @@ namespace HeronGenerator
 
             var topology = TopologyGenerator.GenerateTopology(indicator.Name, bolts, emitterBolt);
             
-            File.WriteAllText(@"Generated/kafka_input_spout.py", spout);
+            File.WriteAllText(@"Generated\src\python\doctor-salary-indicator\kafka_input_spout.py", spout);
             bolts.ForEach(x=> SaveToFile(x));
-            File.WriteAllText(@"Generated/emitter_bolt.py", emitterBolt.GeneratedBoltText);
-            File.WriteAllText(@"Generated/" + indicator.Name + ".py", topology);
+            File.WriteAllText(@"Generated\src\python\doctor-salary-indicator\emitter_bolt.py", emitterBolt.GeneratedBoltText);
+            File.WriteAllText(@"Generated\src\python\doctor-salary-indicator\" + indicator.Name + ".py", topology);
+            File.WriteAllText(@"Generated\src\python\doctor-salary-indicator\helpers.py", File.ReadAllText(@"Templates/helpers.py"));
 
             Console.WriteLine();
         }
         public static void SaveToFile(GeneratedBolt bolt)
         {
-            File.WriteAllText(@"Generated/" + bolt.BoltName + ".py", bolt.GeneratedBoltText);
+            File.WriteAllText(@"Generated\src\python\doctor-salary-indicator\" + bolt.BoltName + ".py", bolt.GeneratedBoltText);
 
             if (bolt.NextBolts == null || bolt.NextBolts.Count == 0)
             {

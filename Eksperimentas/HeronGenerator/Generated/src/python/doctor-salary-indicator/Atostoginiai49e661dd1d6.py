@@ -3,9 +3,9 @@ from heronpy.api.bolt.bolt import Bolt
 import helpers
 
 # class that inherits from heron Bolt
-class <%BoltName%>(Bolt):
+class Atostoginiai49e661dd1d6(Bolt):
     # Important : Define output field tags for the Bolt
-    outputs = ["<%BoltOutputs%>"]
+    outputs = ["Atostoginiai_49e661dd-1d6a-496e-bac5-22d4358145a9"]
     count = 0
     total = 0
     lowers, highers = [], []
@@ -14,7 +14,7 @@ class <%BoltName%>(Bolt):
 
     def initialize(self, config, context):
         # A log context is provided in the context of the spout
-        self.log("Initializing <%BoltName%>...")
+        self.log("Initializing Atostoginiai49e661dd1d6...")
 
     # Process incoming tuple and emit output
     def process(self, tup):
@@ -27,14 +27,14 @@ class <%BoltName%>(Bolt):
                 'unique_id' : input_dict['unique_id'],
                 'result' : {}
             }
-        if <%Combined%>:
+        if False:
             temp_combination[input_dict['unique_id']] = helpers.merge_two_dicts(temp_combination[input_dict['unique_id']], input_dict['result'])
-            if !({<%CombinedCheck%>} <= set(temp_combination[input_dict['unique_id']])):
+            if !({'empty'} <= set(temp_combination[input_dict['unique_id']])):
                 return
             else:
                 output_dict['result'] = temp_combination[input_dict['unique_id']]
                 temp_combination.pop(input_dict['unique_id'])
-        input_value = <%InputValue%>
+        input_value = input_dict['data']['Atostoginiai']
         total += input_value
         count += 1
         result = {
@@ -45,5 +45,5 @@ class <%BoltName%>(Bolt):
             "Count" : count,
             "last_value" : input_value 
         }
-        output_dict['result']['<%BoltName%>'] = result
+        output_dict['result']['Atostoginiai49e661dd1d6'] = result
         self.emit([output_dict])

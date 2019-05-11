@@ -1,0 +1,15 @@
+python_library(
+    name = "spouts-bolts-py",
+    sources=globs('*.py'),
+)
+
+python_binary(
+    name = "doctor-salary-indicator",
+    source='doctor-salary-indicator.py',
+    dependencies = [
+        ':spouts-bolts-py',
+        '3rdparty/python:heronpy',
+        '3rdparty/python:six',
+	    '3rdparty/python:kafka-python'
+    ],
+)
