@@ -29,7 +29,7 @@ class Uzdarbis416f51b52b8a4c(Bolt):
             }
         if True:
             temp_combination[input_dict['unique_id']] = helpers.merge_two_dicts(temp_combination[input_dict['unique_id']], input_dict['result'])
-            if !({'Atlyginimas_c5df16a0-679a-4756-93da-df87b278efca', 'Atostoginiai_49e661dd-1d6a-496e-bac5-22d4358145a9'} <= set(temp_combination[input_dict['unique_id']])):
+            if not({'Atlyginimas_c5df16a0-679a-4756-93da-df87b278efca', 'Atostoginiai_49e661dd-1d6a-496e-bac5-22d4358145a9'} <= set(temp_combination[input_dict['unique_id']])):
                 return
             else:
                 output_dict['result'] = temp_combination[input_dict['unique_id']]

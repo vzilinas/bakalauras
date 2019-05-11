@@ -59,21 +59,23 @@ namespace HeronGenerator.Generators
         }
         private static string GenerateDefinition(GeneratedBolt bolt)
         {
+            var printable = new StringBuilder();
             var boltName = bolt.BoltName.ToLower();
-            var printable = new StringBuilder(
-                $"    {boltName}_bolt = builder.add_bolt('{boltName}', {bolt.BoltName}, par=2)\n");
             if (bolt.NextBolts == null || bolt.NextBolts.Count == 0)
             {
-                printable.Append("\tinputs = {kafka_input_spout : Grouping.fields('SpoutOutput');})\n");
+                printable.Append($"    {boltName}_bolt = builder.add_bolt('{boltName}', {bolt.BoltName}, par=2, ");
+                printable.Append("inputs = {kafka_input_spout : Grouping.fields('SpoutOutput')})\n");
                 return(printable.ToString());
             }
             else
             {
-                printable.Append("\tinputs = {" + GenerateInputs(bolt) + "})\n");
                 foreach (var child in bolt.NextBolts)
                 {
                     printable.Append(GenerateDefinition(child));
                 }
+                printable.Append($"    {boltName}_bolt = builder.add_bolt('{boltName}', {bolt.BoltName}, par=2, ");
+                printable.Append("inputs = {" + GenerateInputs(bolt) + "})\n");
+
                 return printable.ToString();
             }
         }

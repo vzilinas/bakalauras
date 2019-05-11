@@ -23,7 +23,7 @@ class KafkaInputSpout(Spout):
             input_dict = msg.value
             self.logger.info(input_dict)
             primary_key = input_dict['Sritis'] + '_' + input_dict['Metai']
-            primary_key_array = [[input_dict['Sritis'], input_dict['Metai']]
+            primary_key_array = [input_dict['Sritis'], input_dict['Metai']]
             if input_dict['SutartiesTipas'] == 'TERMINUOTA' or input_dict['SutartiesTipas'] == 'LAIKINOJI':
                 ouput_dict = {
                     "data" : input_dict,
@@ -32,8 +32,7 @@ class KafkaInputSpout(Spout):
                     "unique_id" : uuid.uuid4()
                 }
                 self.emit([ouput_dict])
-
-            self.logger.info("Emit success!")
+                self.logger.info("Emit success!")
 
     def ack(self, tup_id):
         self.logger.info("Ackquired!")

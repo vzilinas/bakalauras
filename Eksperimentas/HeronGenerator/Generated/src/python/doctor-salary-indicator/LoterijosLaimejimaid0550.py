@@ -29,7 +29,7 @@ class LoterijosLaimejimaid0550(Bolt):
             }
         if False:
             temp_combination[input_dict['unique_id']] = helpers.merge_two_dicts(temp_combination[input_dict['unique_id']], input_dict['result'])
-            if !({'empty'} <= set(temp_combination[input_dict['unique_id']])):
+            if not({'empty'} <= set(temp_combination[input_dict['unique_id']])):
                 return
             else:
                 output_dict['result'] = temp_combination[input_dict['unique_id']]

@@ -32,7 +32,7 @@ namespace HeronGenerator.Generators
             primaryKey.AppendJoin("'] + '_' + input_dict['", indicator.PrimaryKey);
             primaryKey.Append("']");
 
-            var primaryKeyArray = new StringBuilder("[input_dict['");
+            var primaryKeyArray = new StringBuilder("input_dict['");
             primaryKeyArray.AppendJoin("'], input_dict['", indicator.PrimaryKey);
             primaryKeyArray.Append("']");
 

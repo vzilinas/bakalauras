@@ -20,14 +20,10 @@ if __name__ == '__main__':
     # Start with the random sentence generator, create a reference and define a parallelism hint with par attribute
     kafka_input_spout = builder.add_spout("kafka_input_spout", KafkaInputSpout, par=4)
 
-    uzdarbis416f51b52b8a4c_bolt = builder.add_bolt('uzdarbis416f51b52b8a4c', Uzdarbis416f51b52b8a4c, par=2)
-	inputs = {atlyginimasc5df16a0679a_bolt : Grouping.fields('Atlyginimas_c5df16a0-679a-4756-93da-df87b278efca'), atostoginiai49e661dd1d6_bolt : Grouping.fields('Atostoginiai_49e661dd-1d6a-496e-bac5-22d4358145a9')})
-    atlyginimasc5df16a0679a_bolt = builder.add_bolt('atlyginimasc5df16a0679a', Atlyginimasc5df16a0679a, par=2)
-	inputs = {kafka_input_spout : Grouping.fields('SpoutOutput');})
-    atostoginiai49e661dd1d6_bolt = builder.add_bolt('atostoginiai49e661dd1d6', Atostoginiai49e661dd1d6, par=2)
-	inputs = {kafka_input_spout : Grouping.fields('SpoutOutput');})
-    loterijoslaimejimaid0550_bolt = builder.add_bolt('loterijoslaimejimaid0550', LoterijosLaimejimaid0550, par=2)
-	inputs = {kafka_input_spout : Grouping.fields('SpoutOutput');})
+    atlyginimasc5df16a0679a_bolt = builder.add_bolt('atlyginimasc5df16a0679a', Atlyginimasc5df16a0679a, par=2, inputs = {kafka_input_spout : Grouping.fields('SpoutOutput')})
+    atostoginiai49e661dd1d6_bolt = builder.add_bolt('atostoginiai49e661dd1d6', Atostoginiai49e661dd1d6, par=2, inputs = {kafka_input_spout : Grouping.fields('SpoutOutput')})
+    uzdarbis416f51b52b8a4c_bolt = builder.add_bolt('uzdarbis416f51b52b8a4c', Uzdarbis416f51b52b8a4c, par=2, inputs = {atlyginimasc5df16a0679a_bolt : Grouping.fields('Atlyginimas_c5df16a0-679a-4756-93da-df87b278efca'), atostoginiai49e661dd1d6_bolt : Grouping.fields('Atostoginiai_49e661dd-1d6a-496e-bac5-22d4358145a9')})
+    loterijoslaimejimaid0550_bolt = builder.add_bolt('loterijoslaimejimaid0550', LoterijosLaimejimaid0550, par=2, inputs = {kafka_input_spout : Grouping.fields('SpoutOutput')})
 
 
     emitter_bolt = builder.add_bolt("emitter_bolt", EmitterBolt, par=4,

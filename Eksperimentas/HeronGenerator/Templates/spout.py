@@ -32,8 +32,7 @@ class KafkaInputSpout(Spout):
                     "unique_id" : uuid.uuid4()
                 }
                 self.emit([ouput_dict])
-
-            self.logger.info("Emit success!")
+                self.logger.info("Emit success!")
 
     def ack(self, tup_id):
         self.logger.info("Ackquired!")
