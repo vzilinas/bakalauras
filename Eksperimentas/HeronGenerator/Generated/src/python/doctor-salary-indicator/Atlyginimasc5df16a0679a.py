@@ -2,26 +2,28 @@
 from heronpy.api.bolt.bolt import Bolt
 import helpers
 import pickle
+import json
 
 # class that inherits from heron Bolt
 class Atlyginimasc5df16a0679a(Bolt):
     # Important : Define output field tags for the Bolt
     outputs = ["Atlyginimas_c5df16a0-679a-4756-93da-df87b278efca"]
-    count = 0
-    total = 0
-    lowers, highers = [], []
-    mode_dict = {}
-    temp_combination = {}
+
 
     def initialize(self, config, context):
         # A log context is provided in the context of the spout
         self.log("Initializing Atlyginimasc5df16a0679a...")
+        self.count = 0
+        self.total = 0
+        self.lowers, self.highers = [], []
+        self.mode_dict = {}
+        self.temp_combination = {}
 
     # Process incoming tuple and emit output
     def process(self, tup):
-        self.logger.info("Incoming" + tup)
+        self.logger.info("Incoming")
         input_dict = pickle.loads(tup.values[0])
-        self.logger.info("Caught raw data:" + input_dict)
+        self.logger.info("Caught raw data:" + json.dumps(input_dict))
         output_dict = {
                 'primary_key' : input_dict['primary_key'],
                 'primary_key_array' : input_dict['primary_key_array'],
@@ -29,21 +31,25 @@ class Atlyginimasc5df16a0679a(Bolt):
                 'result' : {}
             }
         if False:
-            temp_combination[input_dict['unique_id']] = helpers.merge_two_dicts(temp_combination[input_dict['unique_id']], input_dict['result'])
-            if not({'empty'} <= set(temp_combination[input_dict['unique_id']])):
+            if input_dict['unique_id'] in self.temp_combination:
+                self.temp_combination[input_dict['unique_id']] = helpers.merge_two_dicts(self.temp_combination[input_dict['unique_id']], input_dict['result'])
+            else:
+                self.temp_combination[input_dict['unique_id']] =  input_dict['result']
+            if not({'empty'} <= set(self.temp_combination[input_dict['unique_id']])):
                 return
             else:
-                output_dict['result'] = temp_combination[input_dict['unique_id']]
-                temp_combination.pop(input_dict['unique_id'])
+                output_dict['result'] = self.temp_combination[input_dict['unique_id']]
+                self.temp_combination.pop(input_dict['unique_id'])
+            
         input_value = input_dict['data']['Atlyginimas']
-        total += input_value
-        count += 1
+        self.total += input_value
+        self.count += 1
         result = {
-            "Mean" : helpers.calculate_mean(total, count),
-            "Median" : helpers.calculate_median(input_value, lowers, highers),
-            "Mode" : helpers.calculate_mode(input_value, mode_dict),
-            "Sum" : total,
-            "Count" : count,
+            "Mean" : helpers.calculate_mean(self.total, self.count),
+            "Median" : helpers.calculate_median(input_value, self.lowers, self.highers),
+            "Mode" : helpers.calculate_mode(input_value, self.mode_dict),
+            "Sum" : self.total,
+            "Count" : self.count,
             "last_value" : input_value 
         }
         output_dict['result']['Atlyginimasc5df16a0679a'] = result

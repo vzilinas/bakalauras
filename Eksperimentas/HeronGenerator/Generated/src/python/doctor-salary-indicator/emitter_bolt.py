@@ -2,6 +2,7 @@
 from heronpy.api.bolt.bolt import Bolt
 from kafka import KafkaProducer
 import json
+import pickle
 
 # class that inherits from heron Bolt
 class EmitterBolt(Bolt):
@@ -16,7 +17,7 @@ class EmitterBolt(Bolt):
 
     # Process incoming tuple and emit output
     def process(self, tup):
-        self.logger.info("Incoming" + tup)
-        input_dict = tup.values[0]
+        self.logger.info("Incoming")
+        input_dict = json.dumps(pickle.loads(tup.values[0]))
         self.logger.info("Caught raw data:" + input_dict)
-        producer.send("doctor-salary-indicator", input_dict)
+        self.producer.send("doctor-salary-indicator", input_dict)

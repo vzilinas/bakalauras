@@ -21,7 +21,8 @@ class KafkaInputSpout(Spout):
 
     # Generate next tuple sequence for this spout
     def next_tuple(self):
-        for msg in self.consumer:
+        msg = next(self.consumer, {})
+        if len(msg) != 0:
             input_dict = msg.value
             self.logger.info(input_dict)
             primary_key = <%PrimaryKey%>
