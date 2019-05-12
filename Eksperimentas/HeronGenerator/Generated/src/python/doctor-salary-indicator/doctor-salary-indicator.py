@@ -23,7 +23,7 @@ if __name__ == '__main__':
     builder = TopologyBuilder("doctor-salary-indicator")
 
     # Start with the random sentence generator, create a reference and define a parallelism hint with par attribute
-    kafka_input_spout = builder.add_spout("kafka_input_spout", KafkaInputSpout, par=4)
+    kafka_input_spout = builder.add_spout("kafka_input_spout", KafkaInputSpout, par=10)
 
     atlyginimasc5df16a0679a_bolt = builder.add_bolt('atlyginimasc5df16a0679a', Atlyginimasc5df16a0679a, par=2, inputs = {kafka_input_spout : Grouping.fields('SpoutOutput')})
     atostoginiai49e661dd1d6_bolt = builder.add_bolt('atostoginiai49e661dd1d6', Atostoginiai49e661dd1d6, par=2, inputs = {kafka_input_spout : Grouping.fields('SpoutOutput')})
@@ -36,7 +36,7 @@ if __name__ == '__main__':
     islaidosd15508c3054849_bolt = builder.add_bolt('islaidosd15508c3054849', Islaidosd15508c3054849, par=1, inputs = {maistoislaidosd05508c30_bolt : Grouping.fields('MaistoIslaidos_d05508c3-0549-499d-bc01-7c25fd2b3e95'), komunaliniaid05508d3054_bolt : Grouping.fields('Komunaliniai_d05508d3-0549-499d-bc01-7c25fd2b3e95')})
 
 
-    emitter_bolt = builder.add_bolt("emitter_bolt", EmitterBolt, par=4,
+    emitter_bolt = builder.add_bolt("emitter_bolt", EmitterBolt, par=10,
                                     inputs={uzdarbis416f51b52b8a4c_bolt : Grouping.ALL, atlyginimasc5df16a0679a_bolt : Grouping.ALL, atostoginiai49e661dd1d6_bolt : Grouping.ALL, loterijoslaimejimaid0550_bolt : Grouping.ALL, islaidosd15508c3054849_bolt : Grouping.ALL, maistoislaidosd05508c30_bolt : Grouping.ALL, suvalgytasmaistasd05508c_bolt : Grouping.ALL, ismestasmaistasd05508c3_bolt : Grouping.ALL, komunaliniaid05508d3054_bolt : Grouping.ALL})
 
 

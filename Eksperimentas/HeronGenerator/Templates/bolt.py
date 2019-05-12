@@ -40,17 +40,17 @@ class <%BoltName%>(Bolt):
             self.temp_combination.pop(output_dict['unique_id'])
 
         if output_dict['primary_key'] in self.results:
-            self.results['primary_key']['total'] += input_value
-            self.results['primary_key']['count'] += 1
+            self.results[output_dict['primary_key']]['total'] += input_value
+            self.results[output_dict['primary_key']]['count'] += 1
         else:
-            self.results['primary_key'] = {}
-            self.results['primary_key']['total'] = input_value
-            self.results['primary_key']['count'] = 1
+            self.results[output_dict['primary_key']] = {}
+            self.results[output_dict['primary_key']]['total'] = input_value
+            self.results[output_dict['primary_key']]['count'] = 1
 
         result = {
-            "Mean" : helpers.calculate_mean(self.results['primary_key']['total'], self.results['primary_key']['count']),
-            "Sum" : self.results['primary_key']['total'],
-            "Count" : self.results['primary_key']['count'],
+            "Mean" : helpers.calculate_mean(self.results[output_dict['primary_key']]['total'], self.results[output_dict['primary_key']]['count']),
+            "Sum" : self.results[output_dict['primary_key']]['total'],
+            "Count" : self.results[output_dict['primary_key']]['count'],
             "last_value" : input_value 
         }
         output_dict['result']['<%BoltName%>'] = result
