@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
 
     emitter_bolt = builder.add_bolt("emitter_bolt", EmitterBolt, par=4,
-                                    inputs={uzdarbis416f51b52b8a4c_bolt : Grouping.fields('Uzdarbis_416f51b5-2b8a-4cb0-9978-f713d5990c52'), loterijoslaimejimaid0550_bolt : Grouping.fields('LoterijosLaimejimai_d05508c3-0549-499d-be01-7c25fd2b3e95'), islaidosd15508c3054849_bolt : Grouping.fields('Islaidos_d15508c3-0548-499d-bc01-7c25fd2b3e95')})
+                                    inputs={uzdarbis416f51b52b8a4c_bolt : Grouping.ALL, atlyginimasc5df16a0679a_bolt : Grouping.ALL, atostoginiai49e661dd1d6_bolt : Grouping.ALL, loterijoslaimejimaid0550_bolt : Grouping.ALL, islaidosd15508c3054849_bolt : Grouping.ALL, maistoislaidosd05508c30_bolt : Grouping.ALL, suvalgytasmaistasd05508c_bolt : Grouping.ALL, ismestasmaistasd05508c3_bolt : Grouping.ALL, komunaliniaid05508d3054_bolt : Grouping.ALL})
 
 
     topology_config = {constants.TOPOLOGY_RELIABILITY_MODE:

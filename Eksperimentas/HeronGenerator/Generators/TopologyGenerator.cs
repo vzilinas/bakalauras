@@ -15,11 +15,28 @@ namespace HeronGenerator.Generators
             var file = File.ReadAllText(_topologyFileName);
             var text = new StringBuilder(file);
             text.Replace("<%TopologyName%>", indicatorName);
-            text.Replace("<%EmitterInputs%>", GenerateInputs(emitterBolt));
+            text.Replace("<%EmitterInputs%>", string.Join(", ", bolts.Select(x=>GenerateEmitterInput(x))));
             text.Replace("<%TopologyBoltImports%>", GenerateTopologyImports(bolts));
             text.Replace("<%TopolgyBoltDefinitions%>", GenerateTopologyDefinitions(bolts));
             return text.ToString(); 
         }
+        private static string GenerateEmitterInput(GeneratedBolt bolt)
+        {
+            var printable = new StringBuilder($"{bolt.BoltName.ToLower()}_bolt : Grouping.ALL");
+            if (bolt.NextBolts == null || bolt.NextBolts.Count == 0)
+            {
+                return(printable.ToString());
+            }
+            else
+            {
+                foreach (var child in bolt.NextBolts)
+                {
+                    printable.Append(", " + GenerateEmitterInput(child));
+                }
+                return printable.ToString();
+            }
+        }
+
         private static string GenerateInputs(GeneratedBolt emitter)
         {
             var inputs = new StringBuilder();
