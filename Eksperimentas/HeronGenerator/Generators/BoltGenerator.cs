@@ -57,7 +57,7 @@ namespace HeronGenerator.Generators
             {
                 var combinationDefinition = ParseFormula(value);
                 text.Replace("<%Combined%>", "True");
-                var combinedCheck = value.NextValues.Select(x => $"'{Helper.GetClassName(x.FieldName + "_" + x.Id)}, '");
+                var combinedCheck = value.NextValues.Select(x => $"'{Helper.GetClassName(x.FieldName + "_" + x.Id)}'");
                 text.Replace("<%CombinedCheck%>", string.Join(", ", combinedCheck));
                 text.Replace("<%InputValue%>", combinationDefinition);
                 return new GeneratedBolt

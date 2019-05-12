@@ -32,7 +32,7 @@ class Uzdarbis416f51b52b8a4c(Bolt):
                 self.temp_combination[output_dict['unique_id']] = helpers.merge_two_dicts(self.temp_combination[output_dict['unique_id']], input_dict['result'])
             else:
                 self.temp_combination[output_dict['unique_id']] = input_dict['result']
-            if not({'Atlyginimasc5df16a0679a, ', 'Atostoginiai49e661dd1d6, '} <= set(self.temp_combination[input_dict['unique_id']])):
+            if not({'Atlyginimasc5df16a0679a', 'Atostoginiai49e661dd1d6'} <= set(self.temp_combination[input_dict['unique_id']])):
                 return
 
         input_value = self.temp_combination[output_dict['unique_id']]['Atlyginimasc5df16a0679a']['last_value'] + self.temp_combination[output_dict['unique_id']]['Atostoginiai49e661dd1d6']['last_value']

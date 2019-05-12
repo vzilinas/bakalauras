@@ -73,7 +73,7 @@ namespace HeronGenerator.Generators
                 {
                     printable.Append(GenerateDefinition(child));
                 }
-                printable.Append($"    {boltName}_bolt = builder.add_bolt('{boltName}', {bolt.BoltName}, par=2, ");
+                printable.Append($"    {boltName}_bolt = builder.add_bolt('{boltName}', {bolt.BoltName}, par=1, ");
                 printable.Append("inputs = {" + GenerateInputs(bolt) + "})\n");
 
                 return printable.ToString();

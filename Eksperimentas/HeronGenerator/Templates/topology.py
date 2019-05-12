@@ -23,8 +23,7 @@ if __name__ == '__main__':
 
 
     topology_config = {constants.TOPOLOGY_RELIABILITY_MODE:
-                         constants.TopologyReliabilityMode.EFFECTIVELY_ONCE,
-                         constants.TOPOLOGY_STATEFUL_CHECKPOINT_INTERVAL_SECONDS: 30}
+                         constants.TopologyReliabilityMode.EFFECTIVELY_ONCE}
 
     builder.set_config(topology_config)
 

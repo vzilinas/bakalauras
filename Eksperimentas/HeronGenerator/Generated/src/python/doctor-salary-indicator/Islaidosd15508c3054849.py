@@ -32,7 +32,7 @@ class Islaidosd15508c3054849(Bolt):
                 self.temp_combination[output_dict['unique_id']] = helpers.merge_two_dicts(self.temp_combination[output_dict['unique_id']], input_dict['result'])
             else:
                 self.temp_combination[output_dict['unique_id']] = input_dict['result']
-            if not({'MaistoIslaidosd05508c30, ', 'Komunaliniaid05508d3054, '} <= set(self.temp_combination[input_dict['unique_id']])):
+            if not({'MaistoIslaidosd05508c30', 'Komunaliniaid05508d3054'} <= set(self.temp_combination[input_dict['unique_id']])):
                 return
 
         input_value = (self.temp_combination[output_dict['unique_id']]['MaistoIslaidosd05508c30']['last_value'] * 0.9) + self.temp_combination[output_dict['unique_id']]['Komunaliniaid05508d3054']['last_value']

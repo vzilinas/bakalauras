@@ -32,7 +32,7 @@ class MaistoIslaidosd05508c30(Bolt):
                 self.temp_combination[output_dict['unique_id']] = helpers.merge_two_dicts(self.temp_combination[output_dict['unique_id']], input_dict['result'])
             else:
                 self.temp_combination[output_dict['unique_id']] = input_dict['result']
-            if not({'SuvalgytasMaistasd05508c, ', 'IsmestasMaistasd05508c3, '} <= set(self.temp_combination[input_dict['unique_id']])):
+            if not({'SuvalgytasMaistasd05508c', 'IsmestasMaistasd05508c3'} <= set(self.temp_combination[input_dict['unique_id']])):
                 return
 
         input_value = (self.temp_combination[output_dict['unique_id']]['SuvalgytasMaistasd05508c']['last_value'] * 0.9) + self.temp_combination[output_dict['unique_id']]['IsmestasMaistasd05508c3']['last_value']
