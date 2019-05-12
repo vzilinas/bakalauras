@@ -22,7 +22,7 @@ namespace HeronGenerator.Generators
         }
         private static string GenerateEmitterInput(GeneratedBolt bolt)
         {
-            var printable = new StringBuilder($"{bolt.BoltName.ToLower()}_bolt : Grouping.ALL");
+            var printable = new StringBuilder($"{bolt.BoltName.ToLower()}_bolt : Grouping.fields('{bolt.Output}')");
             if (bolt.NextBolts == null || bolt.NextBolts.Count == 0)
             {
                 return(printable.ToString());

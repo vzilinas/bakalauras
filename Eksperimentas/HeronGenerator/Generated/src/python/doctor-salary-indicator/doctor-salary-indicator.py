@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
 
     emitter_bolt = builder.add_bolt("emitter_bolt", EmitterBolt, par=10,
-                                    inputs={uzdarbis416f51b52b8a4c_bolt : Grouping.ALL, atlyginimasc5df16a0679a_bolt : Grouping.ALL, atostoginiai49e661dd1d6_bolt : Grouping.ALL, loterijoslaimejimaid0550_bolt : Grouping.ALL, islaidosd15508c3054849_bolt : Grouping.ALL, maistoislaidosd05508c30_bolt : Grouping.ALL, suvalgytasmaistasd05508c_bolt : Grouping.ALL, ismestasmaistasd05508c3_bolt : Grouping.ALL, komunaliniaid05508d3054_bolt : Grouping.ALL})
+                                    inputs={uzdarbis416f51b52b8a4c_bolt : Grouping.fields('Uzdarbis_416f51b5-2b8a-4cb0-9978-f713d5990c52'), atlyginimasc5df16a0679a_bolt : Grouping.fields('Atlyginimas_c5df16a0-679a-4756-93da-df87b278efca'), atostoginiai49e661dd1d6_bolt : Grouping.fields('Atostoginiai_49e661dd-1d6a-496e-bac5-22d4358145a9'), loterijoslaimejimaid0550_bolt : Grouping.fields('LoterijosLaimejimai_d05508c3-0549-499d-be01-7c25fd2b3e95'), islaidosd15508c3054849_bolt : Grouping.fields('Islaidos_d15508c3-0548-499d-bc01-7c25fd2b3e95'), maistoislaidosd05508c30_bolt : Grouping.fields('MaistoIslaidos_d05508c3-0549-499d-bc01-7c25fd2b3e95'), suvalgytasmaistasd05508c_bolt : Grouping.fields('SuvalgytasMaistas_d05508c3-0549-499d-bc02-7c25fd2b3e95'), ismestasmaistasd05508c3_bolt : Grouping.fields('IsmestasMaistas_d05508c3-0549-499d-bc01-7c25fd2b3e85'), komunaliniaid05508d3054_bolt : Grouping.fields('Komunaliniai_d05508d3-0549-499d-bc01-7c25fd2b3e95')})
 
 
     topology_config = {constants.TOPOLOGY_RELIABILITY_MODE:
