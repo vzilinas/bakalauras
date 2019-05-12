@@ -13,10 +13,7 @@ class Uzdarbis416f51b52b8a4c(Bolt):
     def initialize(self, config, context):
         # A log context is provided in the context of the spout
         self.log("Initializing Uzdarbis416f51b52b8a4c...")
-        self.count = 0
-        self.total = 0
-        self.lowers, self.highers = [], []
-        self.mode_dict = {}
+        self.results = {}
         self.temp_combination = {}
 
     # Process incoming tuple and emit output
@@ -31,25 +28,28 @@ class Uzdarbis416f51b52b8a4c(Bolt):
                 'result' : {}
             }
         if True:
-            if input_dict['unique_id'] in self.temp_combination:
-                self.temp_combination[input_dict['unique_id']] = helpers.merge_two_dicts(self.temp_combination[input_dict['unique_id']], input_dict['result'])
+            if output_dict['unique_id'] in self.temp_combination:
+                self.temp_combination[output_dict['unique_id']] = helpers.merge_two_dicts(self.temp_combination[output_dict['unique_id']], input_dict['result'])
             else:
-                self.temp_combination[input_dict['unique_id']] =  input_dict['result']
-            if not({'Atlyginimas_c5df16a0-679a-4756-93da-df87b278efca', 'Atostoginiai_49e661dd-1d6a-496e-bac5-22d4358145a9'} <= set(self.temp_combination[input_dict['unique_id']])):
+                self.temp_combination[output_dict['unique_id']] = input_dict['result']
+            if not({'Atlyginimasc5df16a0679a, ', 'Atostoginiai49e661dd1d6, '} <= set(self.temp_combination[input_dict['unique_id']])):
                 return
-            else:
-                output_dict['result'] = self.temp_combination[input_dict['unique_id']]
-                self.temp_combination.pop(input_dict['unique_id'])
-            
-        input_value = output_dict['result']['Atlyginimas_c5df16a0-679a-4756-93da-df87b278efca']['last_value'] + output_dict['result']['Atostoginiai_49e661dd-1d6a-496e-bac5-22d4358145a9']['last_value']
-        self.total += input_value
-        self.count += 1
+
+        self.temp_combination.pop(output_dict['unique_id'])
+        input_value = self.temp_combination[output_dict['unique_id']]['Atlyginimasc5df16a0679a']['last_value'] + self.temp_combination[output_dict['unique_id']]['Atostoginiai49e661dd1d6']['last_value']
+
+        if output_dict['primary_key'] in self.results:
+            self.results['primary_key']['total'] += input_value
+            self.results['primary_key']['count'] += 1
+        else:
+            self.results['primary_key'] = {}
+            self.results['primary_key']['total'] = input_value
+            self.results['primary_key']['count'] = 1
+
         result = {
-            "Mean" : helpers.calculate_mean(self.total, self.count),
-            "Median" : helpers.calculate_median(input_value, self.lowers, self.highers),
-            "Mode" : helpers.calculate_mode(input_value, self.mode_dict),
-            "Sum" : self.total,
-            "Count" : self.count,
+            "Mean" : helpers.calculate_mean(self.results['primary_key']['total'], self.results['primary_key']['count']),
+            "Sum" : self.results['primary_key']['total'],
+            "Count" : self.results['primary_key']['count'],
             "last_value" : input_value 
         }
         output_dict['result']['Uzdarbis416f51b52b8a4c'] = result

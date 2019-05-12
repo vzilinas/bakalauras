@@ -57,7 +57,7 @@ namespace HeronGenerator.Generators
             {
                 var combinationDefinition = ParseFormula(value);
                 text.Replace("<%Combined%>", "True");
-                var combinedCheck = value.NextValues.Select(x => $"'{x.FieldName}_{x.Id}'");
+                var combinedCheck = value.NextValues.Select(x => $"'{Helper.GetClassName(x.FieldName + "_" + x.Id)}, '");
                 text.Replace("<%CombinedCheck%>", string.Join(", ", combinedCheck));
                 text.Replace("<%InputValue%>", combinationDefinition);
                 return new GeneratedBolt
@@ -81,7 +81,7 @@ namespace HeronGenerator.Generators
             foreach (var element in elements)
             {
                 var definition = value.NextValues.First(x => x.Id == new Guid(element.ToString().Trim('%')));
-                parsed.Replace(element.ToString(), $"output_dict['result']['{definition.FieldName + "_" + definition.Id}']['last_value']");
+                parsed.Replace(element.ToString(), $"self.temp_combination[output_dict['unique_id']]['{Helper.GetClassName(definition.FieldName + "_" + definition.Id)}']['last_value']");
             }
             return parsed.ToString();
         }

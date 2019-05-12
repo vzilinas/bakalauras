@@ -13,10 +13,7 @@ class Islaidosd15508c3054849(Bolt):
     def initialize(self, config, context):
         # A log context is provided in the context of the spout
         self.log("Initializing Islaidosd15508c3054849...")
-        self.count = 0
-        self.total = 0
-        self.lowers, self.highers = [], []
-        self.mode_dict = {}
+        self.results = {}
         self.temp_combination = {}
 
     # Process incoming tuple and emit output
@@ -31,25 +28,28 @@ class Islaidosd15508c3054849(Bolt):
                 'result' : {}
             }
         if True:
-            if input_dict['unique_id'] in self.temp_combination:
-                self.temp_combination[input_dict['unique_id']] = helpers.merge_two_dicts(self.temp_combination[input_dict['unique_id']], input_dict['result'])
+            if output_dict['unique_id'] in self.temp_combination:
+                self.temp_combination[output_dict['unique_id']] = helpers.merge_two_dicts(self.temp_combination[output_dict['unique_id']], input_dict['result'])
             else:
-                self.temp_combination[input_dict['unique_id']] =  input_dict['result']
-            if not({'MaistoIslaidos_d05508c3-0549-499d-bc01-7c25fd2b3e95', 'Komunaliniai_d05508d3-0549-499d-bc01-7c25fd2b3e95'} <= set(self.temp_combination[input_dict['unique_id']])):
+                self.temp_combination[output_dict['unique_id']] = input_dict['result']
+            if not({'MaistoIslaidosd05508c30, ', 'Komunaliniaid05508d3054, '} <= set(self.temp_combination[input_dict['unique_id']])):
                 return
-            else:
-                output_dict['result'] = self.temp_combination[input_dict['unique_id']]
-                self.temp_combination.pop(input_dict['unique_id'])
-            
-        input_value = (output_dict['result']['MaistoIslaidos_d05508c3-0549-499d-bc01-7c25fd2b3e95']['last_value'] * 0.9) + output_dict['result']['Komunaliniai_d05508d3-0549-499d-bc01-7c25fd2b3e95']['last_value']
-        self.total += input_value
-        self.count += 1
+
+        self.temp_combination.pop(output_dict['unique_id'])
+        input_value = (self.temp_combination[output_dict['unique_id']]['MaistoIslaidosd05508c30']['last_value'] * 0.9) + self.temp_combination[output_dict['unique_id']]['Komunaliniaid05508d3054']['last_value']
+
+        if output_dict['primary_key'] in self.results:
+            self.results['primary_key']['total'] += input_value
+            self.results['primary_key']['count'] += 1
+        else:
+            self.results['primary_key'] = {}
+            self.results['primary_key']['total'] = input_value
+            self.results['primary_key']['count'] = 1
+
         result = {
-            "Mean" : helpers.calculate_mean(self.total, self.count),
-            "Median" : helpers.calculate_median(input_value, self.lowers, self.highers),
-            "Mode" : helpers.calculate_mode(input_value, self.mode_dict),
-            "Sum" : self.total,
-            "Count" : self.count,
+            "Mean" : helpers.calculate_mean(self.results['primary_key']['total'], self.results['primary_key']['count']),
+            "Sum" : self.results['primary_key']['total'],
+            "Count" : self.results['primary_key']['count'],
             "last_value" : input_value 
         }
         output_dict['result']['Islaidosd15508c3054849'] = result
