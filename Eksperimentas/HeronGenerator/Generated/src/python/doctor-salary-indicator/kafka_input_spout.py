@@ -17,7 +17,7 @@ class KafkaInputSpout(Spout):
         self.logger.info("IndicatorId - 32c24420-afbd-44fb-b045-ef72c48cb04e")
         self.logger.info("IndicatorName - doctor-salary-indicator")
         self.logger.info("IndicatorVersion - 1-416f51b5-2b8a-4cb0-9978-f713d5990c52")
-        self.consumer = KafkaConsumer("statistics-queue", bootstrap_servers="localhost:9092", value_deserializer=lambda m: json.loads(m.decode('utf-8')))
+        self.consumer = KafkaConsumer("statistics-queue",  group_id='statistics-queue_group', bootstrap_servers="localhost:9092", value_deserializer=lambda m: json.loads(m.decode('utf-8')))
 
     # Generate next tuple sequence for this spout
     def next_tuple(self):

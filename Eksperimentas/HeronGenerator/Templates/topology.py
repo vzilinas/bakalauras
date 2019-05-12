@@ -14,7 +14,7 @@ if __name__ == '__main__':
     builder = TopologyBuilder("<%TopologyName%>")
 
     # Start with the random sentence generator, create a reference and define a parallelism hint with par attribute
-    kafka_input_spout = builder.add_spout("kafka_input_spout", KafkaInputSpout, par=10)
+    kafka_input_spout = builder.add_spout("kafka_input_spout", KafkaInputSpout, par=4)
 
 <%TopolgyBoltDefinitions%>
 

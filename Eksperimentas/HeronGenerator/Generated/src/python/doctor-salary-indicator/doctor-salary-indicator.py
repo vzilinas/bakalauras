@@ -23,7 +23,7 @@ if __name__ == '__main__':
     builder = TopologyBuilder("doctor-salary-indicator")
 
     # Start with the random sentence generator, create a reference and define a parallelism hint with par attribute
-    kafka_input_spout = builder.add_spout("kafka_input_spout", KafkaInputSpout, par=10)
+    kafka_input_spout = builder.add_spout("kafka_input_spout", KafkaInputSpout, par=4)
 
     atlyginimasc5df16a0679a_bolt = builder.add_bolt('atlyginimasc5df16a0679a', Atlyginimasc5df16a0679a, par=2, inputs = {kafka_input_spout : Grouping.fields('SpoutOutput')})
     atostoginiai49e661dd1d6_bolt = builder.add_bolt('atostoginiai49e661dd1d6', Atostoginiai49e661dd1d6, par=2, inputs = {kafka_input_spout : Grouping.fields('SpoutOutput')})
