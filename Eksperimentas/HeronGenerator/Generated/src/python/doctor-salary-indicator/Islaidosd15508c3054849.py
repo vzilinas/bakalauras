@@ -35,8 +35,9 @@ class Islaidosd15508c3054849(Bolt):
             if not({'MaistoIslaidosd05508c30, ', 'Komunaliniaid05508d3054, '} <= set(self.temp_combination[input_dict['unique_id']])):
                 return
 
-        self.temp_combination.pop(output_dict['unique_id'])
         input_value = (self.temp_combination[output_dict['unique_id']]['MaistoIslaidosd05508c30']['last_value'] * 0.9) + self.temp_combination[output_dict['unique_id']]['Komunaliniaid05508d3054']['last_value']
+        if output_dict['unique_id'] in self.temp_combination:
+            self.temp_combination.pop(output_dict['unique_id'])
 
         if output_dict['primary_key'] in self.results:
             self.results['primary_key']['total'] += input_value

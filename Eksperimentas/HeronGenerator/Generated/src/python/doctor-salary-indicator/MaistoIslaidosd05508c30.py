@@ -35,8 +35,9 @@ class MaistoIslaidosd05508c30(Bolt):
             if not({'SuvalgytasMaistasd05508c, ', 'IsmestasMaistasd05508c3, '} <= set(self.temp_combination[input_dict['unique_id']])):
                 return
 
-        self.temp_combination.pop(output_dict['unique_id'])
         input_value = (self.temp_combination[output_dict['unique_id']]['SuvalgytasMaistasd05508c']['last_value'] * 0.9) + self.temp_combination[output_dict['unique_id']]['IsmestasMaistasd05508c3']['last_value']
+        if output_dict['unique_id'] in self.temp_combination:
+            self.temp_combination.pop(output_dict['unique_id'])
 
         if output_dict['primary_key'] in self.results:
             self.results['primary_key']['total'] += input_value

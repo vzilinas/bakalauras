@@ -35,8 +35,9 @@ class Atostoginiai49e661dd1d6(Bolt):
             if not({'empty'} <= set(self.temp_combination[input_dict['unique_id']])):
                 return
 
-        self.temp_combination.pop(output_dict['unique_id'])
         input_value = input_dict['data']['Atostoginiai']
+        if output_dict['unique_id'] in self.temp_combination:
+            self.temp_combination.pop(output_dict['unique_id'])
 
         if output_dict['primary_key'] in self.results:
             self.results['primary_key']['total'] += input_value
