@@ -13,6 +13,62 @@
 .*.lb
 # *.pdf
 
+*.class
+*.iml
+*.ipr
+*.iws
+*.lock_message
+*.pyc
+*.hprof
+*.swp
+*.sublime-project
+*.sublime-workspace
+*~
+*#
+.#*
+.DS_Store
+.build.properties
+.buildcache/
+.coverage*
+.idea
+/.vscode/
+.cache
+.pants.d
+.pants.run
+.pants.workdir.file_lock
+.pants.stats
+.pids
+.project
+.settings
+.classpath
+.factorypath
+.python
+.pydevproject
+.pytest_cache/
+codegen/classes/
+htmlcov/
+out/
+# remove root-level /bin, which is created by Eclipse
+/bin/
+/build-support/*.pex
+/build-support/*.venv
+/build-support/virtualenv-*
+/build-support/virtualenv.dist/
+/build-support/phab/
+/dist/
+/lib/
+# This is created by the very handy `build-support/bin/get_failing_travis_targets_for_pr.sh`.
+/logs/
+arc.sh
+BUILD.release*
+pants.ini.sitegen
+target
+GPATH
+GRTAGS
+GSYMS
+GTAGS
+.mypy_cache/
+
 ## Intermediate documents:
 *.dvi
 *.xdv
