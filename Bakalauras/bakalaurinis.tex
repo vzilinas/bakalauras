@@ -90,119 +90,77 @@ Uždaviniai:
 
 Rodiklių duomenys - tai duomenis, kurie apibrėžia bet kokius duomenis, kuriuos galime grupuoti pagal tam kitus elementus. Rodiklį sudaro pirminis raktas, kuris susideda iš vieno arba daug duomenų ir reikšmių sąrašas, kurį galime grupuoti pagal apibrėžtą raktą.      
 Rodiklių duomenų gali būti daug todėl reikia bendro modelio, kuris gali apibrėžti visus įmanomus rodiklius. 
-\subsection{Rodiklių duomenų modelis}
 
-Darbo tikslui išpildyti buvo sukurtas modelis, kurio pagalba galime apibrėžti rodiklį. Pagal šį apibrėžimą bus generuojama srautinio apdorojimo architektūra.
+\subsection{Įeinančių duomenų struktūra}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{img/rodiklis.jpg}
-    \caption{Rodiklis}
-    \label{img:rodiklis}
+    \includegraphics[width=1\textwidth]{img/duomenys.png}
+    \caption{Duomenys}
+    \label{img:duomenys}
 \end{figure}
 
-Šiame darbe šis rodiklis bus užrašomas skaidant į dvi dalis: \\
-Raktas ir apribojimai:
-\[ [\text{Raktas 1, Raktas N}]
-    \>\> ; \>\>  
-    \begin{array}{|c|c|}
-        \hline
-        \text{Apribojimas 1} & \text{Apribojimas N} \\ 
-        \hline
-        \text{Reikšmė 1} & \text{Reikšmė N} \\ 
-        \text{Operatorius 1} & \text{Operatorius N} \\
-        \text{Riba 1} & \text{Riba N} \\
-        \hline 
-   \end{array}
-\]
-Reikšmės: \\
-\[
-    \begin{tikzpicture}[sibling distance=7em,
-        every node/.style = {shape=rectangle, rounded corners,
-                             draw, align=center,
-                             top color=white, bottom color=white}]
-        \node {Reikšmė 1}
-                child { node {Reikšmė 1.1} 
-                    child { node { Reikšmė 1.1.n} } }
-                child { node {Reikšmė 1.n} } ;
-    \end{tikzpicture} 
-    \>\>\>\>\>\>\>\>
-    \begin{tikzpicture}[sibling distance=10em,
-        every node/.style = {shape=rectangle, rounded corners,
-            draw, align=center,
-            top color=white, bottom color=white}]]
-        \node {Reikšmė n} ;
-    \end{tikzpicture}  
-\]
-\section{Rodiklių duomenų pokyčiai}
+Visi duomenys patenkantis į apdorojimo sistemą bus sudaryti iš raktų ir reikšmių žodyno (\ref{img:duomenys} pav.), kur raktas gali būti tik tekstinio tipo, o reikšmė - tekstas arba skaičius. Siekiant nesigilinti į kodo generavimo detales reikšmės nebus kompleksinio tipo (masyvo arba žodyno). Duomenų raktai ir raktų kiekis gali nesutapti, vieni žodynai gali turėti daugiau raktų-reikšmių elementų, kitų raktai gali būti visiškai nesusiję su apdorojamais rodikliais. Kai yra neaktualus duomenys jie turi būti ignoruojami.\par 
+Duomenys į apdorojimo sistemą pateks asinchroniškai ir iš skirtingų šaltinių, o generuojama sistema tikru laiku turės sugebėti apdoroti reikiamus duomenis, o nereikalingus atmesti.
 
-Kadangi einant laiku duomenis gali keistis ir atitinkamai gali keistis ir rodiklių duomenų tipas, kuriuos reikia surinkti. Tarkime mes turime rodiklį, kuris apibrėžia žmogaus, kuris dirba pagal terminuotą darbo sutartį, metines pajamas, kurios susideda iš gaunamo atlyginimo ir premijų:
-Raktas ir apribojimai:
-\[ [\text{Žmogus, Metai}]
-    \>\> ; \>\>  
-    \begin{array}{|c|}
-        \hline
-        \text{Terminuotą darbo sutartis}  \\ 
-        \hline
-        \text{Darbo sutarties tipas} \\ 
-        \text{LYGU}  \\
-        \text{TERMINUOTA} \\
-        \hline 
-   \end{array}
-\]
-Reikšmės: \\
-\[
-    \begin{tikzpicture}[sibling distance=7em,
-        every node/.style = {shape=rectangle, rounded corners,
-                             draw, align=center,
-                             top color=white, bottom color=white}]
-        \node {Metinės pajamos}
-                child { node {Atlyginimas} }
-                child { node {Premijos} } ;
-    \end{tikzpicture} 
-\]
-Pavyzdžiui, jei atsiranda poreikis fiksuoti, ne tik iš gaunama atlygimą ir premiją, bet ir iš loterijose laimėtus pinigus. Taip pat tarkime, jog terminuota darbo sutartis buvo išskaidyta į terminuotą darbo sutartį ir laikinojo darbo sutartį ir mums reikia įtraukti duomenis pagal abu apribojimus. Mūsų rodiklis, turėtų atsinaujinti atitinkamai:
+\subsection{Rodiklių duomenų apdorojimo apibrėžimo struktūra}
 
-Raktas ir apribojimai:
-\[ [\text{Žmogus, Metai}]
-    \>\> ; \>\>  
-    \begin{array}{|c|c|}
-        \hline
-        \text{Terminuotą darbo sutartis} & \text{Laikinojo darbo sutartis} \\ 
-        \hline
-        \text{Darbo sutarties tipas} & \text{Darbo sutarties tipas} \\ 
-        \text{LYGU} & \text{LYGU} \\
-        \text{TERMINUOTA} & \text{LAIKINOJI} \\
-        \hline 
-   \end{array}
-\]
-Reikšmės: \\
-\[
-    \begin{tikzpicture}[sibling distance=7em,
-        every node/.style = {shape=rectangle, rounded corners,
-                             draw, align=center,
-                             top color=white, bottom color=white}]
-        \node {Metinės pajamos}
-            child { node {Atlyginimas} }
-            child { node {Premijos} } ;
-    \end{tikzpicture} 
-    \>\>\>\>\>\>\>\>
-    \begin{tikzpicture}[sibling distance=10em,
-        every node/.style = {shape=rectangle, rounded corners,
-            draw, align=center,
-            top color=white, bottom color=white}]]
-        \node {Loterijų laimėjimai} ;
-    \end{tikzpicture}  
-\]
 
-\subsection{Galimi pokyčiai}
+\begin{figure}[H]
+    \includegraphics[width=1\textwidth]{img/rodiklio_apibrezimas.png}
+    \caption{Rodiklio apdorojimo apibrėžimo struktūra}
+    \label{img:rodiklio_apibrezimas}
+\end{figure}
+Eksperimentui įvykdyti reikia aprašyti rodiklių duomenų apdorojimo apibrėžimų struktūrą (\ref{img:rodiklio_apibrezimas} pav.), pagal kurią bus generuojamos srautinio duomenų apdorojimo sistemos iš pateikiamų apibrėžimų. Šis apibrėžimas susidarys iš trijų pagrindinių dalių: 
+\begin{itemize}
+    \item Raktų rinkinio, įeinančių duomenų žodyno raktus reikšmių, pagal kurias bus grupuojami apdoroti duomenys.
+    \item Įeinančių duomenų srities apribojimai.
+    \item Įeinančių duomenų raktai, reikšmių kurios bus apdorojamos ir apdorojamų duomenų kombinavimo apibrėžimai. 
+\end{itemize}
 
-\subsubsection{Pirminis raktas}
-Mes savo rodiklyje pakeitėme apribojimus ir reikšmes, tačiau nekeitėme pirminio rakto todėl, kad tokiu atveju grupavimas nebeturėtų prasmės. Tarkime, kad norime nuo 2019 metų rinkti duomenis ne metinius, o kas mėnesį. Tokiu atveju jau surinkti duomenis nebeturi prasmės, nes bandoma lyginti metinius rezultatus su mėnesiais. Jei tai toks elementas, kuris gali kisti ir nėra renkama reikšmė tai turėtų būti apibrėžiama kaip apribojimas. Jei yra poreikis keisti pirminį raktą, reikia kurti naują rodiklį ir, jei yra poreikis pagal jį suagreguoti naujus ir istorinius duomenis, turi būti iš naujo apdoroti visi turimi duomenys.     
+\subsubsection{Raktų rinkinys - reikšmių pagal kuria bus grupuojami apdoroti duomenys}
 
-\subsubsection{Apribojimai}
+Pirma rodiklio apdorojimo apibrėžimo dalis aprašo raktus pagal kurių reikšmes bus grupuojami apdoroti duomenis. Pavyzdžiui:
+\begin{itemize}
+    \item Statistikos srityje: norint surinkti duomenis aprašančius \textbf{skirtingų savivaldybių} nekilnojamo turto kainas pagal \textbf{metus}, raktų rinkinys atrodys taip: \[[\textit{"Savivaldybė"; "Metai"}]\]
+    \item Sensoriniai rodikliai: norint surinkti vienos dienos duomenis aprašančius \textbf{skirtingų sensorių} parodymus \textbf{kiekvieną valandą}, \textbf{kiekvienam ofiso kabinetui}, raktu rinkinys atrodys taip: \[[\textit{"Sensoriaus tipas"; "Valanda"; Kabineto Numeris}]\] 
+    \item Buhalterijoje: norint surinkti duomenis parodančių kiek ir \textbf{kokie skyriai} patyrė išlaidų kiekvieną šių \textbf{metų mėnesį}, raktų rinkinys atrodys taip: \[[\textit{"Skyriaus pavadinimas"; "Mėnesis"}]\] 
+\end{itemize}  \par
+Raktų kiekis nėra ribojamas:
+\[|R| \in [1, +\infty),  |R|-\textit{Raktų kiekis}\] \par
+Pagal tai kiek aprašoma raktų ir kiek skirtingų reikšmių gali turėti kiekvienas raktas nustatomas pagal kiek skirtingų reikšmių bus grupuojami apdoroti duomenis. Nuo to kiek yra skirtingų raktų ir raktų reikšmių priklauso kiekvienos apdorojimo modulio greitaveika bei naudojamas atminties kiekis. 
+
+\subsubsection{Įeinančių duomenų srities apribojimai}
+
+Antra rodiklio apdorojimo apibrėžimo dalis aprašo susidaro iš masyvo apribojimų, kurie aprašo kokius duomenis reikia apdoroti sistemai. Apribojimas susidaro iš: 
+\begin{itemize}
+    \item Raktas elemento, pagal kurio reikšmę tikrinami duomenys
+    \item Operatorius, kuris gali būti (==, !=, >, <)
+    \item Reikšmė su kuria lyginama 
+\end{itemize}
+Pavyzdžiui:
+\begin{itemize}
+    \item Statistikos srityje: norint surinkti žmonių, \textbf{vyresnių nei 60 metų} atlyginimus pagal kalendorinius metus, apribojimų sąrašas atrodys taip: \[[\{\textit{"Amžius" ; > ; 59}\}]\]
+    \item Sensoriniai rodikliai: norint surinkti \textbf{tik savaitgalio} sensorių parodymus, apribojimų sąrašas atrodys taip: \[[\{\textit{"Savaitės Diena" ; > ; 5}\};\{\textit{"Savaitės Diena" ; < ; 8}\}]\]
+    \item Buhalterijoje: norint apdoroti tam tikrus duomenis \textbf{tik "Marketingas" skyriaus} apribojimų sąrašas atrodys taip: \[[\{\textit{"Skyriaus pavadinimas" ; == ; "Marketingas"}\}]\] 
+\end{itemize}  
+Apribojimų kiekis neribotas. Siekiant supaprastinti apribojimų aprašymą eksperimento įeinantis duomenys bus apribojami pagal visų apribojimų aprašų sankirtą (AND sąlyga).
+\[\forall Duomuo \in \{|Apribojimas_1| \cap |Apribojimas_2| \cap ... \cap |Apribojimas_n|\}\] 
+\par
 
 \subsubsection{Reikšmės}
+
+
+\subsection{Rezultatų struktūra}
+
+Pagal apibrėžimą sugeneruotos sistemos gražina apdorotų duomenų rinkinį, kurį galima pateikti lentelės pavidalu. Tokiu būdu saugomus duomenis galima patogiai analizuoti ir esant poreikiui toliau apdoroti.  
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{img/rezultatai.png}
+    \caption{Rezultatų struktūra}
+    \label{img:rezultatai}
+\end{figure}
 
 \section{Srautinio duomenų apdorojimo sprendimų analizė}
 

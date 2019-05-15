@@ -20,7 +20,7 @@ namespace Joyce.Generators
                 filteredDict.Append($"input_dict['{firstFilter.FieldName}'] {Converter.Op(firstFilter.Operator)} '{firstFilter.Value}'");
                 foreach (var filter in indicator.Filters.Skip(1))
                 {
-                    filteredDict.Append($" or input_dict['{filter.FieldName}'] {Converter.Op(firstFilter.Operator)} '{filter.Value}'");
+                    filteredDict.Append($" and input_dict['{filter.FieldName}'] {Converter.Op(firstFilter.Operator)} '{filter.Value}'");
                 }
                 filteredDict.Append(":");
             }
