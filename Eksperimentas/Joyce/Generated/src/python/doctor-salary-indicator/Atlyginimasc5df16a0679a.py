@@ -7,7 +7,7 @@ import json
 # class that inherits from heron Bolt
 class Atlyginimasc5df16a0679a(Bolt):
     # Important : Define output field tags for the Bolt
-    outputs = ["Atlyginimas_c5df16a0-679a-4756-93da-df87b278efca"]
+    outputs = ["Atlyginimas_c5df16a0-679a-4756-93da-df87b278efca", "unique_id"]
 
 
     def initialize(self, config, context):
@@ -54,5 +54,5 @@ class Atlyginimasc5df16a0679a(Bolt):
             "last_value" : input_value 
         }
         output_dict['result']['Atlyginimasc5df16a0679a'] = result
-        self.emit([pickle.dumps(output_dict)])
+        self.emit([pickle.dumps(output_dict), output_dict['unique_id']])
         self.logger.info("Emited:" + json.dumps(output_dict))

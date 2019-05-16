@@ -7,7 +7,7 @@ import json
 # class that inherits from heron Bolt
 class MaistoIslaidosd05508c30(Bolt):
     # Important : Define output field tags for the Bolt
-    outputs = ["MaistoIslaidos_d05508c3-0549-499d-bc01-7c25fd2b3e95"]
+    outputs = ["MaistoIslaidos_d05508c3-0549-499d-bc01-7c25fd2b3e95", "unique_id"]
 
 
     def initialize(self, config, context):
@@ -32,10 +32,10 @@ class MaistoIslaidosd05508c30(Bolt):
                 self.temp_combination[output_dict['unique_id']] = helpers.merge_two_dicts(self.temp_combination[output_dict['unique_id']], input_dict['result'])
             else:
                 self.temp_combination[output_dict['unique_id']] = input_dict['result']
-            if not({'SuvalgytasMaistasd05508c', 'IsmestasMaistasd05508c3'} <= set(self.temp_combination[input_dict['unique_id']])):
+            if not({'SuvalgytasMaistasd05508c', 'LoterijosLaimejimaid0550', 'IsmestasMaistasd05508c3'} <= set(self.temp_combination[input_dict['unique_id']])):
                 return
 
-        input_value = (self.temp_combination[output_dict['unique_id']]['SuvalgytasMaistasd05508c']['last_value'] * 0.9) + self.temp_combination[output_dict['unique_id']]['IsmestasMaistasd05508c3']['last_value']
+        input_value = (self.temp_combination[output_dict['unique_id']]['SuvalgytasMaistasd05508c']['last_value'] * self.temp_combination[output_dict['unique_id']]['LoterijosLaimejimaid0550']['last_value']) + self.temp_combination[output_dict['unique_id']]['IsmestasMaistasd05508c3']['last_value']
         if output_dict['unique_id'] in self.temp_combination:
             self.temp_combination.pop(output_dict['unique_id'])
 
@@ -54,5 +54,5 @@ class MaistoIslaidosd05508c30(Bolt):
             "last_value" : input_value 
         }
         output_dict['result']['MaistoIslaidosd05508c30'] = result
-        self.emit([pickle.dumps(output_dict)])
+        self.emit([pickle.dumps(output_dict), output_dict['unique_id']])
         self.logger.info("Emited:" + json.dumps(output_dict))

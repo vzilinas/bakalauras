@@ -22,7 +22,7 @@ namespace Joyce.Generators
         }
         private static string GenerateEmitterInput(GeneratedBolt bolt)
         {
-            var printable = new StringBuilder($"{bolt.BoltName.ToLower()}_bolt : Grouping.SHUFFLE')");
+            var printable = new StringBuilder($"{bolt.BoltName.ToLower()}_bolt : Grouping.SHUFFLE");
             if (bolt.NextBolts == null || bolt.NextBolts.Count == 0)
             {
                 return(printable.ToString());
