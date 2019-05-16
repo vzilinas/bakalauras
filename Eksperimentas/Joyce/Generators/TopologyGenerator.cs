@@ -22,7 +22,7 @@ namespace Joyce.Generators
         }
         private static string GenerateEmitterInput(GeneratedBolt bolt)
         {
-            var printable = new StringBuilder($"{bolt.BoltName.ToLower()}_bolt : Grouping.fields('{bolt.Output}')");
+            var printable = new StringBuilder($"{bolt.BoltName.ToLower()}_bolt : Grouping.SHUFFLE')");
             if (bolt.NextBolts == null || bolt.NextBolts.Count == 0)
             {
                 return(printable.ToString());
@@ -40,7 +40,7 @@ namespace Joyce.Generators
         private static string GenerateInputs(GeneratedBolt emitter)
         {
             var inputs = new StringBuilder();
-            inputs.AppendJoin(", ", emitter.Inputs.Select(x=> $"{Helper.GetClassName(x).ToLower()}_bolt : Grouping.fields('{x}')"));
+            inputs.AppendJoin(", ", emitter.Inputs.Select(x=> $"{Helper.GetClassName(x).ToLower()}_bolt : Grouping.fields('unique_id')"));
             return inputs.ToString();
         }
         private static string GenerateTopologyImports(List<GeneratedBolt> bolts)
@@ -80,8 +80,8 @@ namespace Joyce.Generators
             var boltName = bolt.BoltName.ToLower();
             if (bolt.NextBolts == null || bolt.NextBolts.Count == 0)
             {
-                printable.Append($"    {boltName}_bolt = builder.add_bolt('{boltName}', {bolt.BoltName}, par=2, ");
-                printable.Append("inputs = {kafka_input_spout : Grouping.fields('SpoutOutput')})\n");
+                printable.Append($"    {boltName}_bolt = builder.add_bolt('{boltName}', {bolt.BoltName}, par=10, ");
+                printable.Append("inputs = {kafka_input_spout : Grouping.SHUFFLE})\n");
                 return(printable.ToString());
             }
             else
@@ -90,7 +90,7 @@ namespace Joyce.Generators
                 {
                     printable.Append(GenerateDefinition(child));
                 }
-                printable.Append($"    {boltName}_bolt = builder.add_bolt('{boltName}', {bolt.BoltName}, par=1, ");
+                printable.Append($"    {boltName}_bolt = builder.add_bolt('{boltName}', {bolt.BoltName}, par=5, ");
                 printable.Append("inputs = {" + GenerateInputs(bolt) + "})\n");
 
                 return printable.ToString();
