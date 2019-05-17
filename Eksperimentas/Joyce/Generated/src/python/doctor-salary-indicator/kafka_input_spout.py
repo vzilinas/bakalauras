@@ -35,7 +35,7 @@ class KafkaInputSpout(Spout, StatefulComponent):
             self.logger.info(input_dict)
             primary_key = str(input_dict['Sritis']) + '_' + str(input_dict['Metai'])
             primary_key_array = [input_dict['Sritis'], input_dict['Metai']]
-            if True:
+            if input_dict['SutartiesTipas'] == 'TERMINUOTA' and input_dict['SutartiesTipas'] == 'LAIKINOJI':
                 output_dict = {
                     "data" : input_dict,
                     "primary_key" : primary_key,

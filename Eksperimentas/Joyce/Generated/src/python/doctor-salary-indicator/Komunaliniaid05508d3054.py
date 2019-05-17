@@ -1,6 +1,7 @@
 # Import Bolt type from heronpy
 from heronpy.api.bolt.bolt import Bolt
 from heronpy.api.state.stateful_component import StatefulComponent
+import redis
 import helpers
 import pickle
 import json
@@ -20,8 +21,15 @@ class Komunaliniaid05508d3054(Bolt, StatefulComponent):
     def initialize(self, config, context):
         # A log context is provided in the context of the spout
         self.log("Initializing Komunaliniaid05508d3054...")
-        self.results = {}
+        self.results = {
+			'Filo_2017' : {
+			    'Count' : 10,
+			    'Sum' : 100,
+			},
+
+        }
         self.temp_combination = {}
+        self.redis_db = redis.Redis(host='localhost', port=6379, db=0);
 
     # Process incoming tuple and emit output
     def process(self, tup):
@@ -47,19 +55,21 @@ class Komunaliniaid05508d3054(Bolt, StatefulComponent):
             self.temp_combination.pop(output_dict['unique_id'])
 
         if output_dict['primary_key'] in self.results:
-            self.results[output_dict['primary_key']]['total'] += input_value
-            self.results[output_dict['primary_key']]['count'] += 1
+            self.results[output_dict['primary_key']]['Sum'] += input_value
+            self.results[output_dict['primary_key']]['Count'] += 1
         else:
             self.results[output_dict['primary_key']] = {}
-            self.results[output_dict['primary_key']]['total'] = input_value
-            self.results[output_dict['primary_key']]['count'] = 1
+            self.results[output_dict['primary_key']]['Sum'] = input_value
+            self.results[output_dict['primary_key']]['Count'] = 1
 
         result = {
-            "Mean" : helpers.calculate_mean(self.results[output_dict['primary_key']]['total'], self.results[output_dict['primary_key']]['count']),
-            "Sum" : self.results[output_dict['primary_key']]['total'],
-            "Count" : self.results[output_dict['primary_key']]['count'],
+            "Mean" : helpers.calculate_mean(self.results[output_dict['primary_key']]['Sum'], self.results[output_dict['primary_key']]['Count']),
+            "Sum" : self.results[output_dict['primary_key']]['Sum'],
+            "Count" : self.results[output_dict['primary_key']]['Count'],
             "last_value" : input_value 
         }
         output_dict['result']['Komunaliniaid05508d3054'] = result
         self.emit([pickle.dumps(output_dict), output_dict['unique_id']])
+        self.redis_db.sadd('doctor-salary-indicator:Komunaliniaid05508d3054:state_values', output_dict['primary_key'])
+        self.redis_db.set('doctor-salary-indicator:Komunaliniaid05508d3054:' + output_dict['primary_key'], self.results[output_dict['primary_key']])
         self.logger.info("Emited:" + json.dumps(output_dict))

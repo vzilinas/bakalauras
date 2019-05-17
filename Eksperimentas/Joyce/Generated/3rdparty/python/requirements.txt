@@ -1,3 +1,5 @@
 six==1.11.0
 heronpy==0.17.8
 kafka-python==1.4.6
+redis==3.2.1
+msgpack==0.6.1

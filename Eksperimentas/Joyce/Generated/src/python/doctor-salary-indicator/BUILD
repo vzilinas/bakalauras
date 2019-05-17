@@ -10,6 +10,7 @@ python_binary(
         ':spouts-bolts-py',
         '3rdparty/python:heronpy',
         '3rdparty/python:six',
+        '3rdparty/python:msgpack',
 	    '3rdparty/python:kafka-python'
     ],
 )

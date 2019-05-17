@@ -8,6 +8,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="MsgPack.Cli" Version="1.0.1" />
+    <PackageReference Include="StackExchange.Redis" Version="2.0.601" />
   </ItemGroup>
 
 </Project>

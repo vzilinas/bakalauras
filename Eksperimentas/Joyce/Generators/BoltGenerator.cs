@@ -5,6 +5,8 @@ using System.IO;
 using System.Text;
 using Joyce.Models;
 using System.Text.RegularExpressions;
+using StackExchange.Redis;
+using MsgPack.Serialization;
 
 namespace Joyce.Generators
 {
@@ -20,24 +22,33 @@ namespace Joyce.Generators
             {
                 BoltName = "emitter_bolt",
                 GeneratedBoltText = text.ToString(),
-                Inputs = indicator.Values.Select( x=> x.FieldName + "_" + x.Id).ToList()
+                Inputs = indicator.Values.Select(x => x.FieldName + "_" + x.Id).ToList()
             };
         }
         public static List<GeneratedBolt> GenerateBolts(Indicator indicator)
         {
+            var redisConnection = ConnectionMultiplexer.Connect("localhost");
+            var serializer = MessagePackSerializer.Get<BoltKeyState>();
             var results = new List<GeneratedBolt>();
             foreach (var value in indicator.Values)
             {
-                results.Add(GenerateBolt(value));
+                results.Add(GenerateBolt(value, indicator.Name, redisConnection, serializer));
             }
             return results;
         }
-        public static GeneratedBolt GenerateBolt(Value value)
+        public static GeneratedBolt GenerateBolt(Value value, 
+                                                string indicatorName, 
+                                                ConnectionMultiplexer redisConnection, 
+                                                MessagePackSerializer<BoltKeyState> serializer)
         {
             var text = new StringBuilder(File.ReadAllText(_boltFileName));
             text.Replace("<%BoltName%>", Helper.GetClassName(value.FieldName + "_" + value.Id));
-            // text.Replace("<%VersionId%>", boltIndice.VersionId);
+            text.Replace("<%PreviousResults%>", GeneratePreviousInputs(indicatorName, 
+                                                                        Helper.GetClassName(value.FieldName + "_" + value.Id), 
+                                                                        redisConnection, 
+                                                                        serializer));
             text.Replace("<%BoltOutputs%>", value.FieldName + "_" + value.Id);
+            text.Replace("<%IndicatorName%>", indicatorName);
             if (value.NextValues == null || !value.NextValues.Any())
             {
                 text.Replace("<%Combined%>", "False");
@@ -66,12 +77,12 @@ namespace Joyce.Generators
                     Id = value.Id,
                     Output = value.FieldName + "_" + value.Id,
                     Inputs = value.NextValues.Select(x => x.FieldName + "_" + x.Id).ToList(),
-                    NextBolts = value.NextValues.Select(x => GenerateBolt(x)).ToList(),
+                    NextBolts = value.NextValues.Select(x => GenerateBolt(x, indicatorName, redisConnection, serializer)).ToList(),
                     GeneratedBoltText = text.ToString()
                 };
             }
         }
-        public static string ParseFormula(Value value)
+        private static string ParseFormula(Value value)
         {
             var parsed = new StringBuilder();
 
@@ -84,6 +95,31 @@ namespace Joyce.Generators
                 parsed.Replace(element.ToString(), $"self.temp_combination[output_dict['unique_id']]['{Helper.GetClassName(definition.FieldName + "_" + definition.Id)}']['last_value']");
             }
             return parsed.ToString();
+        }
+
+        private static string GeneratePreviousInputs(string indicatorName, 
+                                                    string boltName, 
+                                                    ConnectionMultiplexer connection, 
+                                                    MessagePackSerializer<BoltKeyState> serializer)
+        {
+            var v = indicatorName + ":" + boltName + ":";
+            var redis = connection.GetDatabase();
+            var data = redis.SetMembers(v + "state_values");
+            if(!data.Any())
+            {                
+                redis.SetAdd(indicatorName + ":spout_names", boltName);
+                return "";
+            }
+            var previousState = new StringBuilder();
+            foreach(var resultName in data)
+            {
+                var singleResult = serializer.UnpackSingleObject(redis.StringGet(v + resultName.ToString()));
+                previousState.Append($"\t\t\t'{resultName.ToString()}' : " + "{\n");
+                previousState.Append($"\t\t\t    'Count' : {singleResult.Count},\n");
+                previousState.Append($"\t\t\t    'Sum' : {singleResult.Sum},\n");
+                previousState.Append("\t\t\t},\n");
+            }
+            return previousState.ToString();
         }
     }
 }
