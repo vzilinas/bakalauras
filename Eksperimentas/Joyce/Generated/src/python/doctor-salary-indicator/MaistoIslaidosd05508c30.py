@@ -24,36 +24,36 @@ class MaistoIslaidosd05508c30(Bolt, StatefulComponent):
         self.log("Initializing MaistoIslaidosd05508c30...")
         self.results = {
 			'Gydytojas_2019' : {
-			    'Count' : 134,
-			    'Sum' : 33783227.911,
+			    'Count' : 135,
+			    'Sum' : 33836363.911,
 			},
 			'Programuotojas_2017' : {
 			    'Count' : 141,
 			    'Sum' : 37072498.7335,
 			},
 			'Filosofas_2019' : {
-			    'Count' : 125,
-			    'Sum' : 38467635.6497,
+			    'Count' : 127,
+			    'Sum' : 39643123.6497,
 			},
 			'Gydytojas_2017' : {
-			    'Count' : 158,
-			    'Sum' : 36966045.7926,
+			    'Count' : 161,
+			    'Sum' : 37229199.7926,
 			},
 			'Filosofas_2017' : {
 			    'Count' : 119,
 			    'Sum' : 31264051.0673,
 			},
 			'Programuotojas_2018' : {
-			    'Count' : 132,
-			    'Sum' : 37619604.0227,
+			    'Count' : 133,
+			    'Sum' : 37705897.0227,
 			},
 			'Programuotojas_2019' : {
 			    'Count' : 122,
 			    'Sum' : 29457300.8053,
 			},
 			'Gydytojas_2018' : {
-			    'Count' : 127,
-			    'Sum' : 40123460.3829,
+			    'Count' : 128,
+			    'Sum' : 40916821.3829,
 			},
 			'Filosofas_2018' : {
 			    'Count' : 123,

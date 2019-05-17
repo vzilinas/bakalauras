@@ -24,36 +24,36 @@ class SuvalgytasMaistasd05508c(Bolt, StatefulComponent):
         self.log("Initializing SuvalgytasMaistasd05508c...")
         self.results = {
 			'Gydytojas_2019' : {
-			    'Count' : 134,
-			    'Sum' : 65903.45,
+			    'Count' : 135,
+			    'Sum' : 66349.45,
 			},
 			'Programuotojas_2017' : {
 			    'Count' : 141,
 			    'Sum' : 73096.76,
 			},
 			'Filosofas_2019' : {
-			    'Count' : 125,
-			    'Sum' : 63184.47,
+			    'Count' : 127,
+			    'Sum' : 64662.47,
 			},
 			'Gydytojas_2017' : {
-			    'Count' : 158,
-			    'Sum' : 80995.94,
+			    'Count' : 161,
+			    'Sum' : 82214.94,
 			},
 			'Filosofas_2017' : {
 			    'Count' : 119,
 			    'Sum' : 60861.52,
 			},
 			'Programuotojas_2018' : {
-			    'Count' : 132,
-			    'Sum' : 69207.56,
+			    'Count' : 133,
+			    'Sum' : 69744.56,
 			},
 			'Programuotojas_2019' : {
 			    'Count' : 122,
 			    'Sum' : 60668.4,
 			},
 			'Gydytojas_2018' : {
-			    'Count' : 127,
-			    'Sum' : 74920.95,
+			    'Count' : 128,
+			    'Sum' : 75807.95,
 			},
 			'Filosofas_2018' : {
 			    'Count' : 123,

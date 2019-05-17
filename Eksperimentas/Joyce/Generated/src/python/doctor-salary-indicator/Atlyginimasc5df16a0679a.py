@@ -24,36 +24,36 @@ class Atlyginimasc5df16a0679a(Bolt, StatefulComponent):
         self.log("Initializing Atlyginimasc5df16a0679a...")
         self.results = {
 			'Gydytojas_2019' : {
-			    'Count' : 134,
-			    'Sum' : 63157.79,
+			    'Count' : 135,
+			    'Sum' : 63752.79,
 			},
 			'Programuotojas_2017' : {
 			    'Count' : 141,
 			    'Sum' : 73864.7,
 			},
 			'Filosofas_2019' : {
-			    'Count' : 125,
-			    'Sum' : 60552.13,
+			    'Count' : 127,
+			    'Sum' : 62177.13,
 			},
 			'Gydytojas_2017' : {
-			    'Count' : 158,
-			    'Sum' : 79134.79,
+			    'Count' : 161,
+			    'Sum' : 80757.79,
 			},
 			'Filosofas_2017' : {
 			    'Count' : 119,
 			    'Sum' : 61505.24,
 			},
 			'Programuotojas_2018' : {
-			    'Count' : 132,
-			    'Sum' : 71633.69,
+			    'Count' : 133,
+			    'Sum' : 72311.69,
 			},
 			'Programuotojas_2019' : {
 			    'Count' : 122,
 			    'Sum' : 63184.57,
 			},
 			'Gydytojas_2018' : {
-			    'Count' : 127,
-			    'Sum' : 67313.59,
+			    'Count' : 128,
+			    'Sum' : 68063.59,
 			},
 			'Filosofas_2018' : {
 			    'Count' : 123,

@@ -24,36 +24,36 @@ class Islaidosd15508c3054849(Bolt, StatefulComponent):
         self.log("Initializing Islaidosd15508c3054849...")
         self.results = {
 			'Gydytojas_2019' : {
-			    'Count' : 134,
-			    'Sum' : 30404905.1199,
+			    'Count' : 135,
+			    'Sum' : 30452727.5199,
 			},
 			'Programuotojas_2017' : {
 			    'Count' : 141,
 			    'Sum' : 33365248.86015,
 			},
 			'Filosofas_2019' : {
-			    'Count' : 125,
-			    'Sum' : 34620872.08473,
+			    'Count' : 127,
+			    'Sum' : 35678811.28473,
 			},
 			'Gydytojas_2017' : {
-			    'Count' : 158,
-			    'Sum' : 33269441.21334,
+			    'Count' : 161,
+			    'Sum' : 33506279.81334,
 			},
 			'Filosofas_2017' : {
 			    'Count' : 119,
 			    'Sum' : 28137645.96057,
 			},
 			'Programuotojas_2018' : {
-			    'Count' : 132,
-			    'Sum' : 33857643.62043,
+			    'Count' : 133,
+			    'Sum' : 33935307.32043,
 			},
 			'Programuotojas_2019' : {
 			    'Count' : 122,
 			    'Sum' : 26511570.72477,
 			},
 			'Gydytojas_2018' : {
-			    'Count' : 127,
-			    'Sum' : 36111114.34461,
+			    'Count' : 128,
+			    'Sum' : 36825139.24461,
 			},
 			'Filosofas_2018' : {
 			    'Count' : 123,
