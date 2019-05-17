@@ -1,6 +1,7 @@
 # Import Bolt type from heronpy
 from heronpy.api.bolt.bolt import Bolt
 from heronpy.api.state.stateful_component import StatefulComponent
+import msgpack
 import redis
 import helpers
 import pickle
@@ -22,10 +23,46 @@ class Uzdarbis416f51b52b8a4c(Bolt, StatefulComponent):
         # A log context is provided in the context of the spout
         self.log("Initializing Uzdarbis416f51b52b8a4c...")
         self.results = {
+			'Gydytojas_2019' : {
+			    'Count' : 134,
+			    'Sum' : 125319.55,
+			},
+			'Programuotojas_2017' : {
+			    'Count' : 141,
+			    'Sum' : 141473.51,
+			},
+			'Filosofas_2019' : {
+			    'Count' : 125,
+			    'Sum' : 117444.38,
+			},
+			'Gydytojas_2017' : {
+			    'Count' : 158,
+			    'Sum' : 165655.72,
+			},
+			'Filosofas_2017' : {
+			    'Count' : 119,
+			    'Sum' : 114872.74,
+			},
+			'Programuotojas_2018' : {
+			    'Count' : 132,
+			    'Sum' : 134512.01,
+			},
+			'Programuotojas_2019' : {
+			    'Count' : 122,
+			    'Sum' : 121465.5,
+			},
+			'Gydytojas_2018' : {
+			    'Count' : 127,
+			    'Sum' : 123586.85,
+			},
+			'Filosofas_2018' : {
+			    'Count' : 123,
+			    'Sum' : 125692.41,
+			},
 
         }
         self.temp_combination = {}
-        self.redis_db = redis.Redis(host='localhost', port=6379, db=0);
+        self.redis_db = redis.Redis(host='localhost', port=6379, db=0)
 
     # Process incoming tuple and emit output
     def process(self, tup):
@@ -43,10 +80,10 @@ class Uzdarbis416f51b52b8a4c(Bolt, StatefulComponent):
                 self.temp_combination[output_dict['unique_id']] = helpers.merge_two_dicts(self.temp_combination[output_dict['unique_id']], input_dict['result'])
             else:
                 self.temp_combination[output_dict['unique_id']] = input_dict['result']
-            if not({'Atlyginimasc5df16a0679a', 'Atostoginiai49e661dd1d6'} <= set(self.temp_combination[input_dict['unique_id']])):
+            if not({'Atlyginimasc5df16a0679a'} <= set(self.temp_combination[input_dict['unique_id']])):
                 return
 
-        input_value = self.temp_combination[output_dict['unique_id']]['Atlyginimasc5df16a0679a']['last_value'] + self.temp_combination[output_dict['unique_id']]['Atostoginiai49e661dd1d6']['last_value']
+        input_value = self.temp_combination[output_dict['unique_id']]['Atlyginimasc5df16a0679a']['last_value']
         if output_dict['unique_id'] in self.temp_combination:
             self.temp_combination.pop(output_dict['unique_id'])
 
@@ -67,5 +104,5 @@ class Uzdarbis416f51b52b8a4c(Bolt, StatefulComponent):
         output_dict['result']['Uzdarbis416f51b52b8a4c'] = result
         self.emit([pickle.dumps(output_dict), output_dict['unique_id']])
         self.redis_db.sadd('doctor-salary-indicator:Uzdarbis416f51b52b8a4c:state_values', output_dict['primary_key'])
-        self.redis_db.set('doctor-salary-indicator:Uzdarbis416f51b52b8a4c:' + output_dict['primary_key'], self.results[output_dict['primary_key']])
+        self.redis_db.set('doctor-salary-indicator:Uzdarbis416f51b52b8a4c:' + output_dict['primary_key'], msgpack.packb(self.results[output_dict['primary_key']]))
         self.logger.info("Emited:" + json.dumps(output_dict))

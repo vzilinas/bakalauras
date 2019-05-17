@@ -1,6 +1,7 @@
 # Import Bolt type from heronpy
 from heronpy.api.bolt.bolt import Bolt
 from heronpy.api.state.stateful_component import StatefulComponent
+import msgpack
 import redis
 import helpers
 import pickle
@@ -25,7 +26,7 @@ class Atostoginiai49e661dd1d6(Bolt, StatefulComponent):
 
         }
         self.temp_combination = {}
-        self.redis_db = redis.Redis(host='localhost', port=6379, db=0);
+        self.redis_db = redis.Redis(host='localhost', port=6379, db=0)
 
     # Process incoming tuple and emit output
     def process(self, tup):
@@ -67,5 +68,5 @@ class Atostoginiai49e661dd1d6(Bolt, StatefulComponent):
         output_dict['result']['Atostoginiai49e661dd1d6'] = result
         self.emit([pickle.dumps(output_dict), output_dict['unique_id']])
         self.redis_db.sadd('doctor-salary-indicator:Atostoginiai49e661dd1d6:state_values', output_dict['primary_key'])
-        self.redis_db.set('doctor-salary-indicator:Atostoginiai49e661dd1d6:' + output_dict['primary_key'], self.results[output_dict['primary_key']])
+        self.redis_db.set('doctor-salary-indicator:Atostoginiai49e661dd1d6:' + output_dict['primary_key'], msgpack.packb(self.results[output_dict['primary_key']]))
         self.logger.info("Emited:" + json.dumps(output_dict))

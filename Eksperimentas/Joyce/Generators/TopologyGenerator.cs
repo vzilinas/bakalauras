@@ -80,7 +80,7 @@ namespace Joyce.Generators
             var boltName = bolt.BoltName.ToLower();
             if (bolt.NextBolts == null || bolt.NextBolts.Count == 0)
             {
-                printable.Append($"    {boltName}_bolt = builder.add_bolt('{boltName}', {bolt.BoltName}, par=10, ");
+                printable.Append($"    {boltName}_bolt = builder.add_bolt('{boltName}', {bolt.BoltName}, par=1, ");
                 printable.Append("inputs = {kafka_input_spout : Grouping.SHUFFLE})\n");
                 return(printable.ToString());
             }
@@ -90,7 +90,7 @@ namespace Joyce.Generators
                 {
                     printable.Append(GenerateDefinition(child));
                 }
-                printable.Append($"    {boltName}_bolt = builder.add_bolt('{boltName}', {bolt.BoltName}, par=5, ");
+                printable.Append($"    {boltName}_bolt = builder.add_bolt('{boltName}', {bolt.BoltName}, par=1, ");
                 printable.Append("inputs = {" + GenerateInputs(bolt) + "})\n");
 
                 return printable.ToString();
