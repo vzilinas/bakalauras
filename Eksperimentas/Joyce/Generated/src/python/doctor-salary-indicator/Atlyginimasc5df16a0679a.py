@@ -23,42 +23,6 @@ class Atlyginimasc5df16a0679a(Bolt, StatefulComponent):
         # A log context is provided in the context of the spout
         self.log("Initializing Atlyginimasc5df16a0679a...")
         self.results = {
-			'Gydytojas_2019' : {
-			    'Count' : 135,
-			    'Sum' : 63752.79,
-			},
-			'Programuotojas_2017' : {
-			    'Count' : 141,
-			    'Sum' : 73864.7,
-			},
-			'Filosofas_2019' : {
-			    'Count' : 127,
-			    'Sum' : 62177.13,
-			},
-			'Gydytojas_2017' : {
-			    'Count' : 161,
-			    'Sum' : 80757.79,
-			},
-			'Filosofas_2017' : {
-			    'Count' : 119,
-			    'Sum' : 61505.24,
-			},
-			'Programuotojas_2018' : {
-			    'Count' : 133,
-			    'Sum' : 72311.69,
-			},
-			'Programuotojas_2019' : {
-			    'Count' : 122,
-			    'Sum' : 63184.57,
-			},
-			'Gydytojas_2018' : {
-			    'Count' : 128,
-			    'Sum' : 68063.59,
-			},
-			'Filosofas_2018' : {
-			    'Count' : 123,
-			    'Sum' : 64496.26,
-			},
 
         }
         self.temp_combination = {}

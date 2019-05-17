@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using Joyce.Generators;
 using Joyce.Models;
 using Microsoft.AspNetCore.Mvc;
+using MsgPack.Serialization;
 using Newtonsoft.Json;
+using StackExchange.Redis;
 
 namespace Joyce.Controllers
 {
@@ -25,7 +27,33 @@ namespace Joyce.Controllers
             StartHeron(indicator.Name);
             return Ok();
         }
-       
+        [HttpGet("{indicatorName}")]
+        public IActionResult Get(string indicatorName)
+        {
+            Console.WriteLine(indicatorName);
+            var result = new Dictionary<string, List<Result>>();
+            var redisConnection = ConnectionMultiplexer.Connect("localhost");
+            var serializer = MessagePackSerializer.Get<BoltKeyState>();
+            var redis = redisConnection.GetDatabase();
+            var bolts = redis.SetMembers($"{indicatorName}:bolt_names");      
+            foreach(var bolt in bolts)
+            {
+                var values = redis.SetMembers($"{indicatorName}:{bolt}:state_values");
+                var tempList = new List<Result>();
+                foreach(var value in values)
+                {
+                    Console.WriteLine(bolt);
+                    var temp = serializer.UnpackSingleObject(redis.StringGet($"{indicatorName}:{bolt}:{value}"));
+                    tempList.Add(new Result {
+                        PrimaryKey = value.ToString(),
+                        Count = temp.Count,
+                        Sum = temp.Sum                        
+                    });
+                }
+                result.Add(bolt, tempList);
+            }
+            return Ok(result);
+        }
         private void MakeDirectory(string topologyName)
         {
             var process = new Process()

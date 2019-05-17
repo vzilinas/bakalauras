@@ -23,42 +23,6 @@ class SuvalgytasMaistasd05508c(Bolt, StatefulComponent):
         # A log context is provided in the context of the spout
         self.log("Initializing SuvalgytasMaistasd05508c...")
         self.results = {
-			'Gydytojas_2019' : {
-			    'Count' : 135,
-			    'Sum' : 66349.45,
-			},
-			'Programuotojas_2017' : {
-			    'Count' : 141,
-			    'Sum' : 73096.76,
-			},
-			'Filosofas_2019' : {
-			    'Count' : 127,
-			    'Sum' : 64662.47,
-			},
-			'Gydytojas_2017' : {
-			    'Count' : 161,
-			    'Sum' : 82214.94,
-			},
-			'Filosofas_2017' : {
-			    'Count' : 119,
-			    'Sum' : 60861.52,
-			},
-			'Programuotojas_2018' : {
-			    'Count' : 133,
-			    'Sum' : 69744.56,
-			},
-			'Programuotojas_2019' : {
-			    'Count' : 122,
-			    'Sum' : 60668.4,
-			},
-			'Gydytojas_2018' : {
-			    'Count' : 128,
-			    'Sum' : 75807.95,
-			},
-			'Filosofas_2018' : {
-			    'Count' : 123,
-			    'Sum' : 62078.41,
-			},
 
         }
         self.temp_combination = {}

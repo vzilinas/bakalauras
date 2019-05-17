@@ -23,42 +23,6 @@ class Uzdarbis416f51b52b8a4c(Bolt, StatefulComponent):
         # A log context is provided in the context of the spout
         self.log("Initializing Uzdarbis416f51b52b8a4c...")
         self.results = {
-			'Gydytojas_2019' : {
-			    'Count' : 135,
-			    'Sum' : 125914.55,
-			},
-			'Programuotojas_2017' : {
-			    'Count' : 141,
-			    'Sum' : 141473.51,
-			},
-			'Filosofas_2019' : {
-			    'Count' : 127,
-			    'Sum' : 119069.38,
-			},
-			'Gydytojas_2017' : {
-			    'Count' : 161,
-			    'Sum' : 167278.72,
-			},
-			'Filosofas_2017' : {
-			    'Count' : 119,
-			    'Sum' : 114872.74,
-			},
-			'Programuotojas_2018' : {
-			    'Count' : 133,
-			    'Sum' : 135190.01,
-			},
-			'Programuotojas_2019' : {
-			    'Count' : 122,
-			    'Sum' : 121465.5,
-			},
-			'Gydytojas_2018' : {
-			    'Count' : 128,
-			    'Sum' : 124336.85,
-			},
-			'Filosofas_2018' : {
-			    'Count' : 123,
-			    'Sum' : 125692.41,
-			},
 
         }
         self.temp_combination = {}

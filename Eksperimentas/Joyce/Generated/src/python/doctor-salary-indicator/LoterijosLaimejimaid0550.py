@@ -23,42 +23,6 @@ class LoterijosLaimejimaid0550(Bolt, StatefulComponent):
         # A log context is provided in the context of the spout
         self.log("Initializing LoterijosLaimejimaid0550...")
         self.results = {
-			'Gydytojas_2019' : {
-			    'Count' : 135,
-			    'Sum' : 68979.69,
-			},
-			'Programuotojas_2017' : {
-			    'Count' : 141,
-			    'Sum' : 71702.85,
-			},
-			'Filosofas_2019' : {
-			    'Count' : 127,
-			    'Sum' : 74635.76,
-			},
-			'Gydytojas_2017' : {
-			    'Count' : 161,
-			    'Sum' : 73721.2,
-			},
-			'Filosofas_2017' : {
-			    'Count' : 119,
-			    'Sum' : 57530.49,
-			},
-			'Programuotojas_2018' : {
-			    'Count' : 133,
-			    'Sum' : 70443.03,
-			},
-			'Programuotojas_2019' : {
-			    'Count' : 122,
-			    'Sum' : 59188.4,
-			},
-			'Gydytojas_2018' : {
-			    'Count' : 128,
-			    'Sum' : 68122.87,
-			},
-			'Filosofas_2018' : {
-			    'Count' : 123,
-			    'Sum' : 63681.02,
-			},
 
         }
         self.temp_combination = {}

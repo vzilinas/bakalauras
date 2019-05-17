@@ -23,42 +23,6 @@ class IsmestasMaistasd05508c3(Bolt, StatefulComponent):
         # A log context is provided in the context of the spout
         self.log("Initializing IsmestasMaistasd05508c3...")
         self.results = {
-			'Gydytojas_2019' : {
-			    'Count' : 135,
-			    'Sum' : 62281.06,
-			},
-			'Programuotojas_2017' : {
-			    'Count' : 141,
-			    'Sum' : 75740.79,
-			},
-			'Filosofas_2019' : {
-			    'Count' : 127,
-			    'Sum' : 77274.51,
-			},
-			'Gydytojas_2017' : {
-			    'Count' : 161,
-			    'Sum' : 75735.68,
-			},
-			'Filosofas_2017' : {
-			    'Count' : 119,
-			    'Sum' : 62837.84,
-			},
-			'Programuotojas_2018' : {
-			    'Count' : 133,
-			    'Sum' : 72429.24,
-			},
-			'Programuotojas_2019' : {
-			    'Count' : 122,
-			    'Sum' : 64376.14,
-			},
-			'Gydytojas_2018' : {
-			    'Count' : 128,
-			    'Sum' : 63393.12,
-			},
-			'Filosofas_2018' : {
-			    'Count' : 123,
-			    'Sum' : 70292.44,
-			},
 
         }
         self.temp_combination = {}

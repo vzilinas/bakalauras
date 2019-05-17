@@ -23,42 +23,6 @@ class MaistoIslaidosd05508c30(Bolt, StatefulComponent):
         # A log context is provided in the context of the spout
         self.log("Initializing MaistoIslaidosd05508c30...")
         self.results = {
-			'Gydytojas_2019' : {
-			    'Count' : 135,
-			    'Sum' : 33836363.911,
-			},
-			'Programuotojas_2017' : {
-			    'Count' : 141,
-			    'Sum' : 37072498.7335,
-			},
-			'Filosofas_2019' : {
-			    'Count' : 127,
-			    'Sum' : 39643123.6497,
-			},
-			'Gydytojas_2017' : {
-			    'Count' : 161,
-			    'Sum' : 37229199.7926,
-			},
-			'Filosofas_2017' : {
-			    'Count' : 119,
-			    'Sum' : 31264051.0673,
-			},
-			'Programuotojas_2018' : {
-			    'Count' : 133,
-			    'Sum' : 37705897.0227,
-			},
-			'Programuotojas_2019' : {
-			    'Count' : 122,
-			    'Sum' : 29457300.8053,
-			},
-			'Gydytojas_2018' : {
-			    'Count' : 128,
-			    'Sum' : 40916821.3829,
-			},
-			'Filosofas_2018' : {
-			    'Count' : 123,
-			    'Sum' : 31883349.4802,
-			},
 
         }
         self.temp_combination = {}

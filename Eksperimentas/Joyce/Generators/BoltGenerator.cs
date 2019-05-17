@@ -107,7 +107,7 @@ namespace Joyce.Generators
             var data = redis.SetMembers(v + "state_values");
             if(!data.Any())
             {                
-                redis.SetAdd(indicatorName + ":spout_names", boltName);
+                redis.SetAdd(indicatorName + ":bolt_names", boltName);
                 return "";
             }
             var previousState = new StringBuilder();
