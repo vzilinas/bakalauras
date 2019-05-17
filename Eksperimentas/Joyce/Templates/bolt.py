@@ -20,7 +20,9 @@ class <%BoltName%>(Bolt, StatefulComponent):
     def initialize(self, config, context):
         # A log context is provided in the context of the spout
         self.log("Initializing <%BoltName%>...")
-        self.results = {}
+        self.results = {
+<%PreviousResults%>
+        }
         self.temp_combination = {}
 
     # Process incoming tuple and emit output

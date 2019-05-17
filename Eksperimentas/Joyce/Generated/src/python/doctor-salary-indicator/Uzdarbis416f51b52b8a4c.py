@@ -12,7 +12,7 @@ class Uzdarbis416f51b52b8a4c(Bolt, StatefulComponent):
 
     def init_state(self, stateful_state):
         self.recovered_state = stateful_state
-        self.logger.info("Checkpoint Snapshot recovered")
+        self.logger.info("Checkpoint Snapshot recovered : %s" % str(self.recovered_state))
 
     def pre_save(self, checkpoint_id):
         self.logger.info("Checkpoint Snapshot %s" % (checkpoint_id))
