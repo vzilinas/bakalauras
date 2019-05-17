@@ -1,13 +1,21 @@
 # Import Bolt type from heronpy
 from heronpy.api.bolt.bolt import Bolt
+from heronpy.api.state.stateful_component import StatefulComponent
 from kafka import KafkaProducer
 import json
 import pickle
 
 # class that inherits from heron Bolt
-class EmitterBolt(Bolt):
+class EmitterBolt(Bolt, StatefulComponent):
     # Important : Define output field tags for the Bolt
     outputs = ["KafkaLog"]
+
+    def init_state(self, stateful_state):
+        self.recovered_state = stateful_state
+        self.logger.info("Checkpoint Snapshot recovered")
+
+    def pre_save(self, checkpoint_id):
+        self.logger.info("Checkpoint Snapshot %s" % (checkpoint_id))
 
     def initialize(self, config, context):
         # A log context is provided in the context of the spout

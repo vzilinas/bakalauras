@@ -1,15 +1,23 @@
 # Import spout type from heronpy
 from heronpy.api.spout.spout import Spout
+from heronpy.api.state.stateful_component import StatefulComponent
 from kafka import KafkaConsumer
 import uuid
 import json
 import pickle
 
 # KafkaInputSpout class that inherits from heron Spout
-class KafkaInputSpout(Spout):
+class KafkaInputSpout(Spout, StatefulComponent):
     # Important : Define output field tags for the Spout
     outputs = ["SpoutOutput"]
 
+    def init_state(self, stateful_state):
+        self.recovered_state = stateful_state
+        self.logger.info("Checkpoint Snapshot recovered")
+
+    def pre_save(self, checkpoint_id):
+        self.logger.info("Checkpoint Snapshot %s" % (checkpoint_id))
+        
     # Spout initialization
     def initialize(self, config, context):
         # A log context is provided in the context of the spout
@@ -27,7 +35,7 @@ class KafkaInputSpout(Spout):
             self.logger.info(input_dict)
             primary_key = str(input_dict['Sritis']) + '_' + str(input_dict['Metai'])
             primary_key_array = [input_dict['Sritis'], input_dict['Metai']]
-            if True:
+            if input_dict['SutartiesTipas'] == 'TERMINUOTA' and input_dict['SutartiesTipas'] == 'LAIKINOJI':
                 output_dict = {
                     "data" : input_dict,
                     "primary_key" : primary_key,

@@ -1,14 +1,21 @@
 # Import Bolt type from heronpy
 from heronpy.api.bolt.bolt import Bolt
+from heronpy.api.state.stateful_component import StatefulComponent
 import helpers
 import pickle
 import json
 
 # class that inherits from heron Bolt
-class LoterijosLaimejimaid0550(Bolt):
+class LoterijosLaimejimaid0550(Bolt, StatefulComponent):
     # Important : Define output field tags for the Bolt
     outputs = ["LoterijosLaimejimai_d05508c3-0549-499d-be01-7c25fd2b3e95", "unique_id"]
 
+    def init_state(self, stateful_state):
+        self.recovered_state = stateful_state
+        self.logger.info("Checkpoint Snapshot recovered")
+
+    def pre_save(self, checkpoint_id):
+        self.logger.info("Checkpoint Snapshot %s" % (checkpoint_id))
 
     def initialize(self, config, context):
         # A log context is provided in the context of the spout
