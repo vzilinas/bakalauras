@@ -8,9 +8,9 @@ import pickle
 import json
 
 # class that inherits from heron Bolt
-class Atostoginiai49e661dd1d6(Bolt, StatefulComponent):
+class MandatoryEquipmentExpense(Bolt, StatefulComponent):
     # Important : Define output field tags for the Bolt
-    outputs = ["Atostoginiai_49e661dd-1d6a-496e-bac5-22d4358145a9", "unique_id"]
+    outputs = ["MandatoryEquipmentExpense_33339aad-e00c-41d8-a29f-26360ce83df8", "unique_id"]
 
     def init_state(self, stateful_state):
         self.recovered_state = stateful_state
@@ -21,7 +21,7 @@ class Atostoginiai49e661dd1d6(Bolt, StatefulComponent):
 
     def initialize(self, config, context):
         # A log context is provided in the context of the spout
-        self.log("Initializing Atostoginiai49e661dd1d6...")
+        self.log("Initializing MandatoryEquipmentExpense...")
         self.results = {
 
         }
@@ -47,7 +47,7 @@ class Atostoginiai49e661dd1d6(Bolt, StatefulComponent):
             if not({'empty'} <= set(self.temp_combination[input_dict['unique_id']])):
                 return
 
-        input_value = input_dict['data']['Atostoginiai']
+        input_value = input_dict['data']['MandatoryEquipmentExpense']
         if output_dict['unique_id'] in self.temp_combination:
             self.temp_combination.pop(output_dict['unique_id'])
 
@@ -65,8 +65,8 @@ class Atostoginiai49e661dd1d6(Bolt, StatefulComponent):
             "Count" : self.results[output_dict['primary_key']]['Count'],
             "last_value" : input_value 
         }
-        output_dict['result']['Atostoginiai49e661dd1d6'] = result
+        output_dict['result']['MandatoryEquipmentExpense'] = result
         self.emit([pickle.dumps(output_dict), output_dict['unique_id']])
-        self.redis_db.sadd('doctor-salary-indicator:Atostoginiai49e661dd1d6:state_values', output_dict['primary_key'])
-        self.redis_db.set('doctor-salary-indicator:Atostoginiai49e661dd1d6:' + output_dict['primary_key'], msgpack.packb(self.results[output_dict['primary_key']]))
+        self.redis_db.sadd('departament-expenditure-indicator:MandatoryEquipmentExpense:state_values', output_dict['primary_key'])
+        self.redis_db.set('departament-expenditure-indicator:MandatoryEquipmentExpense:' + output_dict['primary_key'], msgpack.packb(self.results[output_dict['primary_key']]))
         self.logger.info("Emited:" + json.dumps(output_dict))

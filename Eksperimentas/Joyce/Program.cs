@@ -19,9 +19,9 @@ namespace Joyce
     {
         public static void Main(string[] args)
         {
-            // var indicator = JsonConvert.DeserializeObject<Indicator>(File.ReadAllText(@"Examples/doctor-salary-indicator.json"));
-            // Generator.GenerateTopology(indicator);
-            CreateWebHostBuilder(args).Build().Run();
+            var indicator = JsonConvert.DeserializeObject<Indicator>(File.ReadAllText(@"Examples/departament-expenditure-indicator.json"));
+            Generator.GenerateTopology(indicator);
+            // CreateWebHostBuilder(args).Build().Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

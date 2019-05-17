@@ -8,9 +8,9 @@ import pickle
 import json
 
 # class that inherits from heron Bolt
-class Islaidosd15508c3054849(Bolt, StatefulComponent):
+class WorkingPlaceCost98026c71(Bolt, StatefulComponent):
     # Important : Define output field tags for the Bolt
-    outputs = ["Islaidos_d15508c3-0548-499d-bc01-7c25fd2b3e95", "unique_id"]
+    outputs = ["WorkingPlaceCost_98026c71-a02a-47a5-8364-007dcb03d59b", "unique_id"]
 
     def init_state(self, stateful_state):
         self.recovered_state = stateful_state
@@ -21,7 +21,7 @@ class Islaidosd15508c3054849(Bolt, StatefulComponent):
 
     def initialize(self, config, context):
         # A log context is provided in the context of the spout
-        self.log("Initializing Islaidosd15508c3054849...")
+        self.log("Initializing WorkingPlaceCost98026c71...")
         self.results = {
 
         }
@@ -39,15 +39,15 @@ class Islaidosd15508c3054849(Bolt, StatefulComponent):
                 'unique_id' : input_dict['unique_id'],
                 'result' : {}
             }
-        if True:
+        if False:
             if output_dict['unique_id'] in self.temp_combination:
                 self.temp_combination[output_dict['unique_id']] = helpers.merge_two_dicts(self.temp_combination[output_dict['unique_id']], input_dict['result'])
             else:
                 self.temp_combination[output_dict['unique_id']] = input_dict['result']
-            if not({'MaistoIslaidosd05508c30'} <= set(self.temp_combination[input_dict['unique_id']])):
+            if not({'empty'} <= set(self.temp_combination[input_dict['unique_id']])):
                 return
 
-        input_value = (self.temp_combination[output_dict['unique_id']]['MaistoIslaidosd05508c30']['last_value'] * 0.9)
+        input_value = input_dict['data']['WorkingPlaceCost']
         if output_dict['unique_id'] in self.temp_combination:
             self.temp_combination.pop(output_dict['unique_id'])
 
@@ -65,8 +65,8 @@ class Islaidosd15508c3054849(Bolt, StatefulComponent):
             "Count" : self.results[output_dict['primary_key']]['Count'],
             "last_value" : input_value 
         }
-        output_dict['result']['Islaidosd15508c3054849'] = result
+        output_dict['result']['WorkingPlaceCost98026c71'] = result
         self.emit([pickle.dumps(output_dict), output_dict['unique_id']])
-        self.redis_db.sadd('doctor-salary-indicator:Islaidosd15508c3054849:state_values', output_dict['primary_key'])
-        self.redis_db.set('doctor-salary-indicator:Islaidosd15508c3054849:' + output_dict['primary_key'], msgpack.packb(self.results[output_dict['primary_key']]))
+        self.redis_db.sadd('departament-expenditure-indicator:WorkingPlaceCost98026c71:state_values', output_dict['primary_key'])
+        self.redis_db.set('departament-expenditure-indicator:WorkingPlaceCost98026c71:' + output_dict['primary_key'], msgpack.packb(self.results[output_dict['primary_key']]))
         self.logger.info("Emited:" + json.dumps(output_dict))

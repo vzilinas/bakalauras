@@ -8,9 +8,9 @@ import pickle
 import json
 
 # class that inherits from heron Bolt
-class IsmestasMaistasd05508c3(Bolt, StatefulComponent):
+class TeamSize58f7d6476c1e45(Bolt, StatefulComponent):
     # Important : Define output field tags for the Bolt
-    outputs = ["IsmestasMaistas_d05508c3-0549-499d-bc01-7c25fd2b3e85", "unique_id"]
+    outputs = ["TeamSize_58f7d647-6c1e-4551-8014-49bd3bdebc65", "unique_id"]
 
     def init_state(self, stateful_state):
         self.recovered_state = stateful_state
@@ -21,7 +21,7 @@ class IsmestasMaistasd05508c3(Bolt, StatefulComponent):
 
     def initialize(self, config, context):
         # A log context is provided in the context of the spout
-        self.log("Initializing IsmestasMaistasd05508c3...")
+        self.log("Initializing TeamSize58f7d6476c1e45...")
         self.results = {
 
         }
@@ -47,7 +47,7 @@ class IsmestasMaistasd05508c3(Bolt, StatefulComponent):
             if not({'empty'} <= set(self.temp_combination[input_dict['unique_id']])):
                 return
 
-        input_value = input_dict['data']['IsmestasMaistas']
+        input_value = input_dict['data']['TeamSize']
         if output_dict['unique_id'] in self.temp_combination:
             self.temp_combination.pop(output_dict['unique_id'])
 
@@ -65,8 +65,8 @@ class IsmestasMaistasd05508c3(Bolt, StatefulComponent):
             "Count" : self.results[output_dict['primary_key']]['Count'],
             "last_value" : input_value 
         }
-        output_dict['result']['IsmestasMaistasd05508c3'] = result
+        output_dict['result']['TeamSize58f7d6476c1e45'] = result
         self.emit([pickle.dumps(output_dict), output_dict['unique_id']])
-        self.redis_db.sadd('doctor-salary-indicator:IsmestasMaistasd05508c3:state_values', output_dict['primary_key'])
-        self.redis_db.set('doctor-salary-indicator:IsmestasMaistasd05508c3:' + output_dict['primary_key'], msgpack.packb(self.results[output_dict['primary_key']]))
+        self.redis_db.sadd('departament-expenditure-indicator:TeamSize58f7d6476c1e45:state_values', output_dict['primary_key'])
+        self.redis_db.set('departament-expenditure-indicator:TeamSize58f7d6476c1e45:' + output_dict['primary_key'], msgpack.packb(self.results[output_dict['primary_key']]))
         self.logger.info("Emited:" + json.dumps(output_dict))

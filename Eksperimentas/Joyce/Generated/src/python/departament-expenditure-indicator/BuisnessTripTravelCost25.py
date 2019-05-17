@@ -8,9 +8,9 @@ import pickle
 import json
 
 # class that inherits from heron Bolt
-class Atlyginimasc5df16a0679a(Bolt, StatefulComponent):
+class BuisnessTripTravelCost25(Bolt, StatefulComponent):
     # Important : Define output field tags for the Bolt
-    outputs = ["Atlyginimas_c5df16a0-679a-4756-93da-df87b278efca", "unique_id"]
+    outputs = ["BuisnessTripTravelCost_252606d7-9b72-42d5-8923-ac8bce4f60e5", "unique_id"]
 
     def init_state(self, stateful_state):
         self.recovered_state = stateful_state
@@ -21,7 +21,7 @@ class Atlyginimasc5df16a0679a(Bolt, StatefulComponent):
 
     def initialize(self, config, context):
         # A log context is provided in the context of the spout
-        self.log("Initializing Atlyginimasc5df16a0679a...")
+        self.log("Initializing BuisnessTripTravelCost25...")
         self.results = {
 
         }
@@ -47,7 +47,7 @@ class Atlyginimasc5df16a0679a(Bolt, StatefulComponent):
             if not({'empty'} <= set(self.temp_combination[input_dict['unique_id']])):
                 return
 
-        input_value = input_dict['data']['Atlyginimas']
+        input_value = input_dict['data']['BuisnessTripTravelCost']
         if output_dict['unique_id'] in self.temp_combination:
             self.temp_combination.pop(output_dict['unique_id'])
 
@@ -65,8 +65,8 @@ class Atlyginimasc5df16a0679a(Bolt, StatefulComponent):
             "Count" : self.results[output_dict['primary_key']]['Count'],
             "last_value" : input_value 
         }
-        output_dict['result']['Atlyginimasc5df16a0679a'] = result
+        output_dict['result']['BuisnessTripTravelCost25'] = result
         self.emit([pickle.dumps(output_dict), output_dict['unique_id']])
-        self.redis_db.sadd('doctor-salary-indicator:Atlyginimasc5df16a0679a:state_values', output_dict['primary_key'])
-        self.redis_db.set('doctor-salary-indicator:Atlyginimasc5df16a0679a:' + output_dict['primary_key'], msgpack.packb(self.results[output_dict['primary_key']]))
+        self.redis_db.sadd('departament-expenditure-indicator:BuisnessTripTravelCost25:state_values', output_dict['primary_key'])
+        self.redis_db.set('departament-expenditure-indicator:BuisnessTripTravelCost25:' + output_dict['primary_key'], msgpack.packb(self.results[output_dict['primary_key']]))
         self.logger.info("Emited:" + json.dumps(output_dict))
