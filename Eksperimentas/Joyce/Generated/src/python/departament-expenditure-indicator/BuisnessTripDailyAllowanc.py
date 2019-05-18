@@ -8,9 +8,9 @@ import pickle
 import json
 
 # class that inherits from heron Bolt
-class IsmestasMaistasd05508c3(Bolt, StatefulComponent):
+class BuisnessTripDailyAllowanc(Bolt, StatefulComponent):
     # Important : Define output field tags for the Bolt
-    outputs = ["IsmestasMaistas_d05508c3-0549-499d-bc01-7c25fd2b3e85", "unique_id"]
+    outputs = ["BuisnessTripDailyAllowance_ca3708fc-4355-4b1e-9c37-48f62c16e1ba", "unique_id"]
 
     def init_state(self, stateful_state):
         self.recovered_state = stateful_state
@@ -21,44 +21,8 @@ class IsmestasMaistasd05508c3(Bolt, StatefulComponent):
 
     def initialize(self, config, context):
         # A log context is provided in the context of the spout
-        self.log("Initializing IsmestasMaistasd05508c3...")
+        self.log("Initializing BuisnessTripDailyAllowanc...")
         self.results = {
-			'Gydytojas_2019' : {
-			    'Count' : 135,
-			    'Sum' : 62281.06,
-			},
-			'Programuotojas_2017' : {
-			    'Count' : 141,
-			    'Sum' : 75740.79,
-			},
-			'Filosofas_2019' : {
-			    'Count' : 127,
-			    'Sum' : 77274.51,
-			},
-			'Gydytojas_2017' : {
-			    'Count' : 161,
-			    'Sum' : 75735.68,
-			},
-			'Filosofas_2017' : {
-			    'Count' : 119,
-			    'Sum' : 62837.84,
-			},
-			'Programuotojas_2018' : {
-			    'Count' : 133,
-			    'Sum' : 72429.24,
-			},
-			'Programuotojas_2019' : {
-			    'Count' : 122,
-			    'Sum' : 64376.14,
-			},
-			'Gydytojas_2018' : {
-			    'Count' : 128,
-			    'Sum' : 63393.12,
-			},
-			'Filosofas_2018' : {
-			    'Count' : 123,
-			    'Sum' : 70292.44,
-			},
 
         }
         self.temp_combination = {}
@@ -83,7 +47,7 @@ class IsmestasMaistasd05508c3(Bolt, StatefulComponent):
             if not({'empty'} <= set(self.temp_combination[input_dict['unique_id']])):
                 return
 
-        input_value = input_dict['data']['IsmestasMaistas']
+        input_value = input_dict['data']['BuisnessTripDailyAllowance']
         if output_dict['unique_id'] in self.temp_combination:
             self.temp_combination.pop(output_dict['unique_id'])
 
@@ -101,8 +65,8 @@ class IsmestasMaistasd05508c3(Bolt, StatefulComponent):
             "Count" : self.results[output_dict['primary_key']]['Count'],
             "last_value" : input_value 
         }
-        output_dict['result']['IsmestasMaistasd05508c3'] = result
+        output_dict['result']['BuisnessTripDailyAllowanc'] = result
         self.emit([pickle.dumps(output_dict), output_dict['unique_id']])
-        self.redis_db.sadd('doctor-salary-indicator:IsmestasMaistasd05508c3:state_values', output_dict['primary_key'])
-        self.redis_db.set('doctor-salary-indicator:IsmestasMaistasd05508c3:' + output_dict['primary_key'], msgpack.packb(self.results[output_dict['primary_key']]))
+        self.redis_db.sadd('departament-expenditure-indicator:BuisnessTripDailyAllowanc:state_values', output_dict['primary_key'])
+        self.redis_db.set('departament-expenditure-indicator:BuisnessTripDailyAllowanc:' + output_dict['primary_key'], msgpack.packb(self.results[output_dict['primary_key']]))
         self.logger.info("Emited:" + json.dumps(output_dict))

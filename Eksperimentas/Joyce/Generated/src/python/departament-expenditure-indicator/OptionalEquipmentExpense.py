@@ -8,9 +8,9 @@ import pickle
 import json
 
 # class that inherits from heron Bolt
-class Atostoginiai49e661dd1d6(Bolt, StatefulComponent):
+class OptionalEquipmentExpense(Bolt, StatefulComponent):
     # Important : Define output field tags for the Bolt
-    outputs = ["Atostoginiai_49e661dd-1d6a-496e-bac5-22d4358145a9", "unique_id"]
+    outputs = ["OptionalEquipmentExpense_f577d760-823c-4aee-b932-5a09ca602727", "unique_id"]
 
     def init_state(self, stateful_state):
         self.recovered_state = stateful_state
@@ -21,44 +21,8 @@ class Atostoginiai49e661dd1d6(Bolt, StatefulComponent):
 
     def initialize(self, config, context):
         # A log context is provided in the context of the spout
-        self.log("Initializing Atostoginiai49e661dd1d6...")
+        self.log("Initializing OptionalEquipmentExpense...")
         self.results = {
-			'Gydytojas_2019' : {
-			    'Count' : 134,
-			    'Sum' : 62161.76,
-			},
-			'Programuotojas_2017' : {
-			    'Count' : 141,
-			    'Sum' : 67608.81,
-			},
-			'Filosofas_2019' : {
-			    'Count' : 125,
-			    'Sum' : 56892.25,
-			},
-			'Gydytojas_2017' : {
-			    'Count' : 158,
-			    'Sum' : 86520.93,
-			},
-			'Filosofas_2017' : {
-			    'Count' : 119,
-			    'Sum' : 53367.5,
-			},
-			'Programuotojas_2018' : {
-			    'Count' : 132,
-			    'Sum' : 62878.32,
-			},
-			'Programuotojas_2019' : {
-			    'Count' : 122,
-			    'Sum' : 58280.93,
-			},
-			'Gydytojas_2018' : {
-			    'Count' : 127,
-			    'Sum' : 56273.26,
-			},
-			'Filosofas_2018' : {
-			    'Count' : 123,
-			    'Sum' : 61196.15,
-			},
 
         }
         self.temp_combination = {}
@@ -83,7 +47,7 @@ class Atostoginiai49e661dd1d6(Bolt, StatefulComponent):
             if not({'empty'} <= set(self.temp_combination[input_dict['unique_id']])):
                 return
 
-        input_value = input_dict['data']['Atostoginiai']
+        input_value = input_dict['data']['OptionalEquipmentExpense']
         if output_dict['unique_id'] in self.temp_combination:
             self.temp_combination.pop(output_dict['unique_id'])
 
@@ -101,8 +65,8 @@ class Atostoginiai49e661dd1d6(Bolt, StatefulComponent):
             "Count" : self.results[output_dict['primary_key']]['Count'],
             "last_value" : input_value 
         }
-        output_dict['result']['Atostoginiai49e661dd1d6'] = result
+        output_dict['result']['OptionalEquipmentExpense'] = result
         self.emit([pickle.dumps(output_dict), output_dict['unique_id']])
-        self.redis_db.sadd('doctor-salary-indicator:Atostoginiai49e661dd1d6:state_values', output_dict['primary_key'])
-        self.redis_db.set('doctor-salary-indicator:Atostoginiai49e661dd1d6:' + output_dict['primary_key'], msgpack.packb(self.results[output_dict['primary_key']]))
+        self.redis_db.sadd('departament-expenditure-indicator:OptionalEquipmentExpense:state_values', output_dict['primary_key'])
+        self.redis_db.set('departament-expenditure-indicator:OptionalEquipmentExpense:' + output_dict['primary_key'], msgpack.packb(self.results[output_dict['primary_key']]))
         self.logger.info("Emited:" + json.dumps(output_dict))

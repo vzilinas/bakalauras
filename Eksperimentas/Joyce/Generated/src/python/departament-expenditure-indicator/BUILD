@@ -4,8 +4,8 @@ python_library(
 )
 
 python_binary(
-    name = "doctor-salary-indicator",
-    source='doctor-salary-indicator.py',
+    name = "departament-expenditure-indicator",
+    source='departament-expenditure-indicator.py',
     dependencies = [
         ':spouts-bolts-py',
         '3rdparty/python:heronpy',

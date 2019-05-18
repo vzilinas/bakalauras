@@ -5,6 +5,5 @@ namespace Joyce.Models
         public string FieldName { get; set; }
         public Operator Operator { get; set; }
         public string Value { get; set; }
-        public ValueType Type { get; set; }
     }
 }

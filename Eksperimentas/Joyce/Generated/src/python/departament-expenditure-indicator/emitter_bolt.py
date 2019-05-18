@@ -28,5 +28,5 @@ class EmitterBolt(Bolt, StatefulComponent):
         self.logger.info("Incoming")
         input_dict = json.dumps(pickle.loads(tup.values[0]))
         self.logger.info("Caught raw data:" + input_dict)
-        self.producer.send("doctor-salary-indicator", input_dict)
+        self.producer.send("departament-expenditure-indicator", input_dict)
         self.emit(["end"])

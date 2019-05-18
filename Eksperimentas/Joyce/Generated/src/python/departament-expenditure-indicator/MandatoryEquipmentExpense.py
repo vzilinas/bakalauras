@@ -1,15 +1,16 @@
 # Import Bolt type from heronpy
 from heronpy.api.bolt.bolt import Bolt
 from heronpy.api.state.stateful_component import StatefulComponent
+import msgpack
 import redis
 import helpers
 import pickle
 import json
 
 # class that inherits from heron Bolt
-class Komunaliniaid05508d3054(Bolt, StatefulComponent):
+class MandatoryEquipmentExpense(Bolt, StatefulComponent):
     # Important : Define output field tags for the Bolt
-    outputs = ["Komunaliniai_d05508d3-0549-499d-bc01-7c25fd2b3e95", "unique_id"]
+    outputs = ["MandatoryEquipmentExpense_33339aad-e00c-41d8-a29f-26360ce83df8", "unique_id"]
 
     def init_state(self, stateful_state):
         self.recovered_state = stateful_state
@@ -20,16 +21,12 @@ class Komunaliniaid05508d3054(Bolt, StatefulComponent):
 
     def initialize(self, config, context):
         # A log context is provided in the context of the spout
-        self.log("Initializing Komunaliniaid05508d3054...")
+        self.log("Initializing MandatoryEquipmentExpense...")
         self.results = {
-			'Filo_2017' : {
-			    'Count' : 10,
-			    'Sum' : 100,
-			},
 
         }
         self.temp_combination = {}
-        self.redis_db = redis.Redis(host='localhost', port=6379, db=0);
+        self.redis_db = redis.Redis(host='localhost', port=6379, db=0)
 
     # Process incoming tuple and emit output
     def process(self, tup):
@@ -50,7 +47,7 @@ class Komunaliniaid05508d3054(Bolt, StatefulComponent):
             if not({'empty'} <= set(self.temp_combination[input_dict['unique_id']])):
                 return
 
-        input_value = input_dict['data']['Komunaliniai']
+        input_value = input_dict['data']['MandatoryEquipmentExpense']
         if output_dict['unique_id'] in self.temp_combination:
             self.temp_combination.pop(output_dict['unique_id'])
 
@@ -68,8 +65,8 @@ class Komunaliniaid05508d3054(Bolt, StatefulComponent):
             "Count" : self.results[output_dict['primary_key']]['Count'],
             "last_value" : input_value 
         }
-        output_dict['result']['Komunaliniaid05508d3054'] = result
+        output_dict['result']['MandatoryEquipmentExpense'] = result
         self.emit([pickle.dumps(output_dict), output_dict['unique_id']])
-        self.redis_db.sadd('doctor-salary-indicator:Komunaliniaid05508d3054:state_values', output_dict['primary_key'])
-        self.redis_db.set('doctor-salary-indicator:Komunaliniaid05508d3054:' + output_dict['primary_key'], self.results[output_dict['primary_key']])
+        self.redis_db.sadd('departament-expenditure-indicator:MandatoryEquipmentExpense:state_values', output_dict['primary_key'])
+        self.redis_db.set('departament-expenditure-indicator:MandatoryEquipmentExpense:' + output_dict['primary_key'], msgpack.packb(self.results[output_dict['primary_key']]))
         self.logger.info("Emited:" + json.dumps(output_dict))
