@@ -11,6 +11,7 @@ python_binary(
         '3rdparty/python:heronpy',
         '3rdparty/python:six',
         '3rdparty/python:msgpack',
+        '3rdparty/python:redis',
 	    '3rdparty/python:kafka-python'
     ],
 )

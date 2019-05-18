@@ -1,6 +1,7 @@
 # Import Bolt type from heronpy
 from heronpy.api.bolt.bolt import Bolt
 from heronpy.api.state.stateful_component import StatefulComponent
+import msgpack
 import redis
 import helpers
 import pickle
@@ -22,10 +23,46 @@ class Atostoginiai49e661dd1d6(Bolt, StatefulComponent):
         # A log context is provided in the context of the spout
         self.log("Initializing Atostoginiai49e661dd1d6...")
         self.results = {
+			'Gydytojas_2019' : {
+			    'Count' : 134,
+			    'Sum' : 62161.76,
+			},
+			'Programuotojas_2017' : {
+			    'Count' : 141,
+			    'Sum' : 67608.81,
+			},
+			'Filosofas_2019' : {
+			    'Count' : 125,
+			    'Sum' : 56892.25,
+			},
+			'Gydytojas_2017' : {
+			    'Count' : 158,
+			    'Sum' : 86520.93,
+			},
+			'Filosofas_2017' : {
+			    'Count' : 119,
+			    'Sum' : 53367.5,
+			},
+			'Programuotojas_2018' : {
+			    'Count' : 132,
+			    'Sum' : 62878.32,
+			},
+			'Programuotojas_2019' : {
+			    'Count' : 122,
+			    'Sum' : 58280.93,
+			},
+			'Gydytojas_2018' : {
+			    'Count' : 127,
+			    'Sum' : 56273.26,
+			},
+			'Filosofas_2018' : {
+			    'Count' : 123,
+			    'Sum' : 61196.15,
+			},
 
         }
         self.temp_combination = {}
-        self.redis_db = redis.Redis(host='localhost', port=6379, db=0);
+        self.redis_db = redis.Redis(host='localhost', port=6379, db=0)
 
     # Process incoming tuple and emit output
     def process(self, tup):
@@ -67,5 +104,5 @@ class Atostoginiai49e661dd1d6(Bolt, StatefulComponent):
         output_dict['result']['Atostoginiai49e661dd1d6'] = result
         self.emit([pickle.dumps(output_dict), output_dict['unique_id']])
         self.redis_db.sadd('doctor-salary-indicator:Atostoginiai49e661dd1d6:state_values', output_dict['primary_key'])
-        self.redis_db.set('doctor-salary-indicator:Atostoginiai49e661dd1d6:' + output_dict['primary_key'], self.results[output_dict['primary_key']])
+        self.redis_db.set('doctor-salary-indicator:Atostoginiai49e661dd1d6:' + output_dict['primary_key'], msgpack.packb(self.results[output_dict['primary_key']]))
         self.logger.info("Emited:" + json.dumps(output_dict))

@@ -1,6 +1,7 @@
 # Import Bolt type from heronpy
 from heronpy.api.bolt.bolt import Bolt
 from heronpy.api.state.stateful_component import StatefulComponent
+import msgpack
 import redis
 import helpers
 import pickle
@@ -22,10 +23,46 @@ class Islaidosd15508c3054849(Bolt, StatefulComponent):
         # A log context is provided in the context of the spout
         self.log("Initializing Islaidosd15508c3054849...")
         self.results = {
+			'Gydytojas_2019' : {
+			    'Count' : 135,
+			    'Sum' : 30452727.5199,
+			},
+			'Programuotojas_2017' : {
+			    'Count' : 141,
+			    'Sum' : 33365248.86015,
+			},
+			'Filosofas_2019' : {
+			    'Count' : 127,
+			    'Sum' : 35678811.28473,
+			},
+			'Gydytojas_2017' : {
+			    'Count' : 161,
+			    'Sum' : 33506279.81334,
+			},
+			'Filosofas_2017' : {
+			    'Count' : 119,
+			    'Sum' : 28137645.96057,
+			},
+			'Programuotojas_2018' : {
+			    'Count' : 133,
+			    'Sum' : 33935307.32043,
+			},
+			'Programuotojas_2019' : {
+			    'Count' : 122,
+			    'Sum' : 26511570.72477,
+			},
+			'Gydytojas_2018' : {
+			    'Count' : 128,
+			    'Sum' : 36825139.24461,
+			},
+			'Filosofas_2018' : {
+			    'Count' : 123,
+			    'Sum' : 28695014.53218,
+			},
 
         }
         self.temp_combination = {}
-        self.redis_db = redis.Redis(host='localhost', port=6379, db=0);
+        self.redis_db = redis.Redis(host='localhost', port=6379, db=0)
 
     # Process incoming tuple and emit output
     def process(self, tup):
@@ -43,10 +80,10 @@ class Islaidosd15508c3054849(Bolt, StatefulComponent):
                 self.temp_combination[output_dict['unique_id']] = helpers.merge_two_dicts(self.temp_combination[output_dict['unique_id']], input_dict['result'])
             else:
                 self.temp_combination[output_dict['unique_id']] = input_dict['result']
-            if not({'MaistoIslaidosd05508c30', 'Komunaliniaid05508d3054'} <= set(self.temp_combination[input_dict['unique_id']])):
+            if not({'MaistoIslaidosd05508c30'} <= set(self.temp_combination[input_dict['unique_id']])):
                 return
 
-        input_value = (self.temp_combination[output_dict['unique_id']]['MaistoIslaidosd05508c30']['last_value'] * 0.9) + self.temp_combination[output_dict['unique_id']]['Komunaliniaid05508d3054']['last_value']
+        input_value = (self.temp_combination[output_dict['unique_id']]['MaistoIslaidosd05508c30']['last_value'] * 0.9)
         if output_dict['unique_id'] in self.temp_combination:
             self.temp_combination.pop(output_dict['unique_id'])
 
@@ -67,5 +104,5 @@ class Islaidosd15508c3054849(Bolt, StatefulComponent):
         output_dict['result']['Islaidosd15508c3054849'] = result
         self.emit([pickle.dumps(output_dict), output_dict['unique_id']])
         self.redis_db.sadd('doctor-salary-indicator:Islaidosd15508c3054849:state_values', output_dict['primary_key'])
-        self.redis_db.set('doctor-salary-indicator:Islaidosd15508c3054849:' + output_dict['primary_key'], self.results[output_dict['primary_key']])
+        self.redis_db.set('doctor-salary-indicator:Islaidosd15508c3054849:' + output_dict['primary_key'], msgpack.packb(self.results[output_dict['primary_key']]))
         self.logger.info("Emited:" + json.dumps(output_dict))
