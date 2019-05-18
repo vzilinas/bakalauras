@@ -15,7 +15,8 @@ namespace Joyce.Generators
             var file = File.ReadAllText(_topologyFileName);
             var text = new StringBuilder(file);
             text.Replace("<%TopologyName%>", indicatorName);
-            text.Replace("<%EmitterInputs%>", string.Join(", ", bolts.Select(x=>GenerateEmitterInput(x))));
+            //text.Replace("<%EmitterInputs%>", string.Join(", ", bolts.Select(x=>GenerateEmitterInput(x))));
+            text.Replace("<%EmitterInputs%>", "");
             text.Replace("<%TopologyBoltImports%>", GenerateTopologyImports(bolts));
             text.Replace("<%TopolgyBoltDefinitions%>", GenerateTopologyDefinitions(bolts));
             return text.ToString(); 

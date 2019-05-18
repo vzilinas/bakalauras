@@ -44,8 +44,8 @@ if __name__ == '__main__':
     officeneedsexpenses595da_bolt = builder.add_bolt('officeneedsexpenses595da', OfficeNeedsExpenses595da, par=5, inputs = {equipmentexpenses0a185e3_bolt : Grouping.fields('unique_id'), workingplacecost98026c71_bolt : Grouping.fields('unique_id')})
 
 
-    emitter_bolt = builder.add_bolt("emitter_bolt", EmitterBolt, par=10,
-                                    inputs={freetimeexpenditure5dbfc_bolt : Grouping.SHUFFLE, tembuildingspending65c89_bolt : Grouping.SHUFFLE, pizzafridayexpense117af4_bolt : Grouping.SHUFFLE, teamsize58f7d6476c1e45_bolt : Grouping.SHUFFLE, buisnesstripexpensesd055_bolt : Grouping.SHUFFLE, buisnesstriplivingcosta7_bolt : Grouping.SHUFFLE, buisnesstriptravelcost25_bolt : Grouping.SHUFFLE, buisnesstripdailyallowanc_bolt : Grouping.SHUFFLE, officeneedsexpenses595da_bolt : Grouping.SHUFFLE, equipmentexpenses0a185e3_bolt : Grouping.SHUFFLE, mandatoryequipmentexpense_bolt : Grouping.SHUFFLE, optionalequipmentexpense_bolt : Grouping.SHUFFLE, workingplacecost98026c71_bolt : Grouping.SHUFFLE})
+    # emitter_bolt = builder.add_bolt("emitter_bolt", EmitterBolt, par=10,
+    #                                 inputs={})
 
 
     topology_config = {constants.TOPOLOGY_RELIABILITY_MODE:
