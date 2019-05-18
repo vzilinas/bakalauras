@@ -5,7 +5,7 @@ import string
 
 producer = KafkaProducer(bootstrap_servers='localhost:9092')
 
-with open('doctor-salary-indicator-data.json') as json_file:  
+with open('departament-expenditure-indicator-data.json') as json_file:  
     data = json.load(json_file)
     for x in data:
         time.sleep(.100)
