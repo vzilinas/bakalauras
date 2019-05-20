@@ -38,7 +38,7 @@ namespace Joyce.Generators
 
             var spoutFile = new StringBuilder(File.ReadAllText(_spoutFileName));
 
-            spoutFile.Replace("<%KafkaQueue%>", _queueName);
+            spoutFile.Replace("<%KafkaQueue%>", indicator.Name);
             spoutFile.Replace("<%IndicatorId%>", indicator.IndicatorId.ToString());
             spoutFile.Replace("<%IndicatorName%>", indicator.Name);
             spoutFile.Replace("<%IndicatorVersion%>", indicator.VersionId);
