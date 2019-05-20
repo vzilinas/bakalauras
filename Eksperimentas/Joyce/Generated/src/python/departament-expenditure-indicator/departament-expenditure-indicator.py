@@ -19,7 +19,7 @@ from MandatoryEquipmentExpense import MandatoryEquipmentExpense
 from OptionalEquipmentExpense import OptionalEquipmentExpense
 from WorkingPlaceCost98026c71 import WorkingPlaceCost98026c71
 
-from emitter_bolt import EmitterBolt
+# from emitter_bolt import EmitterBolt
 # from report_aggregation_bolt import ReportAggregationBolt
 
 if __name__ == '__main__':
