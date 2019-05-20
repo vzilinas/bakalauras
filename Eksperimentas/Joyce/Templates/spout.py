@@ -25,7 +25,7 @@ class KafkaInputSpout(Spout, StatefulComponent):
         self.logger.info("IndicatorId - <%IndicatorId%>")
         self.logger.info("IndicatorName - <%IndicatorName%>")
         self.logger.info("IndicatorVersion - <%IndicatorVersion%>")
-        self.consumer = KafkaConsumer("<%KafkaQueue%>",  group_id='<%KafkaQueue%>_group', bootstrap_servers="localhost:9092", value_deserializer=lambda m: json.loads(m.decode('utf-8')))
+        self.consumer = KafkaConsumer("<%KafkaQueue%>",  group_id='<%IndicatorName%>_group', bootstrap_servers="localhost:9092", value_deserializer=lambda m: json.loads(m.decode('utf-8')))
 
     # Generate next tuple sequence for this spout
     def next_tuple(self):
