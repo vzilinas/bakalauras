@@ -266,8 +266,14 @@ Pagal mūsų aprašyta rodiklių duomenų modelį, mes taip pat turime apsibrė�
 
 \section{Rodiklių duomenų apdorojimo architektūra}
 
-Kuriama architektūra susidarys iš skirtingų komponentų, kuriu visumą turi gebėti generuoti rodiklių duomenų sistemas  
-
+Problema: bandome formalizuoti problemą realaus pasaulio pavyzdžiu - Lietuvos statistikos departamento rodiklių duomenų bazė. Pagal 2019 metų gegužės mėnesio duomenis gautus iš \url{https://osp-rs.stat.gov.lt/rest_xml/dataflow/} kuri teikia Lietuvos statistikos departamentas, rodiklių duomenų bazė susidaro iš 7768 duomenų rinkinių - skirtingų apdorotų rodiklių duomenų. Šie rodikliai rodo statistinę informaciją surinktą per daug metų. Norint sukurti srautinio apdorojimo sistemas visiems šiems rodikliams reikalautų 
+\begin{itemize}
+    \item Daug laiko, kadangi kiekviena sistema turi būti paruošta pagal ateinančius duomenis.
+    \item Programuotojų pagalbos. Nors ir įmanoma rasti srautinio apdorojimo sprendimus, kurie leidžia kurti sistemas, pagal jų sukurta supaprastintą kalbą, tai vis tiek reikalauja programuotojų.
+    \item Kiekvieną kartą kintant įeinančių duomenų aprašymų turėtų būti perrašomos visos susijusios sistemos.
+    \item Kiekviena kartą kintant rodikliams gauti reikalingų skaičiavimų formulėms turės būti iš naujo sukuriama srautinio apdorojimo sistema. 
+\end{itemize}
+Kuriama architektūra išspręstu šią problema pasitelkiant kodo generavimą. 
 
 \begin{figure}[H]
     \centering
@@ -276,7 +282,29 @@ Kuriama architektūra susidarys iš skirtingų komponentų, kuriu visumą turi g
     \label{img:architektura}
 \end{figure}
 
+\subsection{Pagrindiniai komponentai}
+Siūloma architektūra susidaro iš daug skirtingų tarpusavyje susijusiu komponentų. Pagrindiniai du iš jų:
+\begin{itemize}
+    \item Srautinio apdorojimo sprendimas - tai programinė įranga, kurioje bus paleidžiamos sugeneruotos sistemos.
+    \item Kodo generavimo komponentas - atskira programinė įranga, kuri pagal pateikta rodiklio modelį generuos rodiklių duomenų apdorojimo sistemas.
+\end{itemize}
 
+\subsubsection{Srautinio apdorojimo sprendimas}
+
+\subsubsection{Kodo generavimo komponentas}
+
+\subsection{Pagalbiniai komponentai}
+
+\subsubsection{Duomenų bazė}
+
+\subsubsection{Žinučių eilė}
+
+
+\subsection{Duomenų tėkmė architektūroje}
+
+\subsubsection{Vartotojo galimybės}
+
+\subsubsection{Duomenų šaltinis}
 
 Kuriama architektūra turi sugebėti prisitaikyti prie tokių rodiklių duomenų struktūros pokyčių ir pakitus rodikliams tęsti jau vykdomus apdorojimus. 
 
