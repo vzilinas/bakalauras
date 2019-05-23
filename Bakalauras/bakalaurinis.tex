@@ -266,18 +266,18 @@ Pagal mūsų aprašyta rodiklių duomenų modelį, mes taip pat turime apsibrė�
 
 \section{Rodiklių duomenų apdorojimo architektūra}
 
-Problema: bandome formalizuoti problemą realaus pasaulio pavyzdžiu - Lietuvos statistikos departamento rodiklių duomenų bazė. Pagal 2019 metų gegužės mėnesio duomenis gautus iš \url{https://osp-rs.stat.gov.lt/rest_xml/dataflow/} kuri teikia Lietuvos statistikos departamentas, rodiklių duomenų bazė susidaro iš 7768 duomenų rinkinių - skirtingų apdorotų rodiklių duomenų. Šie rodikliai rodo statistinę informaciją surinktą per daug metų. Norint sukurti srautinio apdorojimo sistemas visiems šiems rodikliams reikalautų 
+Nežinau ar čia reikia šito ar kitur ar iš vis nereikia. \par
+Problema: bandome formalizuoti problemą realaus pasaulio pavyzdžiu - Lietuvos statistikos departamento rodiklių duomenų bazė. Pagal 2019 metų gegužės mėnesio duomenis gautus iš \url{https://osp-rs.stat.gov.lt/rest_xml/dataflow/} kuri teikia Lietuvos statistikos departamentas, rodiklių duomenų bazė susidaro iš 7768 duomenų rinkinių - skirtingų apdorotų rodiklių duomenų. Šie rodikliai rodo statistinę informaciją surinktą per daug metų. Norint sukurti srautinio apdorojimo sistemas visiems šiems rodikliams prireiktų: 
 \begin{itemize}
     \item Daug laiko, kadangi kiekviena sistema turi būti paruošta pagal ateinančius duomenis.
     \item Programuotojų pagalbos. Nors ir įmanoma rasti srautinio apdorojimo sprendimus, kurie leidžia kurti sistemas, pagal jų sukurta supaprastintą kalbą, tai vis tiek reikalauja programuotojų.
-    \item Kiekvieną kartą kintant įeinančių duomenų aprašymų turėtų būti perrašomos visos susijusios sistemos.
-    \item Kiekviena kartą kintant rodikliams gauti reikalingų skaičiavimų formulėms turės būti iš naujo sukuriama srautinio apdorojimo sistema. 
+    \item Kiekvieną kartą kintant įeinančių duomenų aprašymų perrašyti visas susijusios srautinio apdorojimo sistemas.
+    \item Kiekviena kartą kintant rodikliams gauti reikalingų skaičiavimų formulėms iš naujo sukurti srautinio apdorojimo sistemą. 
 \end{itemize}
-Kuriama architektūra išspręstu šią problema pasitelkiant kodo generavimą. 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{img/architekturos_diagrama.pdf}
+    \includegraphics[width=0.75\textwidth]{img/architekturos_diagrama.pdf}
     \caption{Architektūra}
     \label{img:architektura}
 \end{figure}
@@ -286,27 +286,42 @@ Kuriama architektūra išspręstu šią problema pasitelkiant kodo generavimą.
 Siūloma architektūra susidaro iš daug skirtingų tarpusavyje susijusiu komponentų. Pagrindiniai du iš jų:
 \begin{itemize}
     \item Srautinio apdorojimo sprendimas - tai programinė įranga, kurioje bus paleidžiamos sugeneruotos sistemos.
-    \item Kodo generavimo komponentas - atskira programinė įranga, kuri pagal pateikta rodiklio modelį generuos rodiklių duomenų apdorojimo sistemas.
+    \item Kodo generavimo komponentas - atskira programinė įranga, kuri pagal pateikta rodiklio modelį generuos rodiklių duomenų apdorojimo sistemas. 
 \end{itemize}
 
 \subsubsection{Srautinio apdorojimo sprendimas}
 
+Srautinio apdorojimo sprendimas šioje architektūroje atsakingas už duomenų apdorojimą. Sugeneruotos srautinio apdorojimo sistemos bus sukompiliuotos ir pateiktos į srautinio apdorojimo sprendimą. Skirtingi srautinio apdorojimo sprendimai turi skirtingas savybes ir skirtingas konfigūracijas, todėl eksperimentui reikės pasirinkti tinkamą sprendimą. Srautinio apdorojimo sprendimai dažniausiai susidaro iš duomenų įeigos komponento ir duomenų apdorojimo komponentų. Srautinio apdorojimo sprendimai turi patys gebėti susitvarkyti su komunikacija tarp komponentų ir komponentų metrikų stebėjimu. Kadangi mūsų architektūra turi galėti apdoroti asinchroniškai patenkančius duomenis iš skirtingų šaltinių, duomenų pateikimas į srautinio apdorojimo sistemas vyks žinučių eilę. 
+
 \subsubsection{Kodo generavimo komponentas}
 
-\subsection{Pagalbiniai komponentai}
+Kodo generavimo komponentas tai svarbiausia architektūros dalis. Šiam komponentui bus pateikiami rodiklių duomenų modeliai ir pagal juos komponentas turės sugeneruoti srautinio apdorojimo sistemas, kurios bus teikiamos į srautinio apdorojimo sprendimo komponentą. Jei srautinio apdorojimo sistema jau egzistuoja jis bus sustabdoma, sugeneruota iš naujo su jau apdorotais duomenimis ir pateikiama į srautinio apdorojimo sistemą (\ref{img:generation-flow} pav.).
 
-\subsubsection{Duomenų bazė}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{img/generation-flow.pdf}
+    \caption{Kodo generavimo komponento veikimas}
+    \label{img:generation-flow}
+\end{figure}
+
+\subsection{Pagalbiniai komponentai}
+Kad būtų įgyvendinti rodiklių duomenų apdorojimo reikalavimai turi būti naudojami papildomi komponentai:
+\begin{itemize}
+    \item Žinučių eilė, kuri bus naudojama duomenų pateikimui į srautinio apdorojimo sistemas.
+    \item Duomenų bazę, kurioje bus saugomi apdoroti rodiklių duomenys.
+\end{itemize}
 
 \subsubsection{Žinučių eilė}
 
+Žinučių eilės pagrindinis uždavinys mūsų architektūroje - perduoti duomenis į srautinio apdorojimo sistemą. Žinučių eilės naudoja publikavimo-prenumeratos modelį (angl. publish-subscribe pattern), komponentai norintys gauti duomenis užsiregistruoja žinučių eilėje, o komponentai siunčiantis tiesiog perduoda juos į žinučių eilę. Taip yra įgyvendinamas asinchroninis bendravimas, komponentai perduoda duomenis į žinučių eilę, o komponentas norintis gauti duomenis gali juos pasiimti bet kuriuo momentu iš eilės.
 
-\subsection{Duomenų tėkmė architektūroje}
+\subsubsection{Duomenų bazė}
 
-\subsubsection{Vartotojo galimybės}
-
-\subsubsection{Duomenų šaltinis}
-
-Kuriama architektūra turi sugebėti prisitaikyti prie tokių rodiklių duomenų struktūros pokyčių ir pakitus rodikliams tęsti jau vykdomus apdorojimus. 
+Duomenų bazė siūlomoje architektūroje saugos apdorotus rodiklių duomenis. Duomenys šioje duomenų bazėje bus tik įrašomi ir skaitomi. Kadangi mes norime turėti apdorotus išvestinių ir pagrindinių rodiklių duomenis, visi srautinio apdorojimo sistemų komponentai turės prisijungti prie duomenų bazės ir padėti paskutinę apdorotų duomenų versiją. Duomenys iš duomenų bazės bus traukiami dviem poreikiam: 
+\begin{enumerate}
+    \item Vartotojui norint gauti apdorotus rodiklių duomenis, vartotojas sius užklaus į architektūroje padarytą prieigos tašką pateikdamas rodiklio pavadinimą ir gaus atsakymą su jau apdorotais rodikliais. 
+    \item Kodo generavimo komponentas naudos apdorotų rodiklių duomenis, kai bus pergeneruojamos srautinio apdorojimo sistemos.  Kadangi po rodiklių pridėjimo arba pašalinimo mes norime, kad nepakeistų rodiklių apdorojimas vyktų toliau, po srautinio apdorojimo sistemos sustabdymo, kodo generavimo komponentas trauks paskutinius apdorojamus duomenis ir dės juos į jau esamus srautinio apdorojimo sistemos komponentus. Taip bus užtikrinamas duomenų apdorojimo pratesimas.   
+\end{enumerate}  
 
 \section{Srautinio duomenų apdorojimo sprendimų analizė}
 
