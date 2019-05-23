@@ -421,13 +421,30 @@ Norint patikrinti siūlomą architektūrą buvo sukurtas sprendimas.
 
 \subsection{Srautinio apdorojimo sistemų kodo generavimo komponentas}
 
-Kodo generavimo komponentas - pagrindinis architektūros komponentas reikalaujantis daugiausiai darbo. Pagrindiniai šio komponento reikalavimai:
+Kodo generavimo komponentas - pagrindinis architektūros komponentas reikalaujantis daugiausiai darbo. Kadangi kodo generavimo greitaveika nėra svarbi, o svarbiau kuo patogesnis kodo rašymas - komponentas buvo kuriamas su ".NET core" biblioteka. 
+Pagrindiniai šio komponento reikalavimai:
 \begin{itemize}
-    \item Taškas (angl. endpoint) rodiklių duomenų modelio pateikimui.
-    \item Srautinio apdorojimo sistemų generavimas pagal pateiktą rodiklių duomenų modelį.
+    \item Taškas (angl. endpoint) rodiklių duomenų modelio pateikimui. Kadangi naudojama ".NET core" biblioteka buvo sukurtas "Web API" tipo projektas kuris leidžia kurti programinė įranga pagal REST architektūrą apibrėžtais taškais. Duomenis į tašką gali būti paduodami internetu, tai duoda privalumą - pats sprendimas gali būti kitame kompiuteryje arb kitame tinkle. Taip pat leidžia daug vartotojų dirbti su suskurtu sprendimu.
+    \item Srautinio apdorojimo sistemų generavimas pagal pateiktą rodiklių duomenų modelį. Naudojant ".Net core" biblioteka generuojame Python kodą, kuris vėliau bus sukompiliuotas ir pateiktas srautinio apdorojo sprendimui. Kodo generavimas pradedamas tik gavus rodiklių duomenų modelį iš vartotojo. Eiga tokia:
+    \begin{enumerate}
+        \item Gaunamas rodiklio modelio aprašymas.
+        \item Patikriname ar egzistuoja tokia srautinio apdorojimo sistema. Tai darome kreipdamiesi į duomenų bazę ir tikrindami, ar egzistuoja įrašų, kurių rakto pradžia sutampa su generuojamos sistemos pavadinimu.
+        \item Jei egzistuoja:
+            \begin{enumerate}
+                \item Sustabdome veikiančią sistemą. Tai darome kviesdami stabdymo komandą per Ubuntu operacinės terminalą.
+                \item Iš duomenų bazės traukiame jau apdorotus rodiklių duomenis ir juos perduodame į generavimo dalį
+            \end{enumerate} 
+        \item Generuojame srautinio apdorojimo sistemos įeigos komponentą - įrašome žinučių eilės grupės pavadinimą, parašome sąlygas įeinantiems duomenims pagal apribojimus ir sugeneruojame unikalų identifikatorių duomeniui, kurio pagalba toliau einantys veiksmai, kurie reikalauja duomenų apdorojimo iš kelių skirtingų komponentų, sukombinuoja duomenis.
+        \item Pagal rodiklius rekursyviai generuojame duomenų apdorojimo komponentus, jei tai jau egzistuojantis komponentas užpildome jį apdorotais duomenimis gautais iš duomenų bazės. 
+        \item Generuojama sistemos topologiją, kuri aprašo komponentų jungimosi tarpusavyje logiką, komponentų paralelizmo lygi ir kitas sistemos konfigūracijas. 
+        \item Visos sugeneruotos bylos talpinamos į vieną aplanką ir paleidžiamas specialus įrankis kompiliavimui.
+        \item Sukompiliuota sistema pateikiama į srautinio apdorojimo sprendimą.
+        \item Vartotojui gražinamas pranešimas, jog sistema sugeneruota sėkmingai.
+    \end{enumerate}
     \item Srautinio apdorojimo sistemų teikimo ir trynimo operacijos su srautinio apdorojimo sprendimu.
     \item Apdorotų rodiklių traukimas iš duomenų bazės ir naudojimas perkuriant jau egzistuojančią srautinio apdorojimo sistemą.
 \end{itemize}
+
 
 
 \subsection{Apdorotų rodiklių duomenų bazė}
