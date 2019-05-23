@@ -399,7 +399,7 @@ Iš šių keturių sprendimų reikėjo pasirinkti vieną, kuris labiausiai tiks 
     \begin{center}
         \caption{Srautinių duomenų apdorojimo sprendimų palyginimas}
         \label{table:comparer}
-        \begin{tabular}{ | l | c | c | c | c | } 
+        \begin{tabular}{ | l | c | c | c | c | }
             \hline
             \cellcolor[gray]{0.8} Charakteristika & \cellcolor[gray]{0.9} "Apache Storm" & \cellcolor[gray]{0.9} "Apache Spark" & \cellcolor[gray]{0.9} "Apache Flink" & \cellcolor[gray]{0.9} "Heron" \\* \hline
             \cellcolor[gray]{0.9} Pristatymas & Bent vieną kartą & Tiksliai vieną kartą & Tiksliai vieną kartą & Pasirenkamas \\* \hline
@@ -417,9 +417,18 @@ Pagal atlikta analizę \ref{table:comparer} lentelėje ir apsibrėžtų reikalav
 
 \section{Pagal architektūrą sukurtas sprendimas}
 
+Norint patikrinti siūlomą architektūrą buvo sukurtas sprendimas.
+
 \subsection{Srautinio apdorojimo sistemų kodo generavimo komponentas}
 
-.Net Core biblioteka 
+Kodo generavimo komponentas - pagrindinis architektūros komponentas reikalaujantis daugiausiai darbo. Pagrindiniai šio komponento reikalavimai:
+\begin{itemize}
+    \item Taškas (angl. endpoint) rodiklių duomenų modelio pateikimui.
+    \item Srautinio apdorojimo sistemų generavimas pagal pateiktą rodiklių duomenų modelį.
+    \item Srautinio apdorojimo sistemų teikimo ir trynimo operacijos su srautinio apdorojimo sprendimu.
+    \item Apdorotų rodiklių traukimas iš duomenų bazės ir naudojimas perkuriant jau egzistuojančią srautinio apdorojimo sistemą.
+\end{itemize}
+
 
 \subsection{Apdorotų rodiklių duomenų bazė}
 
