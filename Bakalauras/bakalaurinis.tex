@@ -46,7 +46,7 @@
 \sectionnonumnocontent{Santrauka}
 Šį darbą sudaro teorinė ir eksperimentinė dalis. Teorinėje dalyje apibrėžiamas rodiklis, jo struktūra ir struktūros pokyčiai. Apibrėžiami kokie yra įmanomi pokyčiai ir kaip eksperimentinėje dalyje kuriamas sprendimas prie pokyčių prisitaikys. Specifikuojama duomenų struktūra ir duomenų struktūrų apjungimo ir skirtumo operacijas. Apibrėžiamas srautinis apdorojimas ir pasirenkama sistema, kuri bus naudojama eksperimentinėje dalyje. Remiantis gautais rezultatais
 nustatoma, kad šiam uždaviniui spręsti pasirenkama "Heron" srautinio apdorojimo sistema. Remiantis pasirinkta srautinio apdorojimo sistema ir apibrėžta rodiklių duomenų struktūra, eksperimentui nusprendžiama generuoti srautinio apdorojimo modulius parašytus "Python" programavimo kalba. Eksperimentinėje dalyje remiantis pasiūlyta architektūra realizuojama bandomoji sistemos versija. Atliekant skirtingų kiekių rodiklių duomenų ir rodiklių duomenų pokyčių simuliaciją stebėjimais analizuojamas šios sistemos tinkamumas apibrėžtam uždaviniui spręsti. Gauti tyrimų rezultatai lyginami, pateikiamos išvados. Taip įrodoma, kad toks sprendimas gali būti įgyvendinamas ir kad kodo generavimas ir srautinio apdorojimo sistema "Heron" yra tinkamas sprendimas kintančių rodiklių uždaviniui spręsti.
-\raktiniaizodziai{srautinis apdorojimas, kodo generavimas, rodikli, rodiklio duomens pokyčiai}   
+\raktiniaizodziai{srautinis apdorojimas, kodo generavimas, rodiklis, rodiklio duomens pokyčiai}   
 
 \sectionnonumnocontent{Summary}
 This work consists of a theoretical and an experimental part. Theoretical part defines the indicator, its structure and changes in indicator structure. It define what changes are possible and how the developed solution in the experimental part will adapt to the changes, specifies the data structure and data structure merging and difference operations, defines stream processing and selects the system to be used in the experimental part. Based on the results
@@ -58,18 +58,16 @@ it is determined that "Heron" stream processing system is chosen to solve this t
 \sectionnonum{Įvadas}
  
 % TODO: Įžangoje apžvelgti srautinį apdorojimą ir kodo generavimą.
-Šiame darbe yra nagrinėjamas rodiklių duomenų apdorojimas ir kuriamas sprendimas galintis prisitaikyti prie kintančių rodiklių duomenų struktūros. Rodiklių duomenimis vadiname duomenis, aprašančius kažkokių objektų savybes arba veiklos procesų rezultatus. Šiuos duomenis galima transformuoti, analizuoti ir grupuoti pagal pasirinktus rodiklius, pavyzdžiui: bazinė mėnesinė alga, mirusiųjų skaičius pagal mirties priežastis, krituliai per metus. Taip pat rodiklių struktūra gali keistis laikui bėgant: objektų atributų taksonomija (pvz. mirties priežasčių sąrašas, finansinių sąskaitų sąrašas) arba įrašo atributų sąrašai. Surenkamu rodiklių duomenų kiekis visada didėja, taip pat ir duomenų kiekis, kuriuos reikia apdoroti pagal rodiklius auga, todėl standartiniai sprendimai, pavyzdžiui reliacinės duomenų bazės netinka dėl ilgos apdorojimo trukmės. Rodiklių duomenų bazės pasižymi tuo, kad duomenys į jas patenka iš daug skirtingų tiekėjų ir patekimo laikas tarp tiekėjų nėra sinchronizuojamas, o suagreguotą informaciją vartotojai gali užklausti bet kurio metu. Todėl šiame darbe bus nagrinėjamas srautinis duomenų apdorojimas, kuris patenkančius duomenis apdoros realiu laiku, ir saugos jau apdorotus.  \par
-Realaus laiko duomenų apdorojimas (angl. Real-time data processing) yra jau senai nagrinėjamas, kaip būdas apdoroti didelių kiekių duomenis (angl. Big data). Vienas iš realaus laiko apdorojimo sprendimų yra srautinis duomenų apdorojimas \cite{BigData, StreamProcessingInData}. Srautinis duomenų apdorojimas (angl. stream processing) – programavimo paradigma, kuri yra ekvivalenti duomenų srauto programavimo (angl. dataflow programming) paradigmai \cite{shortstreamproc}. 
-Duomenų tėkmės programavimo paradigmos idėja yra, kad programa susidaro iš skirtingu modulių, kurie nepriklauso vienas nuo kito, ir tai leidžia sukonstruoti paraleliai skaičiuojančias programas. 
-Vienas iš pirmųjų duomenų tėkmės programavimo kompiliatorių yra BLODI - blokų diagramų kompiliatorius (angl. BLOck DIagram compiler), su kuriuo buvo kompiliuojamos BLODI programavimo kalba parašytos programos \cite{kelly1961block}.  Šia kalba parašytos programos atitinka inžinerinę elektros grandinės schemą, kur duomenys keliauja per komponentus kaip ir elektros grandinėje. Pasinaudojant šiai programavimo paradigmai sukurtai sistemai bus sukurtas sprendimas, kuris generuos modelius, kurie galės apdoroti rodiklių duomenis ir talpins jau apdorotus duomenis kitoje talpykloje \cite{8Requirements}. 
+Šiame darbe yra nagrinėjamas rodiklių duomenų apdorojimas ir kuriamas koncepcinis sprendimas galintis prisitaikyti prie kintančių rodiklių duomenų struktūros ???. Rodiklių duomenimis vadinkime pasikartojančių įvykių parametrus aprašančius duomenis. Pavyzdžiui, įvairių matuoklių – temperatūros, resursų suvartojimo – fiksuojamus rodmenis, kasmėnesinius veiklos indikatorius, tokius kaip veiklos finansines ataskaitas ar veiklos procesų indikatorius. Taip pat rodiklių struktūra gali keistis laikui bėgant: objektų atributų taksonomija (pvz. mirties priežasčių sąrašas, finansinių sąskaitų sąrašas) arba įrašo atributų sąrašai. Surenkamu rodiklių duomenų kiekis visada didėja, taip pat ir duomenų kiekis, kuriuos reikia apdoroti pagal rodiklius auga, todėl standartiniai sprendimai, pavyzdžiui, reliacinės duomenų bazės netinka dėl ilgos apdorojimo trukmės. Rodiklių duomenų bazės pasižymi tuo, kad duomenys į jas patenka iš daug skirtingų tiekėjų ir patekimo laikas tarp tiekėjų nėra sinchronizuojamas, o suagreguotą informaciją vartotojai gali užklausti bet kurio metu. Todėl šiame darbe bus nagrinėjamas srautinis duomenų apdorojimas, kuris patenkančius duomenis apdoros realiu laiku, ir saugos jau apdorotus.  \par
+Realaus laiko duomenų apdorojimas (angl. Real-time data processing) yra jau senai nagrinėjamas, kaip būdas apdoroti didelių kiekių duomenis (angl. Big data). Vienas iš realaus laiko apdorojimo sprendimų yra srautinis duomenų apdorojimas. Srautinis duomenų apdorojimas (angl. stream processing) – programavimo paradigma, kuri yra ekvivalenti duomenų srauto programavimo (angl. dataflow programming) paradigmai \cite{shortstreamproc}. Duomenų tėkmės programavimo paradigmos idėja yra, kad programa susidaro iš skirtingų modulių, kurie nepriklauso vienas nuo kito, ir tai leidžia konstruoti paraleliai skaičiuojančias programas. Pasinaudojant šiai programavimo paradigmai sukurtai sistemai bus sukurtas sprendimas, kuris generuos modelius, kurie galės apdoroti rodiklių duomenis ir talpins jau apdorotus duomenis kitoje talpykloje \cite{8Requirements}. 
 \par
-Kadangi rodiklių yra daug skirtingų ir jie laikui bėgant gali kisti reikia, kad sprendimas kuris juos apdoros galės prisitaikyti prie poreikiu. Yra keli būdai kaip tai galima išspręsti:
+Kadangi rodiklių yra daug skirtingų ir jie laikui bėgant gali būti keičiami reikia, kad sprendimas, kuris juos apdoros ir galės prisitaikyti prie naujų poreikių. Yra keli būdai kaip tai galima išspręsti:
 \begin{itemize}
-    \item Rankinio atnaujinimo sprendimas. Sukuriamas sprendimas pagal esamus reikalavimus ir išskiriamas žmogus, kuris pagal naujus poreikius gali sukurti naujas arba pakeisti esamas apdorojimo sistemas. 
-    \item Universalus sprendimas. Sukuriamas srautinio duomenų apdorojimo sprendimas, kuris apdoroja visus duomenis pagal visus įmanomus rodiklius.
+    \item Rankinio atnaujinimo sprendimas. Sukuriamas sprendimas pagal esamus reikalavimus, o atsiradus naujiems reikalavimams būtų kuriamos naujos arba keičiamos esamas apdorojimo sistemos. 
+    \item Universalus sprendimas. Sukuriamas universalus parametrizuojamas sprendimas ir pritaikomas užduotims nustatant parametrus.
     \item Kodo generavimo sprendimas. Sukuriamas sprendimas, kuris generuoja srautinio duomenų apdorojimo sistemas pagal iš anksto aprašytą struktūrą.  
 \end{itemize}   
-Šie sprendimai turi būti pritaikyti pagal sprendžiama problemą. Jei nėra numatomas kitimas pagal ką turi būti apdorojami duomenis, tai galima pasirinkti ir rankinio apdorojimo sprendimą, kadangi nėra didelės tikimybės, kad teks keisti sprendimą. Toks sprendimas tiktų apdorojant išmaniųjų skaitiklių duomenis \cite{skaitikliai}. Universalus sprendimas taip pat gali būti tinkamas jei įeinantis duomenis yra specifiški ir yra poreikis juos visus apdoroti. Toks sprendimas gali būti aktualus apdorojant duomenis iš sensorių, kurie matuoja namų būsena (temperatūra, drėgmę ir t.t.) ir bet koks naujas sensorius taip pat turi būti prijungtas ir apdorotas \cite{yang2017iot}. Šiame darbe buvo pasirinkta naudoti kodo generavimą siekiant sukurti sprendimą tinkanti bendram atvejui, kai duomenis yra nekonkretus ir ne visi reikalingi ir rodikliai kinta dažnai siekiant išgauti kuo daugiau informacijos iš įeinančių duomenų. \par
+Tinkamas sprendimas turi būti išrinktas pagal sprendžiamą problemą. Jei nėra numatomas kitimas, pagal ką turi būti apdorojami duomenys, tai galima pasirinkti ir rankinio apdorojimo sprendimą, kadangi nėra didelės tikimybės, kad teks keisti sprendimą. Toks sprendimas tiktų apdorojant išmaniųjų skaitiklių duomenis \cite{skaitikliai}. Universalus sprendimas taip pat gali būti tinkamas jei įeinantis duomenis yra specifiški ir yra poreikis juos visus apdoroti. Toks sprendimas gali būti aktualus apdorojant duomenis iš sensorių, kurie matuoja namų būsena (temperatūra, drėgmę ir t.t.) ir bet koks naujas sensorius taip pat turi būti prijungtas ir apdorotas \cite{yang2017iot}. Šiame darbe buvo norima nagrinėti kodo generavimo sprendimo tinkamumą užduotims. \par
 Kodo generavimas tai rašymas programinės įrangos, kuri rašys reikiamą programinę įrangą problemai spręsti. Tai daroma tokiais atvejais, kai sprendžiama problema reikalauja daug rankinio darbo, kurį įmanoma automatizuoti. Kuo didesnio sprendimo reikalauja uždavinys tuo patraukliau tampa naudoti kodo generavimą sprendimo kūrimui. Kodo generavimas suteikia tokius privalumus: 
 \begin{itemize}
     \item Architektūrinį nuoseklumą: 
@@ -88,23 +86,26 @@ Kodo generavimas tai rašymas programinės įrangos, kuri rašys reikiamą progr
     \item Tinkamas sprendimas Judriajam programavimui, kadangi kodo generavimo kuriami sprendimai yra lankstesni, tai leidžia ateityje juos lengviau keisti ir atnaujinti.   
 \end{itemize} 
 Kodo generavimas tampa tikrai naudingas tada, kai jis naudojamas didelių kiekių rankiniam kodavimui pakeisti \cite{herrington2003code}. \par
-Darbe bus nagrinėjamas sprendimas generuojantis srautinio apdorojimo modulius pagal ateinančius rodiklių duomenis. Kadangi rodiklių duomenis gali būti skirtingi ir gali keistis laikui bėgant reikalingas sprendimas galintis apdoroti didelį kiekį kintančių duomenų.  
+Darbe nagrinėjamas sprendimas generuojantis srautinio apdorojimo modulius pagal rodiklių duomenų modelius. Kadangi rodiklių duomenys gali būti skirtingi ir gali keistis laikui bėgant, reikalingas sprendimas, galintis apdoroti didelį kiekį kintančių duomenų ??????.  
 
 Tikslas: Sukurti rodiklių duomenų srautinio apdorojimo sistemos, pritaikomos prie duomenų struktūrų naudojant kodo generavimą, architektūrą.
 
 Uždaviniai:
 \begin{enumerate}
     \item Apibrėžti rodiklių duomenų modelį ir galimus rodiklių duomenų struktūros pokyčius.
-    \item Sukurti architektūra, kuri pasižymėtų reikalingomis savybėmis spręsti rodiklių apdorojimo uždavinį. 
-    \item Atlikus šaltinių analizę pasirinkti srautinio duomenų apdorojimo sprendimą, joje sukurti sudarytos architektūros sprendimą ir atlikti bandymus.
+    \item Sukurti architektūrą, kuri pasižymėtų reikalingomis savybėmis spręsti rodiklių apdorojimo uždavinį. 
+    \item Atlikus šaltinių analizę ????? pasirinkti srautinio duomenų apdorojimo programinę įrangą, joje sukurti sudarytos architektūros koncepcinį sprendimą ir atlikti bandymus.
 \end{enumerate}
 
 \section{Rodiklių duomenys}
 
-Rodiklių duomenys - tai realaus pasaulio duomenys, kurie rodo tam tikrų objektų savybes, kurias galime grupuoti pagal kitas tų objektų savybes. Rodyklių duomenys pasižymi tuo, jog nėra aktualus pradiniai neapdoroti duomenis. Taip pat rodikliai yra nepastovus, jų struktūra gali keistis - atsirasti naujų savybių, kurias reikia surinkti arba yra pašalinamos jau esamos savybės. Rodiklių duomenys yra renkami ir analizuojami labai skirtingiems poreikiams - visur kur reikalinga statistika ir apdorojami didelį kiekiai duomenų yra naudojami rodikliai: tai gali būti įmonės vedamą "Microsoft Excel" skaičiuoklė, kurioje užrašyta kiek buvo mokėta už elektrą kiekvienais metais per paskutinius 10 metų arba juodosios skylės nuotrauka padaryta koreliuojant didelio duomenų kiekį iš 8 skirtingų teleskopu ir gauti rodikliai rodo taškus ant paveikslėlio, kurio dydis yra \(10^{12}\) kartų mažesnis nei pradiniai duomenys \cite{akiyama2019first}. \par    
-Tam, kad sukurtume sprendimą, kuris tiktų rodiklių apdorojimui reikia bendro rodiklių duomenų modelio, kurio pagalba galėtume apibrėžti visus įmanomus rodiklius. Pagal šį aprašytą modelį bus generuojamos srautinio apdorojimo sistemos, kurios apdoros įeinančius duomenis.
+Rodiklių duomenimis vadinkime pasikartojančių įvykių parametrus aprašančius duomenis. Rodiklių duomenys pasižymi tuo, jog yra aktualus, kai jie jau yra apdoroti. Taip pat rodikliai yra nepastovūs, jų struktūra gali būti keičiama - atsirasti naujų savybių, kurias reikia surinkti arba yra pašalinamos jau esamos savybės. Rodiklių duomenys yra renkami ir analizuojami labai skirtingiems poreikiams - visur kur reikalinga statistika ir apdorojami didelį kiekiai duomenų yra naudojami rodikliai: tai gali būti įmonės vedamą "Microsoft Excel" skaičiuoklė, kurioje užrašyta kiek buvo mokėta už elektrą kiekvienais metais per paskutinius 10 metų arba juodosios skylės nuotrauka padaryta koreliuojant didelio duomenų kiekį iš 8 skirtingų teleskopu ir gauti rodikliai rodo taškus ant paveikslėlio, kurio dydis yra \(10^{12}\) kartų mažesnis nei pradiniai duomenys \cite{akiyama2019first}. \par    
+Pirmiausiai turime apibrėžti bendrą rodiklių duomenų modelį, kurio pagalba galėtume apibrėžti rodiklius. 
 
-\subsection{Įeinančių duomenų struktūra}
+\subsection{Pirminiai rodiklių duomenys}
+
+Rodiklių duomenis yra gaunami apdorojus pirminių rodiklių duomenis, kurie susidaro iš raktų ir reikšmių žodyno (\ref{img:duomenys} pav.), kur raktas gali būti tik tekstinio tipo, o reikšmė - tekstas arba skaičius. Duomenų raktai ir raktų kiekis gali nesutapti, vieni žodynai gali turėti daugiau raktų-reikšmių elementų, kitų raktai gali būti visiškai nesusiję su apdorojamais rodikliais. \par 
+Kadangi pirminiai rodiklių duomenys gali būti gaunami iš skirtingų šaltinių, skirtingais laikais, todėl kuriamas sprendimas turi galėti priimti duomenis asinchroniškai ir iš skirtingų šaltinių, o sprendimas realiu laiku turi sugebėti apdoroti reikiamus duomenis, o nereikalingus atmesti. 
 
 \begin{figure}[H]
     \centering
@@ -113,23 +114,22 @@ Tam, kad sukurtume sprendimą, kuris tiktų rodiklių apdorojimui reikia bendro 
     \label{img:duomenys}
 \end{figure}
 
-Rodiklių duomenis mes gauname iš neapdorotų duomenų. Kadangi rodiklių gali būti daug skirtingų, todėl ir įeinantis duomenis neturi būti apriboti. Visi duomenys, kurie bus apdorojami bus sudaryti iš raktų ir reikšmių žodyno (\ref{img:duomenys} pav.), kur raktas gali būti tik tekstinio tipo, o reikšmė - tekstas arba skaičius. Duomenų raktai ir raktų kiekis gali nesutapti, vieni žodynai gali turėti daugiau raktų-reikšmių elementų, kitų raktai gali būti visiškai nesusiję su apdorojamais rodikliais. Kai yra neaktualus duomenys jie turi būti ignoruojami.\par 
-Kadangi neapdoroti duomenys gali būti gaunami iš skirtingų šaltinių, skirtingais laikais, todėl kuriamas sprendimas turi galėti priimti duomenis asinchroniškai ir iš skirtingų šaltinių, o sprendimas tikru laiku turi sugebėti apdoroti reikiamus duomenis, o nereikalingus atmesti. Realus pavyzdys būtų protingų namų sistema, kur skirtingi sensoriai siunčia duomenis skirtingais intervalais ir ne visada yra reikalingi visų sensorių parodymai.  
+
 
 \subsection{Rodiklių duomenų modelis}
+
+Norit apdoroti daug skirtingų rodiklių turime apsibrėžti bendrą rodiklių duomenų modelį (\ref{img:rodiklio_apibrezimas} pav.), pagal kurį bus generuojamos srautinio duomenų apdorojimo sistemos. Siūlomas apibrėžimas susidaro iš trijų dalių: 
+\begin{itemize}
+    \item Rodiklių duomenų pirminis raktas sudarytas iš įeinančių duomenų raktų rinkinio.
+    \item Įeinančių duomenų reikšmių srities apribojimai.
+    \item Įeinančių duomenų raktų rinkinys, kuris aprašo rodiklius ir išvestinių rodiklių kombinavimo apibrėžimai. 
+\end{itemize}
 
 \begin{figure}[H]
     \includegraphics[width=1\textwidth]{img/rodiklio_modelis.pdf}
     \caption{Rodiklių duomenų modelis}
     \label{img:rodiklio_apibrezimas}
 \end{figure}
-
-Norit apdoroti daug skirtingų rodiklių turime apsibrėžti bendrą rodiklių duomenų modelį (\ref{img:rodiklio_apibrezimas} pav.), pagal kurį bus generuojamos srautinio duomenų apdorojimo sistemos. Siūlomas apibrėžimas susidaro iš trijų dalių: 
-\begin{itemize}
-    \item Rodiklių duomenų pirminis raktas sudarytas iš įeinančių duomenų raktų rinkinio.
-    \item Įeinančių duomenų reikšmių srities apribojimai.
-    \item Įeinančių duomenų raktų rinkinys, kuris aprašo renkamus rodiklius ir išvestinių rodiklių kombinavimo apibrėžimai. 
-\end{itemize}
 
 \subsubsection{Pirminis raktas}
 
@@ -139,7 +139,7 @@ Pirma rodiklio apdorojimo apibrėžimo dalis nusako raktų rinkinį reikšmių p
     \item Sensoriniai rodikliai: norint surinkti vienos dienos duomenis aprašančius \textbf{skirtingų sensorių} parodymus \textbf{kiekvieną valandą}, \textbf{kiekvienam ofiso kabinetui}, raktu rinkinys atrodys taip: \[[\textit{"Sensoriaus tipas"; "Valanda"; Kabineto Numeris}]\] 
     \item Buhalterijoje: norint surinkti duomenis parodančių kiek ir \textbf{kokie skyriai} patyrė išlaidų kiekvieną šių \textbf{metų mėnesį}, raktų rinkinys atrodys taip: \[[\textit{"Skyriaus pavadinimas"; "Mėnesis"}]\] 
 \end{itemize}  \par
-Raktų kiekis neturi būti ribojamas, kadangi realiame pasaulyje yra neribotas kiekis duomenų pagal kuriuos galima grupuoti. Visų raktų reikšmių kiekių sandauga - apdorotų rodiklių duomenų pirminių raktų aibė. Nuo šios aibės dydžio priklausys ir apdorotų duomenų kiekis ir naudojamos atminties kiekis, nes visos apdoroti duomenis turi būti saugomi atmintyje. 
+Raktų kiekis neturi būti ribojamas, kadangi realiame pasaulyje yra neribotas kiekis duomenų pagal kuriuos galima grupuoti. Visų raktų reikšmių kiekių sandauga - apdorotų rodiklių duomenų pirminių raktų aibė. 
 
 \subsubsection{Įeinančių duomenų apribojimai}
 
