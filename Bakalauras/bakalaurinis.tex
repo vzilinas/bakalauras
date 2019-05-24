@@ -417,11 +417,12 @@ Pagal atlikta analizę \ref{table:comparer} lentelėje ir apsibrėžtų reikalav
 
 \section{Pagal architektūrą sukurtas sprendimas}
 
-Norint patikrinti siūlomą architektūrą buvo sukurtas sprendimas.
+Norint patikrinti siūlomą architektūrą buvo sukurtas sprendimas su kuriuo bus daromi bandymai.
 
 \subsection{Srautinio apdorojimo sistemų kodo generavimo komponentas}
 
 Kodo generavimo komponentas - pagrindinis architektūros komponentas reikalaujantis daugiausiai darbo. Kadangi kodo generavimo greitaveika nėra svarbi, o svarbiau kuo patogesnis kodo rašymas - komponentas buvo kuriamas su ".NET core" biblioteka. 
+Generavimas vykdomas pagal šabloną, buvo sukurti specialus šablonai, kiekvienam srautinio apdorojimo sprendimo komponento tipui. Šablonuose laukai kuriuos reikia pakeisti užrašyti specialiais identifikuojančiais elementais. Generavimo metų šie elementai pakeičiami pagal duomenis kurie apdorojami.
 Pagrindiniai šio komponento reikalavimai:
 \begin{itemize}
     \item Taškas (angl. endpoint) rodiklių duomenų modelio pateikimui. Kadangi naudojama ".NET core" biblioteka buvo sukurtas "Web API" tipo projektas kuris leidžia kurti programinė įranga pagal REST architektūrą apibrėžtais taškais. Duomenis į tašką gali būti paduodami internetu, tai duoda privalumą - pats sprendimas gali būti kitame kompiuteryje arb kitame tinkle. Taip pat leidžia daug vartotojų dirbti su suskurtu sprendimu.
@@ -438,21 +439,23 @@ Pagrindiniai šio komponento reikalavimai:
         \item Pagal rodiklius rekursyviai generuojame duomenų apdorojimo komponentus, jei tai jau egzistuojantis komponentas užpildome jį apdorotais duomenimis gautais iš duomenų bazės. 
         \item Generuojama sistemos topologiją, kuri aprašo komponentų jungimosi tarpusavyje logiką, komponentų paralelizmo lygi ir kitas sistemos konfigūracijas. 
         \item Visos sugeneruotos bylos talpinamos į vieną aplanką ir paleidžiamas specialus įrankis kompiliavimui.
-        \item Sukompiliuota sistema pateikiama į srautinio apdorojimo sprendimą.
-        \item Vartotojui gražinamas pranešimas, jog sistema sugeneruota sėkmingai.
     \end{enumerate}
     \item Srautinio apdorojimo sistemų teikimo ir trynimo operacijos su srautinio apdorojimo sprendimu.
     \item Apdorotų rodiklių traukimas iš duomenų bazės ir naudojimas perkuriant jau egzistuojančią srautinio apdorojimo sistemą.
 \end{itemize}
 
 
-
 \subsection{Apdorotų rodiklių duomenų bazė}
 
-Redis duomenų bazė
+Saugoti apdorotus duomenis buvo pasirinkta "Redis" duomenų bazę. Ji pasirinkta kadangi apdoroti rodiklių duomenis užima nedaug vietos ir svarbu greitai pasiekti ir įdėti duomenis. "Redis" duomenų bazių valdymo sistema tinka, nes duomenis saugomi operatyvioj atmintyje. Apdoroti rodikliai saugomi unikalioje eilėje pagal rodiklio modelio ir apdorojamo rodiklio pavadinimo kombinacija. Pavyzdžiui: renkant darbuotojų atlyginimus per metus iš uždarbio ir premijos, apdoroti rodiklių duomenys būtų saugomi pagal raktus: "darbuotojų-atlyginimas:uždarbis", "darbuotojų-atlyginimas:premijos" ir "darbuotojų-atlyginimas:atlyginimas"
 
 \subsection{Papildoma programinė įranga}
-Kafka, Zookeeper Pants
+Pilnam sistemos veikimui taip pat reikia papildomos programinės įrangos, kurį užsiima duomenų perdavimu, kompiliavimu. Ši įranga naudojama tokia kaip pateikiama nekeičiant konfigūracijos iš esmės.
+\begin{itemize}
+    \item Apache Kafka buvo pasirinkta įgyvendinti žinučių eilę.
+    \item Apache Kafka reikalauja Apache Zookeeper, kuris atsakingas už Apache Kafka žinučių eilės konfigūracijos valdymą.
+    \item Sugeneruotos sistemos kompiliavimui naudojama "Pants" kompiliavimo sistema.
+\end{itemize}
 
 \section{Eksperimentas ir sukurto sprendimo savybės}
 
