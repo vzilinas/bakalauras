@@ -356,7 +356,20 @@ Todėl norint sužinoti tam tikro srautinio duomenų apdorojimo sprendimo tinkam
     \item Pralaidumas (angl. throughput) - apibrėžia kiek pavyks įvykdyti operacijų per tam tikrą laiko tarpą.
     \item Abstrakcijos lygmuo (angl. abstraction) - apibrėžia kokio lygmens programavimo sąsają pateikia sprendimas.
 \end{itemize}
-
+\begin{table}[!htbp]
+    \begin{center}
+        \caption{Srautinių duomenų apdorojimo sprendimų palyginimas}
+        \label{table:comparer}
+        \begin{tabular}{ | l | l |}
+            \hline
+            \cellcolor[gray]{0.8} Charakteristika &  Išpildymas \\* \hline
+            \cellcolor[gray]{0.9} Pristatymas & test \\* \hline
+            \cellcolor[gray]{0.9} Uždelstumas & test \\* \hline
+            \cellcolor[gray]{0.9} Pralaidumas & test \\* \hline
+            \cellcolor[gray]{0.9} Abstrakcijos lygis & test \\* \hline
+        \end{tabular}
+    \end{center}
+\end{table}\par
 \subsection{Pristatymo semantika}
 "Apache Spark" ir "Apache Flink" sprendimų pristatymo semantika yra tiksliai vieną kartą (angl. exactly-once), tai reiškia, kad visi duomenys bus apdoroti tik vieną kartą. Tačiau tam, kad užtikrinti šią semantiką sprendimas sunaudoja daug resursų, kadangi reikia užtikrinti, kad operacija bus vykdoma būtent vieną kartą kiekviename srautinio apdorojimo žingsnyje: duomenų gavime, kuris stipriai priklauso nuo duomenų šaltinio, duomenų transformacijos, kurią turi įvykdyti srautinio apdorojimo sprendimas, ir duomenų saugojime, tai turi būti užtikrinta sprendimo ir naudojamos saugyklos \cite{zhang20}.\par
 
