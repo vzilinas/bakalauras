@@ -104,7 +104,7 @@ Pirmiausiai turime apibrėžti bendrą rodiklių duomenų modelį, kurio pagalba
 
 \subsection{Pirminiai rodiklių duomenys}
 
-Rodiklių duomenis yra gaunami apdorojus pirminių rodiklių duomenis, kurie susidaro iš raktų ir reikšmių žodyno (\ref{img:duomenys} pav.), kur raktas gali būti tik tekstinio tipo, o reikšmė - tekstas arba skaičius. Duomenų raktai ir raktų kiekis gali nesutapti, vieni žodynai gali turėti daugiau raktų-reikšmių elementų, kitų raktai gali būti visiškai nesusiję su apdorojamais rodikliais. \par 
+Rodiklių duomenys yra gaunami apdorojus pirminius rodiklių duomenis, kurie susidaro iš raktų ir reikšmių žodyno (\ref{img:duomenys} pav.), kur raktas gali būti tik tekstinio tipo, o reikšmė - tekstas arba skaičius. Duomenų raktai ir raktų kiekis gali nesutapti, vieni žodynai gali turėti daugiau raktų-reikšmių elementų, kitų raktai gali būti visiškai nesusiję su apdorojamais rodikliais. \par 
 Kadangi pirminiai rodiklių duomenys gali būti gaunami iš skirtingų šaltinių, skirtingais laikais, todėl kuriamas sprendimas turi galėti priimti duomenis asinchroniškai ir iš skirtingų šaltinių, o sprendimas realiu laiku turi sugebėti apdoroti reikiamus duomenis, o nereikalingus atmesti. 
 
 \begin{figure}[H]
@@ -113,8 +113,6 @@ Kadangi pirminiai rodiklių duomenys gali būti gaunami iš skirtingų šaltini�
     \caption{Įeinantys duomenys}
     \label{img:duomenys}
 \end{figure}
-
-
 
 \subsection{Rodiklių duomenų modelis}
 
@@ -143,19 +141,14 @@ Raktų kiekis neturi būti ribojamas, kadangi realiame pasaulyje yra neribotas k
 
 \subsubsection{Įeinančių duomenų apribojimai}
 
-Antra rodiklio duomenų modelio dalis susidaro iš masyvo apribojimų, kurie aprašo kokie duomenys turi būti apdorojami, o kokie ne. Apribojimas susidaro iš: 
-\begin{itemize}
-    \item Įeinančių duomenų rakto.
-    \item Operatorius, kuris gali būti (==, !=, >, <)
-    \item Reikšmė su kuria lyginama - riba.
-\end{itemize}
+Antra rodiklio duomenų modelio dalis susidaro iš masyvo apribojimų, kurie aprašo kokie duomenys turi būti apdorojami, o kokie ne. Apribojimas yra aprašomi kaip predikatai.
 Pavyzdžiui:
 \begin{itemize}
-    \item Statistikos srityje: norint surinkti žmonių, \textbf{vyresnių nei 60 metų} atlyginimus pagal kalendorinius metus, apribojimų sąrašas atrodys taip: \[[\{\textit{"Amžius" ; > ; 59}\}]\]
-    \item Sensoriniai rodikliai: norint surinkti \textbf{tik savaitgalio} sensorių rodiklius, apribojimų sąrašas atrodys taip: \[[\{\textit{"Savaitės Diena" ; > ; 5}\};\{\textit{"Savaitės Diena" ; < ; 8}\}]\]
-    \item Buhalterijoje: norint apdoroti tam tikrus duomenis \textbf{tik "Marketingas" skyriaus} apribojimų sąrašas atrodys taip: \[[\{\textit{"Skyriaus pavadinimas" ; == ; "Marketingas"}\}]\] 
+    \item Statistikos srityje: norint surinkti žmonių, \textbf{vyresnių nei 60 metų} atlyginimus pagal kalendorinius metus, apribojimų sąrašas atrodys taip: \[[\textit{"Amžius" > 59}]\]
+    \item Sensoriniai rodikliai: norint surinkti \textbf{tik savaitgalio} sensorių rodiklius, apribojimų sąrašas atrodys taip: \[[\textit{"Savaitės Diena" > 5};\textit{"Savaitės Diena" < 8}]\]
+    \item Buhalterijoje: norint apdoroti tam tikrus duomenis \textbf{tik "Marketingas" skyriaus} apribojimų sąrašas atrodys taip: \[[\textit{"Skyriaus pavadinimas" == "Marketingas"}]\] 
 \end{itemize}  
-Apribojimų kiekis kaip ir raktų, taip pat neturi būti ribojamas. Šie apribojimai leis naudoti tuos pačius duomenis skirtingiems rodikliams ir rodiklių rinkiniams apdoroti. Įeinantis duomenys bus ribojami pagal reikšmes, kurios turi priklausyti apribojimų aibių sankirtai. Jei pateikiame du apribojimus, tai įeinančio duomens ribojamos reikšmės turi patekti į abiejų apribojimų aibes. 
+Apribojimų kiekis yra neribojamas. Šie apribojimai turi leisti naudoti tuos pačius duomenis skirtingiems rodikliams ir rodiklių rinkiniams apdoroti. Įeinantis duomenys turi būti ribojami pagal reikšmes, kurios turi priklausyti apribojimų aibių sankirtai. Jei yra pateikti du apribojimus, tai įeinančio duomens ribojamos reikšmės turi patekti į abiejų apribojimų aibes. 
 \par
 
 \subsubsection{Rodikliai}
@@ -266,22 +259,6 @@ Pagal mūsų aprašyta rodiklių duomenų modelį, mes taip pat turime apsibrė�
 
 \section{Rodiklių duomenų apdorojimo architektūra}
 
-Nežinau ar čia reikia šito ar kitur ar iš vis nereikia. \par
-Problema: bandome formalizuoti problemą realaus pasaulio pavyzdžiu - Lietuvos statistikos departamento rodiklių duomenų bazė. Pagal 2019 metų gegužės mėnesio duomenis gautus iš \url{https://osp-rs.stat.gov.lt/rest_xml/dataflow/} kuri teikia Lietuvos statistikos departamentas, rodiklių duomenų bazė susidaro iš 7768 duomenų rinkinių - skirtingų apdorotų rodiklių duomenų. Šie rodikliai rodo statistinę informaciją surinktą per daug metų. Norint sukurti srautinio apdorojimo sistemas visiems šiems rodikliams prireiktų: 
-\begin{itemize}
-    \item Daug laiko, kadangi kiekviena sistema turi būti paruošta pagal ateinančius duomenis.
-    \item Programuotojų pagalbos. Nors ir įmanoma rasti srautinio apdorojimo sprendimus, kurie leidžia kurti sistemas, pagal jų sukurta supaprastintą kalbą, tai vis tiek reikalauja programuotojų.
-    \item Kiekvieną kartą kintant įeinančių duomenų aprašymų perrašyti visas susijusios srautinio apdorojimo sistemas.
-    \item Kiekviena kartą kintant rodikliams gauti reikalingų skaičiavimų formulėms iš naujo sukurti srautinio apdorojimo sistemą. 
-\end{itemize}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\textwidth]{img/architekturos_diagrama.pdf}
-    \caption{Architektūra}
-    \label{img:architektura}
-\end{figure}
-
 \subsection{Pagrindiniai komponentai}
 Siūloma architektūra susidaro iš daug skirtingų tarpusavyje susijusiu komponentų. Pagrindiniai du iš jų:
 \begin{itemize}
@@ -340,7 +317,6 @@ Siekiant apžvelgti modernius srautinio duomenų apdorojimo sprendimus turime ap
     \item taisyklė: Architektūra turi užtikrinti sugebėjimą paskirstyti sistemos darbus automatiškai. Srautinio apdorojimo sistemos turi palaikyti kelių procesoriaus gijų operacijas. Taip pat sistema turi galėti veikti ant kelių kompiuterių vienu metu ir prireikus paskirstyti resursus pagal galimybes.
     \item taisyklė: Architektūra turi apdoroti ir atsakyti akimirksniu. Anksčiau minėtos taisyklės nėra svarbios, jeigu sistema nesugeba greitai susidoroti su dideliu kiekiu naujų duomenų. Todėl turi būti naudojamas ne tik teisingas ir greitas srautinio apdorojimo sprendimas, bet ir gerai optimizuota sistema.
 \end{enumerate}\par 
-Šie reikalavimai yra sukurti tik teoriškai ir srautinio apdorojimo sprendimai neprivalo jų įgyvendinti \cite{stonebraker20058}. 
 Todėl norint sužinoti tam tikro srautinio duomenų apdorojimo sprendimo tinkamumą uždaviniui reikia išanalizuoti jų savybes.   
 \subsection{Srautinio duomenų apdorojimo sistemos}
 
@@ -476,7 +452,7 @@ Pilnam sistemos veikimui taip pat reikia papildomos programinės įrangos, kurį
 
 Nustatyti sukurto sprendimo ir architektūros savybes ir trukumus atliekant bandymus su rodiklių duomenimis:
 \begin{enumerate}
-    \item Sukurti sistemą apdorojančia rodiklius iš duomenų su apribojimais, grupuojančia juos pagal pirminį raktą.
+    \item Sukurti sistemą apdorojančia rodiklius iš duomenų su apribojimais,.
     \item Esamai sistemai pridėti arba pašalinti apribojimą.
     \item Esamai sistemai pridėti rodiklį.
     \item Esamai sistemai pašalinti rodiklį. 
