@@ -98,8 +98,9 @@ Tikslas: Sukurti rodiklių duomenų srautinio apdorojimo sistemos, pritaikomos p
 Uždaviniai:
 \begin{enumerate}
     \item Apibrėžti rodiklių duomenų modelį ir galimus rodiklių duomenų struktūros pokyčius.
-    \item Sukurti architektūrą, kuri pasižymėtų reikalingomis savybėmis spręsti rodiklių apdorojimo uždavinį. 
-    \item Atlikus šaltinių analizę ????? pasirinkti srautinio duomenų apdorojimo programinę įrangą, joje sukurti sudarytos architektūros koncepcinį sprendimą ir atlikti bandymus.
+    \item Atlikus šaltinių analizę pasirinkti srautinio duomenų apdorojimo programinę įrangą.
+    \item Sudaryti srautinio apdorojimo sistemos architektūrą, pagal ją sukurti koncepcinį sprendimą. 
+    \item Nustatyti sukurto koncepcinio sprendimo ir architektūros savybes atliekant bandymus su rodiklių duomenimis.
 \end{enumerate}
 
 \section{Rodiklių duomenys}
@@ -378,9 +379,36 @@ Iš šių keturių sprendimų pasirinktas vienas, kuris labiausiai tinka rodikli
     \end{center}
 \end{table}\par
 
-Pagal atlikta analizę \ref{table:comparer} lentelėje ir apsibrėžtų reikalavimų šiam uždaviniui tinkamiausias srautinio apdorojimo sprendimas yra "Heron". \par
+Pagal atlikta analizę, sudaryta \ref{table:comparer} lentelė. Pagal analizę ir apsibrėžtų reikalavimų šiam uždaviniui tinkamiausias srautinio apdorojimo sprendimas yra "Heron". \par
 Čia parašyti apie abstrakcija \par
  
+\section{Rodiklių duomenų srautinio apdorojimo sistemos architektūra}
+
+Šiame skyriuje aprašoma pasirinktos srautinio apdorojimo programinės įrangos "Heron" srautinio apdorojimo sistemų užrašymą ir kaip turi atrodyti srautinio apdorojimo sistemos pateikiamos į ją.
+
+\subsection{Srautinio apdorojimo sistemos komponentai}
+"Heron" programinei įrangai parašytos srautinio apdorojimo sistemos susidaro iš trijų dalių:
+\begin{itemize}
+    \item "Spout" komponentai - duomenų įeigos komponentai atsakingi už duomenų įeigą. Gali būti daugiau nei vienas, jeigu yra daugiau nei vienas duomenų šaltiniai. Pavyzdžiui žinučių eilė ir duomenų bazė.
+    \item "Bolt" komponentai - duomenų apdorojimo komponentai. Gali būti daugiau nei vienas. Gali gauti duomenis iš "Spout" komponentų ir iš kitų "Bolt" komponentų.
+    \item "Topology" komponentas - vienas komponentas, kuriame aprašomos srautinio apdorojimo sistemos pavadinimas, konfigūracijos (pristatymo semantika, kontrolinių saugojimo tašku intervalas ir t.t.) ir specifikuojama kaip tarpusavyje sujungti "Spout" ir "Bolt" komponentai ir jų paralelizmo lygis. 
+\end{itemize}
+Konkretus pavyzdys srautinio apdorojimo sistemos gali atrodyti taip:
+Tarkime norime sudaryti srautinio apdorojimo sistemą, kuriai bus siunčiami sakiniai, o ji skaičiuos kiekvieno žodžio pasikartojimus per visą laiką. Vienas iš būdų įgyvendinti tokią sistemą (\ref{img:example}. pav) būtų:
+\begin{itemize}
+    \item Įeigos "Spout" tipo komponentas gaunantis sakinius iš žinučių eilės ir perduodantis(angl. emit) sakinius toliau.
+    \item Skaidymo "Bolt" tipo komponentas gaunamus sakinius suskaidantis į žodžius ir perduodantis juos toliau.
+    \item Skaičiavimo "Bolt" tipo komponentas saugantis pasikartojančių žodžių žodyną, kur raktas - žodis, o reikšmė - kiek kartų pasikartojo. Gavęs žodi jis padidina jo skaitiklį žodine ir perduoda į kitą žinučių eilę.
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{img/pavyzdine_sistema.pdf}
+    \caption{Srautinio apdorojimo sistemos pavyzdys}
+    \label{img:example}
+\end{figure}
+
+\subsection{Pagal rodiklių duomenų modelį sugeneruotos srautinio apdorojimo sistemos}
+
 \section{Rodiklių duomenų apdorojimo architektūra}
 
 \subsection{Pagrindiniai komponentai}
