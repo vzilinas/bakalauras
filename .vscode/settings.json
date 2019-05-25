@@ -1,7 +1,7 @@
 {
     "latex-workshop.latex.recipes": [
         {
-            "name": "Darbo planas",
+            "name": "Bakalauras",
             "tools": [
                 "xelatex",
                 "biber",
