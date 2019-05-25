@@ -396,9 +396,9 @@ Pagal atlikta analizę, sudaryta \ref{table:comparer} lentelė. Pagal analizę i
 Konkretus pavyzdys srautinio apdorojimo sistemos gali atrodyti taip:
 Tarkime norime sudaryti srautinio apdorojimo sistemą, kuriai bus siunčiami sakiniai, o ji skaičiuos kiekvieno žodžio pasikartojimus per visą laiką. Vienas iš būdų įgyvendinti tokią sistemą (\ref{img:example}. pav) būtų:
 \begin{itemize}
-    \item Įeigos "Spout" tipo komponentas gaunantis sakinius iš žinučių eilės ir perduodantis(angl. emit) sakinius toliau.
-    \item Skaidymo "Bolt" tipo komponentas gaunamus sakinius suskaidantis į žodžius ir perduodantis juos toliau.
-    \item Skaičiavimo "Bolt" tipo komponentas saugantis pasikartojančių žodžių žodyną, kur raktas - žodis, o reikšmė - kiek kartų pasikartojo. Gavęs žodi jis padidina jo skaitiklį žodyne ir perduoda žodyną į "Rezultatų" žinučių eilę.
+    \item Įeigos "Spout" komponentas gaunantis sakinius iš žinučių eilės ir perduodantis(angl. emit) sakinius toliau.
+    \item Skaidymo "Bolt" komponentas gaunamus sakinius suskaidantis į žodžius ir perduodantis juos toliau.
+    \item Skaičiavimo "Bolt" komponentas saugantis pasikartojančių žodžių žodyną, kur raktas - žodis, o reikšmė - kiek kartų pasikartojo. Gavęs žodi jis padidina jo skaitiklį žodyne ir perduoda žodyną į "Rezultatų" žinučių eilę.
 \end{itemize}
 \begin{figure}[H]
     \centering
@@ -427,50 +427,28 @@ Srautinio apdorojimo sistemos pagal rodiklių duomenų modelį generuojamos taip
     \end{itemize}
     \item Sugeneruojamas "Topology" aprašas, kuriame aprašomos "Spout" ir "Bolt" komponentų jungimaisi tarpusavyje pagal tai kaip jie aprašyti rodiklių duomenų modelyje. Visi paprastų rodiklių "Bolt" komponentai gauna duomenis iš "Spout", o išvestinių rodiklių "Bolt" komponentai gauna duomenis iš kitų paprastų arba išvestinių "Bolt" komponentų.
 \end{enumerate}
-
-\section{Rodiklių duomenų apdorojimo architektūra}
-
-\subsection{Pagrindiniai komponentai}
-Siūloma architektūra susidaro iš daug skirtingų tarpusavyje susijusiu komponentų. Pagrindiniai du iš jų:
-\begin{itemize}
-    \item Srautinio apdorojimo sprendimas - tai programinė įranga, kurioje bus paleidžiamos sugeneruotos sistemos.
-    \item Kodo generavimo komponentas - atskira programinė įranga, kuri pagal pateikta rodiklio modelį generuos rodiklių duomenų apdorojimo sistemas. 
-\end{itemize}
-
-\subsubsection{Srautinio apdorojimo sprendimas}
-
-Srautinio apdorojimo sprendimas šioje architektūroje atsakingas už duomenų apdorojimą. Sugeneruotos srautinio apdorojimo sistemos bus sukompiliuotos ir pateiktos į srautinio apdorojimo sprendimą. Skirtingi srautinio apdorojimo sprendimai turi skirtingas savybes ir skirtingas konfigūracijas, todėl eksperimentui reikės pasirinkti tinkamą sprendimą. Srautinio apdorojimo sprendimai dažniausiai susidaro iš duomenų įeigos komponento ir duomenų apdorojimo komponentų. Srautinio apdorojimo sprendimai turi patys gebėti susitvarkyti su komunikacija tarp komponentų ir komponentų metrikų stebėjimu. Kadangi mūsų architektūra turi galėti apdoroti asinchroniškai patenkančius duomenis iš skirtingų šaltinių, duomenų pateikimas į srautinio apdorojimo sistemas vyks žinučių eilę. 
-
-\subsubsection{Kodo generavimo komponentas}
-
-Kodo generavimo komponentas tai svarbiausia architektūros dalis. Šiam komponentui bus pateikiami rodiklių duomenų modeliai ir pagal juos komponentas turės sugeneruoti srautinio apdorojimo sistemas, kurios bus teikiamos į srautinio apdorojimo sprendimo komponentą. Jei srautinio apdorojimo sistema jau egzistuoja jis bus sustabdoma, sugeneruota iš naujo su jau apdorotais duomenimis ir pateikiama į srautinio apdorojimo sistemą (\ref{img:generation-flow} pav.).
-
+Pavyzdžiui, jei turime rodiklį:     
+\[
+    \begin{tikzpicture}[sibling distance=10em,
+        level distance=2cm,
+        every node/.style = {shape=rectangle, rounded corners,	
+                             draw, align=center,	
+                             top color=white, bottom color=white}]	
+        \node{Žmonių kaita\\Nuolatinė kaita + (Migracija * Gyventojų kiekis)}
+                child { node {Nuolatinė kaita\\Gimstamumas - Mirtingumas} 
+                        child {node {Mirtingumas}}
+                        child {node {Gimstamumas}} }	
+                child { node {Migracija} } 	
+                child { node {Gyventojų kiekis} }; 	
+    \end{tikzpicture} 	
+\]
+Tada sugeneruota srautinio apdorojimo sistema atrodys taip:
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{img/generation-flow.pdf}
-    \caption{Kodo generavimo komponento veikimas}
-    \label{img:generation-flow}
+    \includegraphics[width=1\textwidth]{img/generuota_sistema.pdf}
+    \caption{Sugeneruotos srautinio apdorojimo sistemos pavyzdys}
+    \label{img:example}
 \end{figure}
-
-\subsection{Pagalbiniai komponentai}
-Kad būtų įgyvendinti rodiklių duomenų apdorojimo reikalavimai turi būti naudojami papildomi komponentai:
-\begin{itemize}
-    \item Žinučių eilė, kuri bus naudojama duomenų pateikimui į srautinio apdorojimo sistemas.
-    \item Duomenų bazę, kurioje bus saugomi apdoroti rodiklių duomenys.
-\end{itemize}
-
-\subsubsection{Žinučių eilė}
-
-Žinučių eilės pagrindinis uždavinys mūsų architektūroje - perduoti duomenis į srautinio apdorojimo sistemą. Žinučių eilės naudoja publikavimo-prenumeratos modelį (angl. publish-subscribe pattern), komponentai norintys gauti duomenis užsiregistruoja žinučių eilėje, o komponentai siunčiantis tiesiog perduoda juos į žinučių eilę. Taip yra įgyvendinamas asinchroninis bendravimas, komponentai perduoda duomenis į žinučių eilę, o komponentas norintis gauti duomenis gali juos pasiimti bet kuriuo momentu iš eilės.
-
-\subsubsection{Duomenų bazė}
-
-Duomenų bazė siūlomoje architektūroje saugos apdorotus rodiklių duomenis. Duomenys šioje duomenų bazėje bus tik įrašomi ir skaitomi. Kadangi mes norime turėti apdorotus išvestinių ir pagrindinių rodiklių duomenis, visi srautinio apdorojimo sistemų komponentai turės prisijungti prie duomenų bazės ir padėti paskutinę apdorotų duomenų versiją. Duomenys iš duomenų bazės bus traukiami dviem poreikiam: 
-\begin{enumerate}
-    \item Vartotojui norint gauti apdorotus rodiklių duomenis, vartotojas sius užklaus į architektūroje padarytą prieigos tašką pateikdamas rodiklio pavadinimą ir gaus atsakymą su jau apdorotais rodikliais. 
-    \item Kodo generavimo komponentas naudos apdorotų rodiklių duomenis, kai bus pergeneruojamos srautinio apdorojimo sistemos.  Kadangi po rodiklių pridėjimo arba pašalinimo mes norime, kad nepakeistų rodiklių apdorojimas vyktų toliau, po srautinio apdorojimo sistemos sustabdymo, kodo generavimo komponentas trauks paskutinius apdorojamus duomenis ir dės juos į jau esamus srautinio apdorojimo sistemos komponentus. Taip bus užtikrinamas duomenų apdorojimo pratesimas.   
-\end{enumerate}  
-
 
 \section{Eksperimentas ir sukurto sprendimo savybės}
 
@@ -502,12 +480,12 @@ Kompiuterio, kuriame buvo vykdomas eksperimentas specifikacijos:
 
 Kodo generavimo komponentas - programinė įranga sukurta su .NET core biblioteka. Pasirinkta .NET core biblioteka, nes reikalingas "Web API" tašką (angl. endpoint) rodiklio modelis pateikimui. 
 Kodo generavimas yra vykdomas pagal šablonus, kurie sukurti kiekvienam srautinio apdorojimo sprendimo komponento tipui. Šablono laukai, kuriuos reikia pakeisti, užrašyti specialiais identifikuojančiais elementais. Generavimo metu šie elementai keičiami reikiamu kodu užduočiai spręsti.
-Šio komponento veikimas toks:
+Šio komponento veikimas toks (\ref{img:generation-flow} pav.):
 \begin{itemize}
     \item Taškas (angl. endpoint) rodiklių duomenų modelio pateikimui. Kadangi naudojama ".NET core" biblioteka buvo sukurtas "Web API" tipo projektas kuris leidžia kurti programinė įranga pagal REST architektūrą apibrėžtais taškais. Duomenis į tašką gali būti paduodami internetu, tai duoda privalumą - pats sprendimas gali būti kitame kompiuteryje arb kitame tinkle. Taip pat leidžia daug vartotojų dirbti su suskurtu sprendimu.
     \item Srautinio apdorojimo sistemų generavimas pagal pateiktą rodiklių duomenų modelį. Naudojant ".Net core" biblioteka generuojame Python kodą, kuris vėliau bus sukompiliuotas ir pateiktas srautinio apdorojo sprendimui. Kodo generavimas pradedamas tik gavus rodiklių duomenų modelį iš vartotojo. Eiga tokia:
     \begin{enumerate}
-        \item Gaunamas rodiklio modelio aprašymas.
+        \item Gaunamas rodiklių duomenų modelis.
         \item Patikriname ar egzistuoja tokia srautinio apdorojimo sistema. Tai darome kreipdamiesi į duomenų bazę ir tikrindami, ar egzistuoja įrašų, kurių rakto pradžia sutampa su generuojamos sistemos pavadinimu.
         \item Jei egzistuoja:
             \begin{enumerate}
@@ -518,12 +496,26 @@ Kodo generavimas yra vykdomas pagal šablonus, kurie sukurti kiekvienam srautini
         \item Pagal rodiklius rekursyviai generuojame duomenų apdorojimo komponentus, jei tai jau egzistuojantis komponentas užpildome jį apdorotais duomenimis gautais iš duomenų bazės. 
         \item Generuojama sistemos topologiją, kuri aprašo komponentų jungimosi tarpusavyje logiką, komponentų paralelizmo lygi ir kitas sistemos konfigūracijas. 
         \item Visos sugeneruotos bylos talpinamos į vieną aplanką ir paleidžiamas specialus įrankis kompiliavimui.
+        \item Sukompiliuota sistema pateikiama į srautinio apdorojimo programą.
     \end{enumerate}
     \item Srautinio apdorojimo sistemų teikimo ir trynimo operacijos su srautinio apdorojimo sprendimu.
     \item Apdorotų rodiklių traukimas iš duomenų bazės ir naudojimas perkuriant jau egzistuojančią srautinio apdorojimo sistemą.
 \end{itemize}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{img/generation-flow.pdf}
+    \caption{Kodo generavimo komponento veikimas}
+    \label{img:generation-flow}
+\end{figure}
+
 \subsection{Apdorotų rodiklių duomenų bazė}
+
+Duomenų bazė koncepciniam sprendime saugos apdorotus rodiklių duomenis. Duomenys šioje duomenų bazėje bus tik įrašomi ir skaitomi. Kadangi mes norime turėti apdorotus išvestinių ir pagrindinių rodiklių duomenis, visi srautinio apdorojimo sistemų komponentai turės prisijungti prie duomenų bazės ir padėti paskutinę apdorotų duomenų versiją. Duomenys iš duomenų bazės bus traukiami dviem poreikiam: 
+\begin{enumerate}
+    \item Vartotojui norint gauti apdorotus rodiklių duomenis, vartotojas sius užklaus į architektūroje padarytą prieigos tašką pateikdamas rodiklio pavadinimą ir gaus atsakymą su jau apdorotais rodikliais. 
+    \item Kodo generavimo komponentas naudos apdorotų rodiklių duomenis, kai bus pergeneruojamos srautinio apdorojimo sistemos.  Kadangi po rodiklių pridėjimo arba pašalinimo mes norime, kad nepakeistų rodiklių apdorojimas vyktų toliau, po srautinio apdorojimo sistemos sustabdymo, kodo generavimo komponentas trauks paskutinius apdorojamus duomenis ir dės juos į jau esamus srautinio apdorojimo sistemos komponentus. Taip bus užtikrinamas duomenų apdorojimo pratesimas.   
+\end{enumerate}  
 
 Saugoti apdorotus duomenis buvo pasirinkta "Redis" duomenų bazę. Ji pasirinkta kadangi apdoroti rodiklių duomenis užima nedaug vietos ir svarbu greitai pasiekti ir įdėti duomenis. "Redis" duomenų bazių valdymo sistema tinka, nes duomenis saugomi operatyvioj atmintyje. Apdoroti rodikliai saugomi unikalioje eilėje pagal rodiklio modelio ir apdorojamo rodiklio pavadinimo kombinacija. Pavyzdžiui: renkant darbuotojų atlyginimus per metus iš uždarbio ir premijos, apdoroti rodiklių duomenys būtų saugomi pagal raktus: "darbuotojų-atlyginimas:uždarbis", "darbuotojų-atlyginimas:premijos" ir "darbuotojų-atlyginimas:atlyginimas"
 
@@ -532,7 +524,7 @@ Saugoti apdorotus duomenis buvo pasirinkta "Redis" duomenų bazę. Ji pasirinkta
 
 Pilnam sistemos veikimui taip pat reikia papildomos programinės įrangos, kurį užsiima duomenų perdavimu, srautinio apdorojimo sistemų kompiliavimu. Ši įranga naudojama tokia kaip pateikiama nekeičiant konfigūracijos iš esmės.
 \begin{itemize}
-    \item Apache Kafka buvo pasirinkta įgyvendinti žinučių eilę.
+    \item Žinučių eilės pagrindinis uždavinys - perduoti duomenis į srautinio apdorojimo sistemą. Žinučių eilės naudoja publikavimo-prenumeratos modelį (angl. publish-subscribe pattern), komponentai norintys gauti duomenis užsiregistruoja žinučių eilėje, o komponentai siunčiantis tiesiog perduoda juos į žinučių eilę. Taip yra įgyvendinamas asinchroninis bendravimas, komponentai perduoda duomenis į žinučių eilę, o komponentas norintis gauti duomenis gali juos pasiimti bet kuriuo momentu iš eilės. Koncepcinio sprendimo įgyvendinimui pasirinkta Apache Kafka žinučių eilė.
     \item Apache Kafka reikalauja Apache Zookeeper, kuris atsakingas už Apache Kafka žinučių eilės konfigūracijos valdymą.
     \item Sugeneruotos sistemos kompiliavimui naudojama "Pants" kompiliavimo sistema.
 \end{itemize}
