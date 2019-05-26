@@ -530,9 +530,9 @@ Taip pat norint eksperimentų atlikimui yra reikalinga programinė įranga:
 
 \subsection{Eksperimentas}
 Eksperimento vykdymui sudarytas rodiklių duomenų uždavinys: turime išmanių namų sensorius - drėgmės, temperatūros, šviesos. Norima surinkti valandinius dienos (nuo 8 valandos iki 20 valandos) pagal kambario pavadinimą rodiklius. Taip pat norima apskaičiuoti išvestinį juntamosios temperatūros\cite{anderson2013methods} rodiklį: 
-\[\textit{Juntamoji temperatūra} = \textit{Temperatūra} – 0.55 * (1 – 0.001 * \textit{Drėgmė}) * (\textit{Temperatūra} – 14.5)\]
-Taip pat tarkime, kad po laiko buvo nuspręsta taip pat apdoroti kondensacijos taško rodiklį: 
-\[\textit{Kondensacijos taškas} = ((\textit{Drėgmė} / 100)^{0.125})*(112+(0.9*\textit{Temperatūra}))+0.1*\textit{Temperatūra}-112\]
+\[\textit{Juntamoji temperatūra} = \textit{Temperatūra} – 0.55 * (1 –\>\frac{\textit{Drėgmė}}{1000}) * (\textit{Temperatūra} – 14.5)\]
+Taip pat tarkime, kad po laiko buvo nuspręsta taip pat apdoroti kondensacijos taško \cite{wanielista1997hydrology} rodiklį: 
+\[\textit{Kondensacijos taškas} = ((\textit{Drėgmė} / 100)^{\frac{1}{8}})*(112+(0.9*\textit{Temperatūra}))+0.1*\textit{Temperatūra}-112\]
 \subsubsection{Pradiniai duomenys}
 Siekiant įvykdyti eksperimentą reikia tokių pradinių duomenų:
 
