@@ -66,7 +66,7 @@ Kadangi rodikliai laikui bėgant gali būti keičiami reikia, kad sprendimas, ga
     \item Universalus sprendimas. Sukuriamas universalus parametrizuojamas sprendimas ir pritaikomas užduotims nustatant parametrus.
     \item Kodo generavimo sprendimas. Sukuriamas sprendimas, kuris generuoja srautinio duomenų apdorojimo sistemas pagal iš anksto aprašytą struktūrą.  
 \end{itemize}   
-Tinkamas sprendimas turi būti išrinktas pagal sprendžiamą problemą. Jei nėra numatomas kitimas, pagal ką turi būti apdorojami duomenys, tai galima pasirinkti ir rankinio apdorojimo sprendimą, kadangi nėra didelės tikimybės, kad teks keisti sprendimą. Toks sprendimas tiktų apdorojant išmaniųjų skaitiklių duomenis \cite{skaitikliai}. Universalus sprendimas taip pat gali būti tinkamas jei įeinantis duomenis yra specifiški ir yra poreikis juos visus apdoroti. Toks sprendimas gali būti aktualus apdorojant duomenis iš sensorių, kurie matuoja namų būsena (temperatūra, drėgmę ir t.t.) ir bet koks naujas sensorius taip pat turi būti prijungtas ir apdorotas \cite{yang2017iot}. Šiame darbe buvo norima nagrinėti kodo generavimo sprendimo tinkamumą užduotims. \par
+Tinkamas sprendimas turi būti išrinktas pagal sprendžiamą problemą. Jei nėra numatomas kitimas, pagal ką turi būti apdorojami duomenys, tai galima pasirinkti ir rankinio apdorojimo sprendimą, kadangi nėra didelės tikimybės, kad teks keisti sprendimą. Toks sprendimas tiktų apdorojant išmaniųjų skaitiklių duomenis \cite{skaitikliai}. Universalus sprendimas taip pat gali būti tinkamas jei pirminiai rodiklių duomenis yra specifiški ir yra poreikis juos visus apdoroti. Toks sprendimas gali būti aktualus apdorojant duomenis iš sensorių, kurie matuoja namų būsena (temperatūra, drėgmę ir t.t.) ir bet koks naujas sensorius taip pat turi būti prijungtas ir apdorotas \cite{yang2017iot}. Šiame darbe buvo norima nagrinėti kodo generavimo sprendimo tinkamumą užduotims. \par
 Pagal Jack Herrington 2003 metų knygą "Code Generation in Action" kodo generavimas - tai rašymas programinės įrangos, kuri rašys reikiamą programinę įrangą problemai spręsti. Tai daroma tokiais atvejais, kai sprendžiama problema reikalauja daug rankinio darbo, kurį įmanoma automatizuoti. Kuo didesnio sprendimo reikalauja uždavinys tuo patraukliau tampa naudoti kodo generavimą sprendimo kūrimui. Kodo generavimas suteikia tokius privalumus: 
 \begin{itemize}
     \item Architektūrinį nuoseklumą: 
@@ -116,7 +116,7 @@ Kadangi pirminiai rodiklių duomenys gali būti gaunami iš skirtingų šaltini�
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{img/duomenys.pdf}
-    \caption{Įeinantys duomenys}
+    \caption{Pirminiai rodiklių duomenys}
     \label{img:duomenys}
 \end{figure}
 
@@ -124,9 +124,9 @@ Kadangi pirminiai rodiklių duomenys gali būti gaunami iš skirtingų šaltini�
 
 Norit apdoroti daug skirtingų rodiklių turime apsibrėžti bendrą rodiklių duomenų modelį (\ref{img:rodiklio_apibrezimas} pav.), pagal kurį bus generuojamos srautinio duomenų apdorojimo sistemos. Siūlomas apibrėžimas susidaro iš trijų dalių: 
 \begin{itemize}
-    \item Rodiklių duomenų pirminis raktas sudarytas iš įeinančių duomenų raktų rinkinio.
-    \item Įeinančių duomenų reikšmių srities apribojimai.
-    \item Įeinančių duomenų raktų rinkinys, kuris aprašo rodiklius. 
+    \item Rodiklių duomenų pirminis raktas sudarytas iš pirminių rodiklių duomenų raktų rinkinio.
+    \item Pirminių rodiklių duomenų reikšmių srities apribojimai.
+    \item Rodiklių. 
 \end{itemize}
 
 \begin{figure}[H]
@@ -145,23 +145,23 @@ Pirma rodiklio apdorojimo apibrėžimo dalis nusako raktų rinkinį reikšmių p
 \end{itemize}  \par
 Raktų kiekis neturi būti ribojamas, kadangi realiame pasaulyje yra neribotas kiekis duomenų pagal kuriuos galima grupuoti. Visų raktų reikšmių kiekių sandauga - apdorotų rodiklių duomenų pirminių raktų aibė. 
 
-\subsubsection{Įeinančių duomenų apribojimai}
+\subsubsection{Pirminių rodiklių duomenų apribojimai}
 
-Antra rodiklio duomenų modelio dalis susidaro iš masyvo apribojimų, kurie aprašo kokie duomenys turi būti apdorojami, o kokie ne. Apribojimas yra aprašomi kaip predikatai.
+Antra rodiklio duomenų modelio dalis susidaro iš rinkinio apribojimų, kurie aprašo kokie duomenys turi būti apdorojami, o kokie ne. Apribojimas yra aprašomi kaip predikatai.
 Pavyzdžiui:
 \begin{itemize}
     \item Statistikos srityje: norint surinkti žmonių, \textbf{vyresnių nei 60 metų} atlyginimus pagal kalendorinius metus, apribojimų sąrašas atrodys taip: \[\textit{"Amžius" > 59}\]
     \item Sensoriniai rodikliai: norint surinkti \textbf{tik savaitgalio} sensorių rodiklius, apribojimų sąrašas atrodys taip: \[\textit{"Savaitės Diena" > 5}, \textit{"Savaitės Diena" < 8}\]
     \item Buhalterijoje: norint apdoroti tam tikrus duomenis \textbf{tik "Marketingas" skyriaus} apribojimų sąrašas atrodys taip: \[\textit{"Skyriaus pavadinimas" == "Marketingas"}\] 
 \end{itemize}  
-Apribojimų kiekis yra neribojamas. Šie apribojimai turi leisti naudoti tuos pačius duomenis skirtingiems rodikliams ir rodiklių rinkiniams apdoroti. Įeinantis duomenys turi būti ribojami pagal reikšmes, kurios turi priklausyti apribojimų aibių sankirtai. Jei yra pateikti du apribojimus, tai įeinančio duomens ribojamos reikšmės turi patekti į abiejų apribojimų aibes. 
+Apribojimų kiekis yra neribojamas. Šie apribojimai turi leisti naudoti tuos pačius duomenis skirtingiems rodikliams ir rodiklių rinkiniams apdoroti. Pirminiai rodiklių duomenys turi būti ribojami pagal reikšmes, kurios turi priklausyti apribojimų aibių sankirtai. Jei yra pateikti du apribojimus, tai pirminio rodiklio duomens ribojamos reikšmės turi patekti į abiejų apribojimų aibes. 
 \par
 
 \subsubsection{Rodikliai}
 
 Ši rodiklių duomenų modelio dalis sudaryta iš dviejų skirtinų tipų komponentų:
 \begin{itemize}
-    \item Rodiklis - iš pirminių rodiklių duomenų gaunami parametrai. Rodiklių duomenų modelyje rodiklis yra sudarytas iš pavadinimo ir priminių rodiklių duomenų rakto.
+    \item Rodiklis - iš pirminių rodiklių duomenų gaunami parametrai. Rodiklių duomenų modelyje rodiklis yra sudarytas iš pavadinimo ir pirminių rodiklių duomenų rakto.
     \item Išvestinis rodiklis - iš vieno ar daugiau rodiklių išskaičiuojami parametrai. Rodiklių duomenų modelyje išvestinis rodiklis yra sudarytas iš pavadinimo ir rodiklių, nuo kuriu priklauso išvestinis rodiklis, transformacijos aprašo - formulės. 
 \end{itemize}
 Rodiklių duomenų modelyje komponentų priklausomybės sudaro priklausomybių medį, kurio viršūnės - rodikliai, o keliai - priklausomybės tarp rodiklių. Priklausomybių medyje kabančios (galinės) viršūnės visada bus rodiklio tipo, o visos kitos išvestinių rodiklių tipo.
@@ -221,7 +221,7 @@ Pavyzdžiui:
 
 \subsection{Rezultatų struktūra}
 
-Apdorotų rodiklių rezultatai gauti iš pirminių rodiklių duomenų gali būti užrašyti lentelę. Lentelės duomenų pirminis raktas yra sudarytas iš pirminių rodiklių duomenų reikšmių kombinacijos gautos pagal rodiklio modelio pirminį raktą. Rezultatų lentelės stulpeliuose aprašytas priminis raktas ir išvestiniai rodikliai. Rezultatų lentelės išvestinių rodiklių kolonėlės susidaro iš apdorotų rodiklių duomenų.
+Apdorotų rodiklių rezultatai gauti iš pirminių rodiklių duomenų gali būti užrašyti lentelę. Lentelės duomenų pirminis raktas yra sudarytas iš pirminių rodiklių duomenų reikšmių kombinacijos gautos pagal rodiklio modelio pirminį raktą. Rezultatų lentelės stulpeliuose aprašytas pirminis raktas ir išvestiniai rodikliai. Rezultatų lentelės išvestinių rodiklių kolonėlės susidaro iš apdorotų rodiklių duomenų.
 
 \begin{figure}[H]
     \centering
@@ -236,7 +236,7 @@ Rodiklių duomenų struktūra gali būti keičiama laikui bėgant. Buhalterijos 
 Pagal mūsų aprašyta rodiklių duomenų modelį, mes taip pat turime apsibrėžti kas gali keistis:
 \begin{itemize}
     \item Pirminis raktas negali keistis, nes naujos reikšmės tampa nepalyginamos su anksčiau surinktomis. Tarkim buvo renkami rodikliai metinių duomenų, o pagal poreikius reikia rinkti mėnesinius duomenis, ir lyginimas su anksčiau surinktais tampa neįmanomas. Todėl bet kokius pirminio raktus pokyčius turime laikyti nauju rodikliu. 
-    \item Apribojimai gali keistis, tačiau šie pokyčiai turi turėti prasmę ir naudojami tik tam, kad būtų išlaikytos tos pačios apdorojamu įeinančių duomenų aibės. Tarkime mums reikėjo apdoroti duomenis iš visų skyrių išskyrus administraciją ir tokiam uždaviniui buvo sukurtas apribojimas - \(\textit{"Skyriaus pavadinimas" != "Administracija"}\). Tačiau po laiko dalis administracijos skyriaus atsiskyrė ir susikūrė naujas HR skyrius. Norint, kad būtų išlaikyta apdorotų rodiklių lyginimo prasmė, nauji apribojimai atrodys taip: \(\textit{"Skyriaus pavadinimas"!="Administracija"}, \textit{"Skyriaus pavadinimas"!="HR"}\)
+    \item Apribojimai gali keistis, tačiau šie pokyčiai turi turėti prasmę ir naudojami tik tam, kad būtų išlaikytos tos pačios pirminių rodiklių duomenų aibės. Tarkime mums reikėjo apdoroti duomenis iš visų skyrių išskyrus administraciją ir tokiam uždaviniui buvo sukurtas apribojimas - \(\textit{"Skyriaus pavadinimas" != "Administracija"}\). Tačiau po laiko dalis administracijos skyriaus atsiskyrė ir susikūrė naujas HR skyrius. Norint, kad būtų išlaikyta apdorotų rodiklių lyginimo prasmė, nauji apribojimai atrodys taip: \(\textit{"Skyriaus pavadinimas"!="Administracija"}, \textit{"Skyriaus pavadinimas"!="HR"}\)
     \item Rodikliai ir išvestiniai rodikliai gali būti keičiami: rodiklių medžio viršūnės gali būti pridedamos ir pašalinamos. Operacijos su rodikliais neturi įtakoti kitų rodiklių būsenos ir modelį. Tarkime jog skaičiavome pajamas naudodami formulę: \[\textit{Pajamos = Atlyginimas + Premijos}\] Ir pagal šią formulę buvo sukurtas toks rodiklių medis: 
     \[	
         \begin{tikzpicture}[sibling distance=7em,	
@@ -395,7 +395,7 @@ Srautinio apdorojimo sistemos pagal rodiklių duomenų modelį generuojamos taip
     "Bolt" komponentai generuojami iš dviejų tipų rodiklių:
     \begin{itemize}
         \item Paprasti rodiklių "Bolt" komponentai, kurie iš pirminių duomenų ištraukia elementą, pagal raktą aprašyta rodiklio modelyje ir perduoda jį toliau.
-        \item Išvestiniai rodiklių "Bolt" komponentai, kurie gauna duomenis iš vieno arba daugiau "Bolt" komponentų ir su jais atlieką transformacijos aprašytus rodiklio modelyje. Transformacijos gali būti bet kokie iš anksto aprašyti veiksmai su bet kokiu kiekiu duomenų. Pavyzdžiui: norint gauti išvestinį rodiklį, kuris skaičiuoja dviejų įeinančių rodiklių sumą turi būti:
+        \item Išvestiniai rodiklių "Bolt" komponentai, kurie gauna duomenis iš vieno arba daugiau "Bolt" komponentų ir su jais atlieką transformacijos aprašytus rodiklio modelyje. Transformacijos gali būti bet kokie iš anksto aprašyti veiksmai su bet kokiu kiekiu duomenų. Pavyzdžiui: norint gauti išvestinį rodiklį, kuris skaičiuoja dviejų pirminių rodiklių sumą turi būti:
         \begin{itemize}
             \item Srautinio apdorojimo sistemoje iš anksto aprašyta funkcija "suma", kuri priima du skaičius ir gražina vieną.
             \item Rodiklio modelyje transformacija aprašyta - suma(rodiklis1, rodiklis2).
@@ -487,9 +487,9 @@ Kodo generavimas yra vykdomas pagal šablonus, kurie sukurti kiekvienam srautini
                 \item Sustabdome veikiančią sistemą. Tai darome kviesdami stabdymo komandą per Ubuntu operacinės terminalą.
                 \item Iš duomenų bazės traukiame jau apdorotus rodiklių duomenis ir juos perduodame į generavimo dalį.
             \end{enumerate} 
-        \item Generuojame srautinio apdorojimo sistemos įeigos komponentą - įrašome žinučių eilės grupės pavadinimą, parašome sąlygas įeinantiems duomenims pagal apribojimus ir sugeneruojame unikalų identifikatorių duomeniui, kurio pagalba toliau einantys veiksmai, kurie reikalauja duomenų apdorojimo iš kelių skirtingų komponentų, sukombinuoja duomenis.
-        \item Pagal rodiklius rekursyviai generuojame duomenų apdorojimo komponentus, jei tai jau egzistuojantis komponentas užpildome jį apdorotais duomenimis gautais iš duomenų bazės. 
-        \item Generuojama sistemos topologiją, kuri aprašo komponentų jungimosi tarpusavyje logiką, komponentų paralelizmo lygi ir kitas sistemos konfigūracijas. 
+        \item Generuojame srautinio apdorojimo sistemos įeigos "Spout" tipo komponentą - įrašome žinučių eilės grupės pavadinimą, parašome sąlygas pirminių rodiklių duomenims pagal apribojimus ir sugeneruojame unikalų identifikatorių duomeniui, kurio pagalba toliau einantys veiksmai, kurie reikalauja duomenų apdorojimo iš kelių skirtingų komponentų, sukombinuoja duomenis.
+        \item Pagal rodiklius rekursyviai generuojame duomenų apdorojimo "Bolt" tipo komponentus, jei tai jau egzistuojantis komponentas užpildome jį apdorotais duomenimis gautais iš duomenų bazės. 
+        \item Generuojama sistemos "Topology" tipo aprašą, kuriame įrašyta komponentų jungimosi tarpusavyje logiką, komponentų paralelizmo lygi ir kitas sistemos konfigūracijas. 
         \item Visos sugeneruotos bylos talpinamos į vieną aplanką ir paleidžiamas specialus įrankis kompiliavimui.
         \item Sukompiliuota sistema pateikiama į srautinio apdorojimo programą.
     \end{enumerate}
