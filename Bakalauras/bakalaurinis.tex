@@ -56,7 +56,6 @@ This work consists of a theoretical and an experimental part. Theoretical part d
 
 \sectionnonum{Įvadas}
  
-% TODO: Įžangoje apžvelgti srautinį apdorojimą ir kodo generavimą.
 Šiame darbe yra nagrinėjamas rodiklių duomenų apdorojimas ir kuriamas koncepcinis sprendimas galintis prisitaikyti, kai keičiama rodiklių duomenų struktūrą. Rodiklių duomenimis vadinkime pasikartojančių įvykių parametrus aprašančius duomenis. Pavyzdžiui, įvairių matuoklių – temperatūros, resursų suvartojimo – fiksuojamus rodmenis, kasmėnesinius veiklos indikatorius, tokius kaip veiklos finansines ataskaitas ar veiklos procesų indikatorius. Taip pat rodiklių struktūra gali keistis laikui bėgant: objektų atributų taksonomija (pvz. mirties priežasčių sąrašas, finansinių sąskaitų sąrašas) arba įrašo atributų sąrašai. Surenkamu rodiklių duomenų kiekis visada didėja, taip pat ir duomenų kiekis, kuriuos reikia apdoroti pagal rodiklius auga, todėl standartiniai sprendimai, pavyzdžiui, reliacinės duomenų bazės netinka dėl ilgos apdorojimo trukmės. Rodiklių duomenų bazės pasižymi tuo, kad duomenys į jas patenka iš daug skirtingų tiekėjų ir patekimo laikas tarp tiekėjų nėra sinchronizuojamas, o suagreguotą informaciją vartotojai gali užklausti bet kurio metu. Todėl šiame darbe bus nagrinėjamas srautinis duomenų apdorojimas, kuris patenkančius duomenis apdoros realiu laiku, ir saugos jau apdorotus. \par
 Realaus laiko duomenų apdorojimas (angl. Real-time data processing) yra jau senai nagrinėjamas, kaip vienas iš būdų apdoroti didelių kiekių duomenis (angl. Big data). Vienas iš realaus laiko apdorojimo sprendimų yra srautinis duomenų apdorojimas. Srautinis duomenų apdorojimas (angl. stream processing) – lygiagrečių programų kūrimo modelis, pasireiškiantis sintaksiškai sujungiant nuoseklius skaičiavimo komponentus srautais, kad kiekvienas komponentas galėtų skaičiuoti savarankiškai \cite{shortstreamproc}. Darbe yra analizuojamos jau egzistuojančias srautinio apdorojimo sistemų programas pagal srautinio apdorojimo programų savybes aprašytas Michael Stonebraker, pasirenkama vieną srautinio apdorojimo programa ir pagal ją sukuriamas koncepcinis sprendimas. 
 \par
@@ -474,7 +473,7 @@ Siekiant nustatyti sudarytos architektūros savybes sukurtas koncepcinis sprendi
 \subsubsection{Sistemų generavimo išpildymas}
 
 Sistemų generavimo komponentas - programinė įranga sukurta su .NET core biblioteka. Pasirinkta .NET core biblioteka, nes reikalingas "Web API" tašką (angl. endpoint) rodiklio modelis pateikimui. 
-Kodo generavimas yra vykdomas pagal šablonus, kurie sukurti kiekvienam srautinio apdorojimo sprendimo komponento tipui. Šablono laukai, kuriuos reikia pakeisti, užrašyti specialiais identifikuojančiais elementais. Generavimo metu šie elementai keičiami reikiamu kodu užduočiai spręsti.
+Srautinio apdorojimo sistemų kodo generavimas yra vykdomas pagal šablonus, kurie sukurti kiekvienam srautinio apdorojimo sprendimo komponento tipui. Šablono laukai, kuriuos reikia pakeisti, užrašyti specialiais identifikuojančiais elementais. Generavimo metu šie elementai keičiami reikiamu kodu užduočiai spręsti.
 Šio komponento veikimas toks (\ref{img:generation-flow} pav.):
 \begin{itemize}
     \item Taškas (angl. endpoint) rodiklių duomenų modelio pateikimui. Kadangi naudojama ".NET core" biblioteka buvo sukurtas "Web API" tipo projektas kuris leidžia kurti programinė įranga pagal REST architektūrą apibrėžtais taškais. Duomenis į tašką gali būti paduodami internetu, tai duoda privalumą - pats sprendimas gali būti kitame kompiuteryje arb kitame tinkle. Taip pat leidžia daug vartotojų dirbti su suskurtu sprendimu.
@@ -500,7 +499,7 @@ Kodo generavimas yra vykdomas pagal šablonus, kurie sukurti kiekvienam srautini
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{img/generation-flow.pdf}
-    \caption{Kodo generavimo komponento veikimas}
+    \caption{Srautinio apdorojimo sistemų generavimo komponento veikimas}
     \label{img:generation-flow}
 \end{figure}
 
@@ -509,11 +508,10 @@ Kodo generavimas yra vykdomas pagal šablonus, kurie sukurti kiekvienam srautini
 Duomenų bazė koncepciniam sprendime saugos apdorotus rodiklių duomenis. Duomenys šioje duomenų bazėje bus tik įrašomi ir skaitomi. Kadangi mes norime turėti apdorotus išvestinių ir pagrindinių rodiklių duomenis, visi srautinio apdorojimo sistemų komponentai turės prisijungti prie duomenų bazės ir padėti paskutinę apdorotų duomenų versiją. Duomenys iš duomenų bazės bus traukiami dviem poreikiam: 
 \begin{enumerate}
     \item Vartotojui norint gauti apdorotus rodiklių duomenis, vartotojas sius užklaus į architektūroje padarytą prieigos tašką pateikdamas rodiklio pavadinimą ir gaus atsakymą su jau apdorotais rodikliais. 
-    \item Kodo generavimo komponentas naudos apdorotų rodiklių duomenis, kai bus pergeneruojamos srautinio apdorojimo sistemos.  Kadangi po rodiklių pridėjimo arba pašalinimo mes norime, kad nepakeistų rodiklių apdorojimas vyktų toliau, po srautinio apdorojimo sistemos sustabdymo, kodo generavimo komponentas trauks paskutinius apdorojamus duomenis ir dės juos į jau esamus srautinio apdorojimo sistemos komponentus. Taip bus užtikrinamas duomenų apdorojimo pratesimas.   
+    \item Srautinio apdorojimo sistemų generavimo komponentas naudos apdorotų rodiklių duomenis, kai bus pergeneruojamos srautinio apdorojimo sistemos.  Kadangi po rodiklių pridėjimo arba pašalinimo mes norime, kad nepakeistų rodiklių apdorojimas vyktų toliau, po srautinio apdorojimo sistemos sustabdymo, kodo generavimo komponentas trauks paskutinius apdorojamus duomenis ir dės juos į jau esamus srautinio apdorojimo sistemos komponentus. Taip bus užtikrinamas duomenų apdorojimo pratesimas.   
 \end{enumerate}  
 
 Saugoti apdorotus duomenis buvo pasirinkta "Redis" duomenų bazę. Ji pasirinkta kadangi apdoroti rodiklių duomenis užima nedaug vietos ir svarbu greitai pasiekti ir įdėti duomenis. "Redis" duomenų bazių valdymo sistema tinka, nes duomenis saugomi operatyvioj atmintyje. Apdoroti rodikliai saugomi unikalioje eilėje pagal rodiklio modelio ir apdorojamo rodiklio pavadinimo kombinacija. Pavyzdžiui: renkant darbuotojų atlyginimus per metus iš uždarbio ir premijos, apdoroti rodiklių duomenys būtų saugomi pagal raktus: "darbuotojų-atlyginimas:uždarbis", "darbuotojų-atlyginimas:premijos" ir "darbuotojų-atlyginimas:atlyginimas"
-
 
 \subsubsection{Papildoma programinė įranga}
 
@@ -523,21 +521,35 @@ Pilnam sistemos veikimui taip pat reikia papildomos programinės įrangos, kurį
     \item Apache Kafka reikalauja Apache Zookeeper, kuris atsakingas už Apache Kafka žinučių eilės konfigūracijos valdymą.
     \item Sugeneruotos sistemos kompiliavimui naudojama "Pants" kompiliavimo sistema.
 \end{itemize}
+Taip pat norint eksperimentų atlikimui yra reikalinga programinė įranga:
+\begin{itemize}
+    \item Pirminių rodiklių duomenų siuntimo komponentas. Šis Python kalba komponentas į žinučių eilę reguliaru intervalu siunčia duomenis sugeneruotus su \url{https://mockaroo.com/} įrankiu.
+    \item Postman programa naudojama išsiųsti rodiklių duomenų modelį į koncepcinio sprendimo generavimo tašką.
+    \item Naršyklė naudojama stebėti sugeneruotas ir pateiktas srautinio apdorojimo sistemas per "Heron" sąsają ir gauti duomenis iš apdorotų rodiklių duomenų bazės.
+\end{itemize}
 
-Testavimo duomenų generatorius, Postman, naršyklė
+\subsection{Eksperimentas}
+Eksperimento vykdymui sudarytas rodiklių duomenų uždavinys: turime išmanių namų sensorius - drėgmės, temperatūros, šviesos. Norima surinkti valandinius dienos (nuo 8 valandos iki 20 valandos) pagal kambario pavadinimą rodiklius. Taip pat norima apskaičiuoti išvestinį juntamosios temperatūros\cite{anderson2013methods} rodiklį: 
+\[\textit{Juntamoji temperatūra} = \textit{Temperatūra} – 0.55 * (1 – 0.001 * \textit{Drėgmė}) * (\textit{Temperatūra} – 14.5)\]
+Taip pat tarkime, kad po laiko buvo nuspręsta taip pat apdoroti kondensacijos taško rodiklį: 
+\[\textit{Kondensacijos taškas} = ((\textit{Drėgmė} / 100)^{0.125})*(112+(0.9*\textit{Temperatūra}))+0.1*\textit{Temperatūra}-112\]
+\subsubsection{Pradiniai duomenys}
+Siekiant įvykdyti eksperimentą reikia tokių pradinių duomenų:
 
-\subsection{Eksperimento eiga}
 
-\subsection{Eksperimento išvados}
+\subsubsection{Eksperimento eiga}
+
+\subsubsection{Eksperimento rezultatai}
 
 \subsection{Sprendimo savybės}
 
 \sectionnonum{Rezultatai}
 
 \begin{enumerate}
-    \item Apibrėžta rodiklių duomenų struktūra ir galimi duomenų struktūros pokyčiai.
-    \item Sukurtas architektūra tinkama spręsti rodiklių apdorojimo uždavinį. 
-    \item Pasirinktam srautinio apdorojimo sprendimui, pagal sukurtą architektūra sukurtas sprendimas
+    \item Apibrėžtas rodiklių duomenų modelis ir galimi duomenų struktūros pokyčiai.
+    \item Atlikta srautinio apdorojimo sprendimų analizė ir pasirinktas tinkamas srautinių rodiklių duomenų apdorojimo sistemų generavimui. 
+    \item Sudaryta srautinio apdorojimo sistemos architektūra tinkama spręsti rodiklių apdorojimo uždavinį. 
+    \item Sukurtas koncepcinis sprendimas pagal sudaryta architektūrą.
     \item Atlikti eksperimentai su sukurtu sprendimu ir apžvelgtos jo savybės. 
 \end{enumerate}
 
