@@ -529,10 +529,12 @@ Taip pat norint eksperimentų atlikimui yra reikalinga programinė įranga:
 \end{itemize}
 
 \subsection{Eksperimentas}
+
 Eksperimento vykdymui sudarytas rodiklių duomenų uždavinys: turime išmanaus ofiso sensorius - drėgmės, temperatūros, šviesos. Norima surinkti valandinius dienos (nuo 8 valandos iki 20 valandos) pagal kabineto numerį rodiklius. Taip pat norima apskaičiuoti išvestinį juntamosios temperatūros rodiklį pagal formulę\cite{anderson2013methods}: 
 \[\textit{Juntamoji temperatūra} = \textit{Temperatūra} – (0.55 * (1 –\>\frac{\textit{Drėgmė}}{1000}) * (\textit{Temperatūra} – 14.5))\]
 Taip pat tarkime, kad po laiko buvo nuspręsta taip pat apdoroti bendro pojūčio rodiklį: 
 \[\textit{Bendras pojūtis} = \frac{\textit{Šviesumas}}{75} * \frac{\textit{Juntamoji temperatūra}}{25} \]
+
 \subsubsection{Pradiniai duomenys}
 \noindent Pradinis rodiklių duomenų modelis pagal uždavinį atrodo taip:
 \begin{itemize}
@@ -558,7 +560,7 @@ Taip pat tarkime, kad po laiko buvo nuspręsta taip pat apdoroti bendro pojūči
         \end{tikzpicture} 	
     \]
 \end{itemize}
-Pakeistas rodiklių duomenų modelis atrodo taip:
+Atnaujintas rodiklių duomenų modelis atrodo taip:
 \begin{itemize}
     \item Pirminis raktas: \(\textit{"Valanda", "Kabinetas"}\)
     \item Pirminių rodiklių duomenų apribojimai: \(\textit{"Valanda" > 7},\textit{"Valanda" < 21}\) 
@@ -592,17 +594,26 @@ Pakeistas rodiklių duomenų modelis atrodo taip:
 Eksperimentas buvo vykdomas tokia eiga:
 \begin{enumerate}
     \item Pradinių rodiklių duomenų modelis užrašomas JSON formatu (Priedas \ref{add:initial-json}) ir naudojant Postman programą paduodamas į sprendimą.
-    \item Atsidarę "Heron" sąsają naršyklėje matome srautinio apdorojimo sistemos diagramą (Priedas \ref{add:generated-system1}).
+    \item Atsidarę "Heron" sąsają naršyklėje matome sugeneruotos srautinio apdorojimo sistemos diagramą (Priedas \ref{add:generated-system1}).
     \item Su pirminių rodiklių duomenų siuntimo programa pradedame siųsti duomenis į žinučių eilę.
-    \item Naršyklėje siusdami užklausa į sprendimo tašką gauname apdorotus rodiklių duomenis iš duomenų bazės ((Priedas \ref{add:generated-data1})).
-    \item Pakeistas rodiklių duomenų modelis užrašomas JSON formatu (Priedas \ref{add:changed-json}) ir naudojant Postman programą paduodamas į sprendimą.
-    \item Atnaujinę "Heron" sąsają naršyklėje matome, jog buvo atnaujinta srautinio apdorojimo sistema ((Priedas \ref{add:generated-system2})).
-    \item Naršyklėje siusdami užklausa į sprendimo tašką gauname apdorotus rodiklių duomenis iš duomenų bazės, kuriuose jau yra naujas rodiklis((Priedas \ref{add:generated-data2})).
+    \item Naršyklėje siusdami užklausa į sprendimo tašką gauname apdorotus rodiklių duomenis iš duomenų bazės (Priedas \ref{add:generated-data1}).
+    \item Atnaujintas rodiklių duomenų modelis užrašomas JSON formatu (Priedas \ref{add:changed-json}) ir naudojant Postman programą paduodamas į sprendimą.
+    \item Atnaujinę "Heron" sąsają naršyklėje matome, jog buvo atnaujinta srautinio apdorojimo sistema (Priedas \ref{add:generated-system2}).
+    \item Naršyklėje siusdami užklausa į sprendimo tašką gauname apdorotus rodiklių duomenis iš duomenų bazės, kuriuose jau yra naujas rodiklis(Priedas \ref{add:generated-data2}).
 \end{enumerate}
 
 \subsubsection{Eksperimento rezultatai}
-
+Stebint eksperimentą gauti rezultatai:
+\begin{itemize}
+    \item Sėkmingai sugeneruota srautinio apdorojimo sistema iš rodiklio duomenų modelio.
+    \item Srautinio apdorojimo sistema sėkmingai apdorojo pirminiai rodiklių duomenys pagal rodiklių duomenų modelį.
+    \item Išvestinių rodiklių "Bolt" komponentai teisingai išskaičiavo rezultatus pagal iš anksto aprašytas funkcijas naudojant duomenis iš daugiau nei vieno "Bolt" komponento.
+    \item Sėkmingai atnaujinta srautinio apdorojimo sistema pakeitus rodiklių duomenų modelį.
+    \item Atnaujinus sistemą nepakeisti "Bolt" tipo komponentai toliau pratęsė rodiklių apdorojimą. 
+\end{itemize}
 \subsection{Sprendimo savybės}
+
+Atliktas eksperimentas įrodo, jog šis sprendimas atitinka visas užsibrėžtas savybes.
 
 \sectionnonum{Rezultatai}
 
@@ -625,14 +636,14 @@ Eksperimentas buvo vykdomas tokia eiga:
 
 \appendix 
 
-\section{Generuojami pirminių rodiklių duomenys}\label{add:mockaroo}
+\section{Pirminių rodiklių duomenų generavimo įrankis}\label{add:mockaroo}
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{img/generated-data.png}
     \label{img:generated-data}
 \end{figure}
 
-\section{Pradinis rodiklių duomenų modelis JSON formatu}\label{add:initial-json}
+\section{Rodiklių duomenų modelis JSON formatu}\label{add:initial-json}
 \lstset{
     string=[s]{"}{"},
     stringstyle=\color{blue},
@@ -685,20 +696,21 @@ Eksperimentas buvo vykdomas tokia eiga:
 }
 \end{lstlisting}
 
-\section{Pradinė sugeneruota sistema "Heron" sąsajoje}\label{add:generated-system1}
+\section{Sugeneruota srautinio apdorojimo sistema "Heron" sąsajoje}\label{add:generated-system1}
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{img/generated-topology-1.png}
     \label{img:generated-data}
 \end{figure}
 
-\section{Dalis pradinės sugeneruotos sistemos rezultatų}\label{add:generated-data1}
+\section{Sugeneruotos srautinio apdorojimo sistemos rezultatai}\label{add:generated-data1}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{img/topology-data-1.png}
     \label{img:generated-data}
 \end{figure}
-\section{Pakeistas rodiklių duomenų modelis JSON formatu}\label{add:changed-json}
+
+\section{Atnaujintas rodiklių duomenų modelis JSON formatu}\label{add:changed-json}
 \begin{lstlisting}
 {
     "IndicatorId": "32c24420-afbd-44fb-b045-ef72c48cb04e",
@@ -752,14 +764,14 @@ Eksperimentas buvo vykdomas tokia eiga:
 \end{lstlisting}
 
 
-\section{Pakeista sugeneruota sistema "Heron" sąsajoje}\label{add:generated-system2}
+\section{Atnaujintos srautinio apdorojimo sistemos "Heron" sąsajoje}\label{add:generated-system2}
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{img/generated-topology-2.png}
     \label{img:generated-data}
 \end{figure}
 
-\section{Dalis pakeistos sugeneruotos sistemos rezultatų}\label{add:generated-data2}
+\section{Atnaujintos srautinio apdorojimo sistemos rezultatai}\label{add:generated-data2}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{img/topology-data-2.png}
