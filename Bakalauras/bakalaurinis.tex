@@ -97,7 +97,7 @@ Tikslas: Sukurti rodiklių duomenų srautinio apdorojimo sistemos, pritaikomos p
 Uždaviniai:
 \begin{enumerate}
     \item Apibrėžti rodiklių duomenų modelį ir galimus rodiklių duomenų struktūros pokyčius.
-    \item Atlikus šaltinių analizę pasirinkti srautinio duomenų apdorojimo programinę įrangą.
+    \item Atlikus šaltinių analizę pasirinkti srautinio duomenų apdorojimo sprendimą.
     \item Sudaryti srautinio apdorojimo sistemos architektūrą, pagal ją sukurti koncepcinį sprendimą. 
     \item Nustatyti sukurto koncepcinio sprendimo ir architektūros savybes atliekant bandymus su rodiklių duomenimis.
 \end{enumerate}
@@ -359,17 +359,17 @@ Pagal analizę (\ref{table:comparer} lentelė.) ir apsibrėžtus reikalavimus m�
 
 \section{Srautinio duomenų apdorojimo sistemų architektūra}
 
-Šiame skyriuje aprašoma pasirinktos srautinio apdorojimo programinės įrangos "Heron" srautinio apdorojimo sistemų užrašymą ir kaip turi atrodyti srautinio apdorojimo sistemos pateikiamos į ją.
+Šiame skyriuje apžvelgtas srautinio apdorojimo sprendimo "Heron" srautinio apdorojimo sistemų užrašymas ir srautinio apdorojimo sistemų generavimas pagal deklaratyviai aprašyta rodiklių duomenų modelį.
 
 \subsection{Srautinio apdorojimo sistemos komponentai}
-"Heron" programinei įrangai parašytos srautinio apdorojimo sistemos kuriamos iš trijų dalių:
+"Heron" sprendimui parašytos srautinio apdorojimo sistemos susidaro iš trijų tipų komponentų:
 \begin{itemize}
     \item "Spout" komponentų - duomenų įeigos komponentai. Gali būti daugiau nei vienas, jeigu yra daugiau nei vienas duomenų šaltiniai, pavyzdžiui, žinučių eilė ir duomenų bazė.
     \item "Bolt" komponentų - duomenų apdorojimo komponentai. Gali būti daugiau nei vienas. Gali gauti duomenis iš "Spout" komponentų ir iš kitų "Bolt" komponentų.
     \item "Topology" aprašo skirto aprašyti srautinio apdorojimo sistemos pavadinimą, konfigūracijas (pristatymo semantika, kontrolinių saugojimo tašku intervalas ir t.t.) ir specifikuoti, kaip tarpusavyje sujungti "Spout" ir "Bolt" komponentai ir jų paralelizmo lygis. 
 \end{itemize}
-Konkretus pavyzdys srautinio apdorojimo sistemos gali atrodyti taip:
-Tarkime norime sudaryti srautinio apdorojimo sistemą, kuriai bus siunčiami sakiniai, o ji skaičiuos kiekvieno žodžio pasikartojimus per visą laiką. Vienas iš būdų įgyvendinti tokią sistemą (\ref{img:example}. pav) būtų:
+Konkretus pavyzdys srautinio apdorojimo sistemos atrodo taip:
+Reikalinga srautinio apdorojimo sistema, kuriai bus siunčiami sakiniai, o ji gražins žodyną su žodžių dažniu. Vienas iš būdų įgyvendinti tokią sistemą (\ref{img:example}. pav) yra:
 \begin{itemize}
     \item Įeigos "Spout" komponentas gaunantis sakinius iš žinučių eilės ir perduodantis(angl. emit) sakinius toliau.
     \item Skaidymo "Bolt" komponentas gaunamus sakinius suskaidantis į žodžius ir perduodantis juos toliau.
@@ -382,25 +382,20 @@ Tarkime norime sudaryti srautinio apdorojimo sistemą, kuriai bus siunčiami sak
     \label{img:example}
 \end{figure}
 
-\subsection{Pagal rodiklių duomenų modelį sugeneruotos srautinio apdorojimo sistemos}
-Srautinio apdorojimo sistemos pagal rodiklių duomenų modelį generuojamos taip:
+\subsection{Srautinio apdorojimo sistemų sudarymas pagal rodiklių duomenų modelį}
+Srautinio apdorojimo sistemos sudarytos pagal deklaratyvų rodiklių duomenų modelį atrodo taip:
 \begin{enumerate}
-    \item Sugeneruojamas "Spout" tipo komponentas į kurį duomenys ateina iš žinučių eilės. Šis komponentas filtruoja duomenis pagal rodiklių duomenų modelyje apibrėžtus apribojimus. Taip pat šiame komponente prie pradinių rodiklių duomenų pridedama papildoma informacija: 
+    \item "Spout" tipo įeigos komponentas. Šis komponentas aprašo priminių rodiklių duomenų filtravimo predikatus ir pirminį raktą. 
+    \item "Bolt" tipo komponentai, kurie sudaryti pagal rodiklių duomenų modelio rodiklius. Kiekvienam rodikliui turi būti vienas "Bolt" tipo komponentas. "Bolt" komponentai gali būti dviejų tipų:
     \begin{itemize}
-        \item Pirminis raktas sudarytas pagal rodiklių duomenų apibrėžimą ir pirminius rodiklių duomenis.
-        \item Sugeneruotas unikalus identifikatorius, kuris naudojamas išvestinių rodiklių kombinacijos veiksmams.
-    \end{itemize}
-    \item Sugeneruojami "Bolt" tipo komponentai, pagal rodiklių duomenų modelio rodiklius. Pagal kiekvieną rodiklį sugeneruojamas vienas "Bolt" tipo komponentas.
-    "Bolt" komponentai generuojami iš dviejų tipų rodiklių:
-    \begin{itemize}
-        \item Paprasti rodiklių "Bolt" komponentai, kurie iš pirminių duomenų ištraukia elementą, pagal raktą aprašyta rodiklio modelyje ir perduoda jį toliau.
-        \item Išvestiniai rodiklių "Bolt" komponentai, kurie gauna duomenis iš vieno arba daugiau "Bolt" komponentų ir su jais atlieką transformacijos aprašytus rodiklio modelyje. Transformacijos gali būti bet kokie iš anksto aprašyti veiksmai su bet kokiu kiekiu duomenų. Pavyzdžiui: norint gauti išvestinį rodiklį, kuris skaičiuoja dviejų pirminių rodiklių sumą turi būti:
+        \item Paprastų rodiklių "Bolt" komponentai, kurie atsakingi už pirminių rodiklių duomenų apdorojimą.
+        \item Išvestiniai rodiklių "Bolt" komponentai, kurie atsakingi už duomenų, gautų iš paprastų arba išvestinių rodiklių "Bolt" komponentų, transformaciją. Transformacijos - bet kokie iš anksto aprašyti nuoseklus veiksmai su duomenų rinkiniu gražinantys vieną rezultatą. Pavyzdžiui: norint sudaryto išvestinį rodiklį, kuris skaičiuoja dviejų pirminių rodiklių sumą turi būti:
         \begin{itemize}
-            \item Srautinio apdorojimo sistemoje iš anksto aprašyta funkcija "suma", kuri priima du skaičius ir gražina vieną.
-            \item Rodiklio modelyje transformacija aprašyta - suma(rodiklis1, rodiklis2).
+            \item Iš anksto aprašyta funkcija "suma", kuri priima du skaičius ir gražina vieną.
+            \item Rodiklio modelyje užrašyta transformacija - suma(rodiklis1, rodiklis2).
         \end{itemize} 
     \end{itemize}
-    \item Sugeneruojamas "Topology" aprašas, kuriame aprašomos "Spout" ir "Bolt" komponentų jungimaisi tarpusavyje pagal tai kaip jie aprašyti rodiklių duomenų modelyje. Visi paprastų rodiklių "Bolt" komponentai gauna duomenis iš "Spout", o išvestinių rodiklių "Bolt" komponentai gauna duomenis iš kitų paprastų arba išvestinių "Bolt" komponentų.
+    \item "Topology" aprašas, kuriame aprašomos "Spout" ir "Bolt" komponentų jungimaisi tarpusavyje pagal priklausomybių medžiu iš rodiklių duomenų modelio.
 \end{enumerate}
 Pavyzdžiui, jei turime rodiklį:     
 \[
@@ -417,11 +412,11 @@ Pavyzdžiui, jei turime rodiklį:
                 child { node {Gyventojų kiekis} }; 	
     \end{tikzpicture} 	
 \]
-Tada sugeneruota srautinio apdorojimo sistema atrodys taip:
+"Heron" sprendimui sukurta srautinio apdorojimo sistema atrodys taip:
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{img/generuota_sistema.pdf}
-    \caption{Sugeneruotos srautinio apdorojimo sistemos pavyzdys}
+    \caption{Srautinio apdorojimo sistemos pavyzdys}
     \label{img:example}
 \end{figure}
 
@@ -603,12 +598,11 @@ Stebint eksperimentą gauti rezultatai:
     \item Srautinio apdorojimo sistema sėkmingai apdorojo pirminiai rodiklių duomenys pagal rodiklių duomenų modelį.
     \item Išvestinių rodiklių "Bolt" komponentai teisingai išskaičiavo rezultatus pagal iš anksto aprašytas funkcijas naudojant duomenis iš daugiau nei vieno "Bolt" komponento.
     \item Sėkmingai atnaujinta srautinio apdorojimo sistema pakeitus rodiklių duomenų modelį.
-    \item Atnaujinus sistemą nepakeisti "Bolt" tipo komponentai toliau pratęsė rodiklių apdorojimą. 
+    \item Atnaujinus srautinio apdorojimo sistemą nepakeisti "Bolt" tipo komponentai toliau pratęsė rodiklių apdorojimą. 
 \end{itemize}
 \subsection{Sprendimo savybės}
-
 Atliktas eksperimentas įrodo, jog šis sprendimas atitinka visas užsibrėžtas savybes.
-
+TODO
 \sectionnonum{Rezultatai}
 
 \begin{enumerate}
