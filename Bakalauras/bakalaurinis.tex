@@ -87,10 +87,10 @@ Pagal Jack Herrington 2003 metų knygą "Code Generation in Action" kodo generav
 Kodo generavimas tampa tikrai naudingas tada, kai jis naudojamas didelių kiekių rankiniam kodavimui pakeisti \cite{herrington2003code}. \par
 Darbe nagrinėjamas architektūra ir koncepcinis sprendimas generuojantis srautinio apdorojimo sistemas pagal rodiklių duomenų modelius. Rodiklių duomenis apdorojantis koncepcinis sprendimas turi pasižymėti tokiomis savybėmis: 
 \begin{itemize}
-    \item Galėjimas keisti esamas apdorojimo sistemas, kai pakeičiamas rodiklių duomenų modelis.
+    \item Srautinių apdorojimo sistemų generavimas pagal deklaratyvų aprašymą.
+    \item Galimybė keisti esamas apdorojimo sistemas, kai pakeičiamas rodiklių duomenų modelis.
     \item Išvestinių rodiklių gavimas iš daugiau nei vieno rodiklio transformacijos.
     \item Išvestinių rodiklių apdorojimas pagal iš anksto apibrėžtas funkcijas.
-    \item Srautinių apdorojimo sistemų generavimas pagal deklaratyvų aprašymą.
 \end{itemize}  
 
 Tikslas: Sukurti rodiklių duomenų srautinio apdorojimo sistemos, pritaikomos prie duomenų struktūrų naudojant kodo generavimą, architektūrą.
@@ -105,7 +105,7 @@ Uždaviniai:
 
 \section{Rodiklių duomenys}
 
-Rodiklių duomenimis vadinkime pasikartojančių įvykių parametrus aprašančius duomenis. Rodiklių duomenys pasižymi tuo, jog yra aktualus, kai jie jau yra apdoroti. Taip pat rodikliai yra nepastovūs, jų struktūra gali būti keičiama - atsirasti naujų savybių, kurias reikia surinkti arba yra pašalinamos jau esamos savybės. Rodiklių duomenys yra renkami ir analizuojami labai skirtingiems poreikiams - visur kur reikalinga statistika ir apdorojami didelį kiekiai duomenų yra naudojami rodikliai: tai gali būti įmonės vedamą "Microsoft Excel" skaičiuoklė, kurioje užrašyta kiek buvo mokėta už elektrą kiekvienais metais per paskutinius 10 metų arba juodosios skylės nuotrauka padaryta koreliuojant didelio duomenų kiekį iš 8 skirtingų teleskopu ir gauti rodikliai rodo taškus ant paveikslėlio, kurio dydis yra \(10^{12}\) kartų mažesnis nei pradiniai duomenys \cite{akiyama2019first}. \par    
+Rodiklių duomenys - pasikartojančių įvykių parametrus aprašančius duomenys. Rodiklių duomenys pasižymi tuo, jog tik surinkti ir apdoroti tampa aktualus. Taip pat rodikliai yra nepastovūs, jų struktūra gali būti keičiama - atsirasti naujų savybių, kurias reikia surinkti arba yra pašalinamos jau esamos savybės. Rodiklių duomenys yra renkami ir analizuojami labai skirtingiems poreikiams - visur kur reikalinga statistika ir apdorojami didelį kiekiai duomenų yra naudojami rodikliai: tai gali būti įmonės vedamą "Microsoft Excel" skaičiuoklė, kurioje užrašyta kiek buvo mokėta už elektrą kiekvienais metais per paskutinius 10 metų arba juodosios skylės nuotrauka padaryta koreliuojant didelio duomenų kiekį iš 8 skirtingų teleskopu ir gauti rodikliai rodo taškus ant paveikslėlio, kurio dydis yra \(10^{12}\) kartų mažesnis nei pradiniai duomenys \cite{akiyama2019first}. \par    
 Pirmiausiai turime apibrėžti bendrą rodiklių duomenų modelį, kurio pagalba galėtume apibrėžti rodiklius. 
 
 \subsection{Pirminiai rodiklių duomenys}
@@ -126,7 +126,7 @@ Norit apdoroti daug skirtingų rodiklių turime apsibrėžti bendrą rodiklių d
 \begin{itemize}
     \item Rodiklių duomenų pirminis raktas sudarytas iš įeinančių duomenų raktų rinkinio.
     \item Įeinančių duomenų reikšmių srities apribojimai.
-    \item Įeinančių duomenų raktų rinkinys, kuris aprašo rodiklius ir išvestinių rodiklių kombinavimo apibrėžimai. 
+    \item Įeinančių duomenų raktų rinkinys, kuris aprašo rodiklius. 
 \end{itemize}
 
 \begin{figure}[H]
@@ -158,10 +158,13 @@ Apribojimų kiekis yra neribojamas. Šie apribojimai turi leisti naudoti tuos pa
 \par
 
 \subsubsection{Rodikliai}
-Rodiklių duomenų modelio dalis, kuri aprašo, kokie rodikliai renkami iš pradinių duomenų ir išvestinių rodiklių formules. 
-Ši dalis susidaro iš masyvo medžių. duomenis medžio šakomis eina iš apačios į viršų. Kiekviena medžio viršūnė saugo apdorotą rodiklį ir talpiną jį duomenų bazėje. Medžio viršūnės gali aprašyti du skirtingus dalykus: rodiklį ir išvestinį rodiklį. \par
-Rodiklis gauna ir apdoroja įeinančius duomenis. Rodiklio apibrėžimas susidaro iš įeinančių duomenų elemento rakto, reikšmės kuri bus naudojama apdorojimui. Rodikliuose ši reikšmė visada yra skaitinė, ji gali nurodyti skaičiuojamas savybes arba tai gali būti dvejetainė reikšmė. \par
-Išvestinis rodiklis gauna duomenis iš prieš tai ėjusio rodiklio. Išvestinio rodiklio gaunami duomenys - tai prieš tai ėjusios viršūnės bet kokio rodiklio paskutinė reikšmė. Kaip duomenis bus apdoroti išvestinio rodiklio viršūnėje aprašo formulė, kurioje pateikiama veiksmai atliekami su prieš tai ėjusių viršūnių paskutinėmis reikšmėmis ir atliekami susiejant duomenis unikaliu identifikatoriumi, kuris sukuriamas kiekvienam įeinančiam duomeniui patenkant į apdorojimo sprendimą. Norint rodiklį gauti ne tik naudojant pagrindinius matematinius veiksmus kaip sudėtis arba atimtis, turi būti įmanoma naudoti, bet kokį iš anksto aprašytą metodą duomenims apdoroti. \par
+
+Ši rodiklių duomenų modelio dalis sudaryta iš dviejų skirtinų tipų komponentų:
+\begin{itemize}
+    \item Rodiklis - iš pirminių rodiklių duomenų gaunami parametrai. Rodiklių duomenų modelyje rodiklis yra sudarytas iš pavadinimo ir priminių rodiklių duomenų rakto.
+    \item Išvestinis rodiklis - iš vieno ar daugiau rodiklių išskaičiuojami parametrai. Rodiklių duomenų modelyje išvestinis rodiklis yra sudarytas iš pavadinimo ir rodiklių, nuo kuriu priklauso išvestinis rodiklis, transformacijos aprašo - formulės. 
+\end{itemize}
+Rodiklių duomenų modelyje komponentų priklausomybės sudaro priklausomybių medį, kurio viršūnės - rodikliai, o keliai - priklausomybės tarp rodiklių. Priklausomybių medyje kabančios (galinės) viršūnės visada bus rodiklio tipo, o visos kitos išvestinių rodiklių tipo.
 Pavyzdžiui:
 \begin{itemize}
     \item Statistikos srityje: norint surinkti rodiklių duomenis nekilnojamo turto kainų ir žmonių kaitos šalyje (\(\textit{Žmonių kaita} = (\textit{Gimstamumas - Mirtingumas}) + (\textit{Migracija} * \textit{Gyventojų kiekis}\)), renkamų rodiklių medžiai apsirašytų taip: 
@@ -218,7 +221,7 @@ Pavyzdžiui:
 
 \subsection{Rezultatų struktūra}
 
-Apdorotų rodiklių rezultatai gauti iš pirminių rodiklių duomenų sudaro lentelę. Lentelės duomenų pirminis raktas yra sudarytas iš pirminių rodiklių duomenų reikšmių kombinacijos gautos pagal rodiklio modelio pirminį raktą. Rezultatų lentelės stulpeliai susidaro iš priminio rakto ir išvestinių rodiklių. Rezultatų lentelės išvestinių rodiklių kolonėlės susidaro iš apdorotų rodiklių duomenų.
+Apdorotų rodiklių rezultatai gauti iš pirminių rodiklių duomenų gali būti užrašyti lentelę. Lentelės duomenų pirminis raktas yra sudarytas iš pirminių rodiklių duomenų reikšmių kombinacijos gautos pagal rodiklio modelio pirminį raktą. Rezultatų lentelės stulpeliuose aprašytas priminis raktas ir išvestiniai rodikliai. Rezultatų lentelės išvestinių rodiklių kolonėlės susidaro iš apdorotų rodiklių duomenų.
 
 \begin{figure}[H]
     \centering
@@ -293,39 +296,7 @@ Norime nustatyti srautinio apdorojimo sistemų savybes pagal:
     \item Abstrakcijos lygmuo (angl. abstraction) - apibrėžia kokio lygmens programavimo sąsają pateikia sprendimas.
 \end{itemize}
 Tam išnagrinėsime ir palyginsime, kaip šitas savybes išpildo keturi egzistuojantys srautinio apdorojimo sprendimai - "Apache Storm", "Apache Spark", "Apache Flink" ir "Heron".
-% \begin{table}[!htbp]
-%     \begin{center}
-%         \caption{Srautinių duomenų apdorojimo sprendimų palyginimas}
-%         \label{table:comparer}
-%         \begin{tabular}{ | l | p{12cm} |}
-%             \hline
-%             \cellcolor[gray]{0.8} Charakteristika &  Išpildymas \\* \hline
-%             \cellcolor[gray]{0.9} Pristatymas & "Apache Spark" ir "Apache Flink" sprendimų pristatymo semantika yra tiksliai vieną kartą (angl. exactly-once), tai reiškia, kad visi duomenys bus apdoroti tik vieną kartą. Tačiau tam, kad užtikrinti šią semantiką sprendimas sunaudoja daug resursų, kadangi reikia užtikrinti, kad operacija bus vykdoma būtent vieną kartą kiekviename srautinio apdorojimo žingsnyje: duomenų gavime, kuris stipriai priklauso nuo duomenų šaltinio, duomenų transformacijos, kurią turi įvykdyti srautinio apdorojimo sprendimas, ir duomenų saugojime, tai turi būti užtikrinta sprendimo ir naudojamos saugyklos \cite{zhang20}.\par
 
-%             "Apache Storm" pristatymo semantika yra bent vieną kartą (angl. at-least-once), tai reiškia, kad į šį sprendimą siunčiami duomenys bus visada apdoroti, tačiau kartais gali būti apdoroti kelis kartus \cite{prithi20}. Jei uždavinys nereikalauja tiksliai vieno karto apdorojimo, tai geriau rinktis bent vieną kartą ar ne daugiau vieno karto semantikas, kadangi jos neturi papildomų apsaugų, kurios reikalingos tiksliai vieno karto apdorojimui, ir todėl veikia greičiau \cite{zhang20}. \par
-            
-%             "Heron" sprendimų pristatymo semantika gali būti keičiama, programuotojas kurdamas srautinio apdorojimo sistemą šiam sprendimui aprašo kokio tipo pristatymo semantikos jo sistema reikalauja \cite{delivery-semantics}. Todėl šis sprendimas yra tinkamiausias jei kuriamos sistemos turi būti skirtingų poreikių ir pobūdžių. \\* \hline
-%             \cellcolor[gray]{0.9} Uždelstumas & Uždelstumas - laiko trukmė, kuri parodo kaip greitai sprendimas įvykdo vieną operaciją, nuo jos patekimo į eilę iki šios operacijos apdorojimo pabaigos. Pagal \cite{Lopez2016APC} aprašytus Martin Andreoni Lopez "Apache Storm", "Apache Spark" ir "Apache Flink" bandymus galima matyti, kad būtent "Apache Storm" turi mažiausią uždelstumą. Kadangi parinkus tinkamą paralelizmo parametrą šis sprendimas su užduotimi susidorojo net iki 15 kartų greičiau. Antroje vietoje liko "Apache Flink", o po jos "Apache Spark". \par
-
-%             Tačiau "Heron" sprendimas yra sukurtas siekiant pagerinti "Apache Storm" sprendimo greitaveika ir suteikti lengvą būdą pereiti nuo "Apache Storm" API prie "Heron", todėl jo uždelstumas yra dar mažesnis nei "Apache Storm" \cite{Kulkarni:2015:THS:2723372.2742788}. \\* \hline
-%             \cellcolor[gray]{0.9} Pralaidumas & Pralaidumas apibrėžia kokį kiekį procesų sprendimas gali įvykdyti per tam tikrą laiko tarpą. 2016 metais Sanket Chintapalli \cite{chintapalli2016benchmarking} išmatavo "Apache Storm", "Apache Spark" ir "Apache Flink" sprendimų pralaidumą ir uždelstumą bei palygino rezultatus. Kaip ir anksčiau manyta, "Apache Spark" turėjo aukščiausia pralaidumą iš visų, kadangi jis vienintelis duomenis apdoroja mikro-paketais. Antroje vietoje liko "Apache Flink", kuris yra subalansuotas pralaidumo atžvilgiu ir paskutinis liko "Apache Storm", kuris turi žemą uždelstumą, todėl nukenčia pralaidumas. "Heron" tuo tarpu turi aukštesnį pralaidumą ir žemesnį uždelstumą nei "Apache Storm" \cite{TwitterHeron}.  \\* \hline
-%             \cellcolor[gray]{0.9} Abstrakcijos lygis & "Apache Storm" parašytos sistemos yra žemo abstrakcijos lygmens, tai reiškia, kad turi būti aprašyti visi srautinio apdorojimo moduliai: 
-%             setSpouts(..), kuriame nustatoma duomenų įeiga ir koks bus paralelizmo lygis, setBolt(..), kuriame nustatomi apdorojimo moduliai, kokius duomenis gaus iš prieš tai buvusio modulio ir paralelizmo lygis. Kiekvieno modulio execute() metodas aprašo, kaip šis modulis turi apdoroti duomenis \cite{tutpoint}. Šio sprendimo programų kūrimo laikas užtruks ilgiau negu kitiems sprendimams su aukštu abstrakcijos lygmeniu, tačiau žemas abstrakcijos leidžia rašyti daug greičiau veikiančias sistemas, kadangi programuotojas turi pilną kontrolę. \par
-            
-%             "Apache Spark" parašytos programos yra aukšto abstrakcijos lygmens. Sistemos aprašomos funkciškai, todėl kodo rašymas trunka daug trumpiau ir jį yra daug lengviau skaityti. Tačiau prarandama galimybė optimizuoti ir paralelizmo klausimas paliekamas sprendimui. Kadangi "Apache Spark" yra ne pilnai srautinis, o mikro-paketinis (angl. micro-batching) sprendimas, todėl vartotojas turi apsirašyti kokio dydžio paketais bus renkami duomenys \cite{shoro2015big}. \par
-            
-%             "Apache Flink" parašytos programos yra aukšto abstrakcijos lygmens. "Apache Flink" sprendimas pats užsiima resursų distribucija, todėl programuotojui lieka tik parašyti veikianti kodą, o sistema pati susitvarkys su paralelizmu \cite{flinkdoc}. Tačiau tai reiškia, kad su šiuo sprendimu parašytos programos nepavyks optimizuoti taip pat gerai kaip žemo abstrakcijos lygmens sprendimus. \par
-            
-%             "Heron" sprendimas turi skirtingus API, kurie naudoja skirtingus abstrakcijos lygius, kuriuos galima rinktis pagal tinkamumą sprendžiamai problemai. Darbo rašymo metu "Heron" turi 4 skirtingus API:
-%             \begin{itemize}
-%                 \item "Heron Streamlet API" - aukšto abstrakcijos lygmens API, rašomas su "Java" programavimo kalba. Panaši sintaksė į "Apache Flink" rašomų sprendimų.
-%                 \item "Heron ECO API" - eksperimentinis aukšto abstrakcijos lygmens API, rašomas su "Java" programavimo kalba. Skiriasi nuo "Heron Streamlet API", nes modulių apdorojimo eiliškumas apsirašo YAML formatų, kas leidžia keisti sukurtos srautinio duomenų apdorojimo programos struktūrą nekeičiant kodo.
-%                 \item "Heron Topology API for Java" - žemo abstrakcijos lygmens API, rašomas su "Java" programavimo kalba. Rašomas identiškas kodas, kaip ir "Apache Storm", kadangi "Heron" sprendimas buvo sukurtas siekiant pagerinti "Apache Storm".
-%                 \item "Heron Topology API for Python" - žemo abstrakcijos lygmens API, rašomas su "Python" programavimo kalba. Su šiuo API kuriami srautinio apdorojimo sprendimai yra panašus į "Apache Storm", tik su "Python" programavimo kalbos privalumais.
-%             \end{itemize}   \\* \hline
-%         \end{tabular}
-%     \end{center}
-% \end{table}\par
 \subsection{Pristatymo semantika}
 "Apache Spark" ir "Apache Flink" sprendimų pristatymo semantika yra tiksliai vieną kartą (angl. exactly-once), tai reiškia, kad visi duomenys bus apdoroti tik vieną kartą. Tačiau tam, kad užtikrinti šią semantiką sprendimas sunaudoja daug resursų, kadangi reikia užtikrinti, kad operacija bus vykdoma būtent vieną kartą kiekviename srautinio apdorojimo žingsnyje: duomenų gavime, kuris stipriai priklauso nuo duomenų šaltinio, duomenų transformacijos, kurią turi įvykdyti srautinio apdorojimo sprendimas, ir duomenų saugojime, tai turi būti užtikrinta sprendimo ir naudojamos saugyklos \cite{zhang20}.\par
 
@@ -337,11 +308,11 @@ Tam išnagrinėsime ir palyginsime, kaip šitas savybes išpildo keturi egzistuo
 
 Uždelstumas - laiko trukmė, kuri parodo kaip greitai sprendimas įvykdo vieną operaciją, nuo jos patekimo į eilę iki šios operacijos apdorojimo pabaigos. Pagal \cite{Lopez2016APC} aprašytus Martin Andreoni Lopez "Apache Storm", "Apache Spark" ir "Apache Flink" bandymus galima matyti, kad būtent "Apache Storm" turi mažiausią uždelstumą. Kadangi parinkus tinkamą paralelizmo parametrą šis sprendimas su užduotimi susidorojo net iki 15 kartų greičiau. Antroje vietoje liko "Apache Flink", o po jos "Apache Spark". \par
 
-Tačiau "Heron" sprendimas yra sukurtas siekiant pagerinti "Apache Storm" sprendimo greitaveika ir suteikti lengvą būdą pereiti nuo "Apache Storm" API prie "Heron", todėl jo uždelstumas yra dar mažesnis nei "Apache Storm" \cite{Kulkarni:2015:THS:2723372.2742788}.
+"Heron" sprendimas yra sukurtas siekiant pagerinti "Apache Storm" sprendimo greitaveika, todėl jo uždelstumas yra dar mažesnis nei "Apache Storm" \cite{Kulkarni:2015:THS:2723372.2742788}.
 
 \subsection{Pralaidumas}
 
-Pralaidumas apibrėžia kokį kiekį procesų sprendimas gali įvykdyti per tam tikrą laiko tarpą. 2016 metais Sanket Chintapalli \cite{chintapalli2016benchmarking} išmatavo "Apache Storm", "Apache Spark" ir "Apache Flink" sprendimų pralaidumą ir uždelstumą bei palygino rezultatus. Kaip ir anksčiau manyta, "Apache Spark" turėjo aukščiausia pralaidumą iš visų, kadangi jis vienintelis duomenis apdoroja mikro-paketais. Antroje vietoje liko "Apache Flink", kuris yra subalansuotas pralaidumo atžvilgiu ir paskutinis liko "Apache Storm", kuris turi žemą uždelstumą, todėl nukenčia pralaidumas. "Heron" tuo tarpu turi aukštesnį pralaidumą ir žemesnį uždelstumą nei "Apache Storm" \cite{TwitterHeron}. 
+Pralaidumas apibrėžia kokį kiekį procesų sprendimas gali įvykdyti per tam tikrą laiko tarpą. 2016 metais Sanket Chintapalli išmatavo "Apache Storm", "Apache Spark" ir "Apache Flink" sprendimų pralaidumą ir uždelstumą bei palygino rezultatus. Kaip ir anksčiau manyta, "Apache Spark" turėjo aukščiausia pralaidumą iš visų, kadangi jis vienintelis duomenis apdoroja mikro-paketais\cite{chintapalli2016benchmarking}. Antroje vietoje liko "Apache Flink", kuris yra subalansuotas pralaidumo atžvilgiu ir paskutinis liko "Apache Storm", kuris turi žemą uždelstumą, todėl nukenčia pralaidumas. "Heron" tuo tarpu turi aukštesnį pralaidumą ir žemesnį uždelstumą nei "Apache Storm" \cite{TwitterHeron}. 
 
 \subsection{Abstrakcijos lygmuo}
 
@@ -362,7 +333,13 @@ setSpouts(..), kuriame nustatoma duomenų įeiga ir koks bus paralelizmo lygis, 
 
 
 \subsection{Apibendrinimas}
-Iš šių keturių sprendimų pasirinktas vienas, kuris labiausiai tinka rodiklių duomenų apdorojimui, pagal aprašytas savybes.\par
+
+Pagal atlikta analizę, sudaryta \ref{table:comparer} lentelė. Iš šių keturių sprendimų pasirinktas vienas, kuris labiausiai tinka rodiklių duomenų srautinio apdorojimo sistemų generavimui, pagal aprašytas savybes. Tinkamas sprendimas turi pasižymėti: 
+\begin{itemize}
+    \item Apdorojimo greičiu, svarbu, kad duomenys būtų apdorojami kai tik patenka į sistemą, todėl turi būti žemas uždelstumas.
+    \item Tiksliai vieną kartą apdorojimu, kadangi norint gauti tikslius rodiklių duomenis turi neišsikreipti pirminių rodiklių duomenų aibė apdorojimo metu.
+    \item Žemu abstrakcijos lygiu, nes tai leidžia generuoti iš anksto optimizuotus srautinio apdorojimo sprendimus.  
+\end{itemize} 
 
 \begin{table}[!htbp]
     \begin{center}
@@ -379,9 +356,8 @@ Iš šių keturių sprendimų pasirinktas vienas, kuris labiausiai tinka rodikli
     \end{center}
 \end{table}\par
 
-Pagal atlikta analizę, sudaryta \ref{table:comparer} lentelė. Pagal analizę ir apsibrėžtų reikalavimų šiam uždaviniui tinkamiausias srautinio apdorojimo sprendimas yra "Heron". \par
-Čia parašyti apie abstrakcija \par
- 
+Pagal analizę (\ref{table:comparer} lentelė.) ir apsibrėžtus reikalavimus mūsų sprendžiamam uždaviniui tinkamiausias srautinio apdorojimo sprendimas yra "Heron". \par
+
 \section{Srautinio duomenų apdorojimo sistemų architektūra}
 
 Šiame skyriuje aprašoma pasirinktos srautinio apdorojimo programinės įrangos "Heron" srautinio apdorojimo sistemų užrašymą ir kaip turi atrodyti srautinio apdorojimo sistemos pateikiamos į ją.
@@ -454,16 +430,24 @@ Tada sugeneruota srautinio apdorojimo sistema atrodys taip:
 
 \subsection{Eksperimento tikslas}
 
-Nustatyti sukurto sprendimo ir architektūros savybes ir trukumus atliekant bandymus su rodiklių duomenimis:
+Eksperimento tikslas - patikrinti ar sukurtas koncepcinis sprendimas ir sudaryti architektūrą išpildo iškeltas savybes:
+\begin{itemize}
+    \item Srautinių apdorojimo sistemų generavimas pagal deklaratyvų aprašymą.
+    \item Galimybė keisti esamas apdorojimo sistemas, kai pakeičiamas rodiklių duomenų modelis.
+    \item Išvestinių rodiklių gavimas iš daugiau nei vieno rodiklio transformacijos.
+    \item Išvestinių rodiklių apdorojimas pagal iš anksto apibrėžtas funkcijas.
+\end{itemize}  
+
+\noindent Siekiant tai patikrinti atlikti šie bandymai:
 \begin{enumerate}
-    \item Sukurti sistemą apdorojančia rodiklius iš duomenų su apribojimais,.
-    \item Esamai sistemai pridėti arba pašalinti apribojimą.
-    \item Esamai sistemai pridėti rodiklį.
-    \item Esamai sistemai pašalinti rodiklį. 
-    \item Paduoti nereikalingus arba netinkamus duomenis į sistemą.
-    \item Paduoti didelį kiekį duomenų vienu metu.
-    \item Gauti apdorotus rodiklius.
-    \item Gauti apdorotus rodiklius didelio duomenų kiekio padavimo į sistemą metu.
+    \item Sukurtas pavyzdinis rodiklių duomenų modelis, aprašytas deklaratyviai ir aprašymas pateiktas į koncepcinį sprendimą.
+    \item Esamam rodiklių duomenų modeliui padaryti pokyčiai:
+    \begin{enumerate}
+        \item Pridėti arba pašalinti apribojimas.
+        \item Pridėtas išvestinis rodiklis.
+        \item Pašalintas išvestinis rodiklis.
+    \end{enumerate}
+    \item Apsibrėžta specializuota funkcija ir aprašytas naujas išvestinis rodiklis naudojantis specializuota funkcija.
 \end{enumerate}
 
 \subsection{Eksperimento vykdymo aplinka}
@@ -476,9 +460,20 @@ Kompiuterio, kuriame buvo vykdomas eksperimentas specifikacijos:
     \item Operacinė sistema - Ubuntu 18.04
 \end{itemize}
 
-\subsection{Kodo generavimo išpildymas}
+\subsection{Koncepcinis sprendimas}
 
-Kodo generavimo komponentas - programinė įranga sukurta su .NET core biblioteka. Pasirinkta .NET core biblioteka, nes reikalingas "Web API" tašką (angl. endpoint) rodiklio modelis pateikimui. 
+Siekiant nustatyti sudarytos architektūros savybes sukurtas koncepcinis sprendimas (\ref{img:concept} pav.).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{img/architekturos_diagrama.pdf}
+    \caption{Koncepcinio sprendimo architektūra}
+    \label{img:concept}
+\end{figure}
+
+\subsubsection{Sistemų generavimo išpildymas}
+
+Sistemų generavimo komponentas - programinė įranga sukurta su .NET core biblioteka. Pasirinkta .NET core biblioteka, nes reikalingas "Web API" tašką (angl. endpoint) rodiklio modelis pateikimui. 
 Kodo generavimas yra vykdomas pagal šablonus, kurie sukurti kiekvienam srautinio apdorojimo sprendimo komponento tipui. Šablono laukai, kuriuos reikia pakeisti, užrašyti specialiais identifikuojančiais elementais. Generavimo metu šie elementai keičiami reikiamu kodu užduočiai spręsti.
 Šio komponento veikimas toks (\ref{img:generation-flow} pav.):
 \begin{itemize}
@@ -509,7 +504,7 @@ Kodo generavimas yra vykdomas pagal šablonus, kurie sukurti kiekvienam srautini
     \label{img:generation-flow}
 \end{figure}
 
-\subsection{Apdorotų rodiklių duomenų bazė}
+\subsubsection{Apdorotų rodiklių duomenų bazė}
 
 Duomenų bazė koncepciniam sprendime saugos apdorotus rodiklių duomenis. Duomenys šioje duomenų bazėje bus tik įrašomi ir skaitomi. Kadangi mes norime turėti apdorotus išvestinių ir pagrindinių rodiklių duomenis, visi srautinio apdorojimo sistemų komponentai turės prisijungti prie duomenų bazės ir padėti paskutinę apdorotų duomenų versiją. Duomenys iš duomenų bazės bus traukiami dviem poreikiam: 
 \begin{enumerate}
@@ -520,7 +515,7 @@ Duomenų bazė koncepciniam sprendime saugos apdorotus rodiklių duomenis. Duome
 Saugoti apdorotus duomenis buvo pasirinkta "Redis" duomenų bazę. Ji pasirinkta kadangi apdoroti rodiklių duomenis užima nedaug vietos ir svarbu greitai pasiekti ir įdėti duomenis. "Redis" duomenų bazių valdymo sistema tinka, nes duomenis saugomi operatyvioj atmintyje. Apdoroti rodikliai saugomi unikalioje eilėje pagal rodiklio modelio ir apdorojamo rodiklio pavadinimo kombinacija. Pavyzdžiui: renkant darbuotojų atlyginimus per metus iš uždarbio ir premijos, apdoroti rodiklių duomenys būtų saugomi pagal raktus: "darbuotojų-atlyginimas:uždarbis", "darbuotojų-atlyginimas:premijos" ir "darbuotojų-atlyginimas:atlyginimas"
 
 
-\subsection{Papildoma programinė įranga}
+\subsubsection{Papildoma programinė įranga}
 
 Pilnam sistemos veikimui taip pat reikia papildomos programinės įrangos, kurį užsiima duomenų perdavimu, srautinio apdorojimo sistemų kompiliavimu. Ši įranga naudojama tokia kaip pateikiama nekeičiant konfigūracijos iš esmės.
 \begin{itemize}
