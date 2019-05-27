@@ -300,7 +300,7 @@ Tam išnagrinėsime ir palyginsime, kaip šitas savybes išpildo keturi egzistuo
 
 "Apache Storm" pristatymo semantika yra bent vieną kartą (angl. at-least-once), tai reiškia, kad į šį sprendimą siunčiami duomenys bus visada apdoroti, tačiau kartais gali būti apdoroti kelis kartus \cite{prithi20}. Jei uždavinys nereikalauja tiksliai vieno karto apdorojimo, tai geriau rinktis bent vieną kartą ar ne daugiau vieno karto semantikas, kadangi jos neturi papildomų apsaugų, kurios reikalingos tiksliai vieno karto apdorojimui, ir todėl veikia greičiau \cite{zhang20}. \par
 
-"Heron" sprendimų pristatymo semantika gali būti keičiama, programuotojas kurdamas srautinio apdorojimo sistemą šiam sprendimui aprašo kokio tipo pristatymo semantikos kuriama sistema reikalauja \cite{delivery-semantics}.
+"Heron" sprendimų pristatymo semantika gali būti keičiama, programuotojas kuriantis srautinio apdorojimo sistemą šiam sprendimui aprašo kokio tipo pristatymo semantikos kuriama sistema reikalauja \cite{delivery-semantics}.
 
 \subsection{Uždelstumas}
 
@@ -358,7 +358,7 @@ Pagal analizę (\ref{table:comparer} lentelė.) ir apsibrėžtus reikalavimus da
 
 \section{Srautinio duomenų apdorojimo sistemų architektūra}
 
-Šiame skyriuje apžvelgtas srautinio apdorojimo sprendimo "Heron" srautinio apdorojimo sistemų užrašymas ir srautinio apdorojimo sistemų generavimas pagal deklaratyviai aprašyta rodiklių duomenų modelį.
+Šiame skyriuje apžvelgiamas srautinio apdorojimo sistemų rašymas "Heron" sprendimui ir srautinio apdorojimo sistemų generavimas pagal deklaratyviai aprašyta rodiklių duomenų modelį.
 
 \subsection{Srautinio apdorojimo sistemos komponentai}
 "Heron" sprendimui parašytos srautinio apdorojimo sistemos susidaro iš trijų tipų komponentų:
@@ -582,12 +582,12 @@ Atnaujintas rodiklių duomenų modelis atrodo taip:
 Eksperimentas buvo vykdomas tokia eiga:
 \begin{enumerate}
     \item Pradinių rodiklių duomenų modelis užrašomas JSON formatu (Priedas \ref{add:initial-json}) ir naudojant Postman programą paduodamas į sprendimą.
-    \item Atsidarę "Heron" sąsają naršyklėje matome sugeneruotos srautinio apdorojimo sistemos diagramą (Priedas \ref{add:generated-system1}).
-    \item Su pirminių rodiklių duomenų siuntimo programa pradedame siųsti duomenis į žinučių eilę.
-    \item Naršyklėje siusdami užklausa į sprendimo tašką gauname apdorotus rodiklių duomenis iš duomenų bazės (Priedas \ref{add:generated-data1}).
+    \item Atsidarius "Heron" sąsają naršyklėje matoma sugeneruotos srautinio apdorojimo sistemos diagramą (Priedas \ref{add:generated-system1}).
+    \item Su pirminių rodiklių duomenų siuntimo programa duomenis siunčiami į žinučių eilę.
+    \item Naršyklėje išsiunčiama užklausa į sprendimo duomenų prieigos tašką ir gaunami apdorotus rodiklių duomenys (Priedas \ref{add:generated-data1}).
     \item Atnaujintas rodiklių duomenų modelis užrašomas JSON formatu (Priedas \ref{add:changed-json}) ir naudojant Postman programą paduodamas į sprendimą.
-    \item Atnaujinę "Heron" sąsają naršyklėje matome, jog buvo atnaujinta srautinio apdorojimo sistema (Priedas \ref{add:generated-system2}).
-    \item Naršyklėje siusdami užklausa į sprendimo tašką gauname apdorotus rodiklių duomenis iš duomenų bazės, kuriuose jau yra naujas rodiklis(Priedas \ref{add:generated-data2}).
+    \item Atnaujinus "Heron" sąsają naršyklėje matoma, jog atsinaujino srautinio apdorojimo sistemos diagrama (Priedas \ref{add:generated-system2}).
+    \item Naršyklėje siunčiama užklausa į sprendimo tašką ir gaunami apdoroti rodiklių duomenis, kuriuose jau galima matyti naujo rodiklio rezultatus(Priedas \ref{add:generated-data2}).
 \end{enumerate}
 
 \subsubsection{Eksperimento rezultatai}
