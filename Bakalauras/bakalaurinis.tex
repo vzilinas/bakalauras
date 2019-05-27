@@ -320,7 +320,7 @@ setSpouts(..), kuriame nustatoma duomenų įeiga ir koks bus paralelizmo lygis, 
 
 "Apache Spark" parašytos programos yra aukšto abstrakcijos lygmens. Sistemos aprašomos funkciškai, todėl kodo rašymas trunka daug trumpiau ir jį yra daug lengviau skaityti. Tačiau prarandama galimybė optimizuoti ir paralelizmo klausimas paliekamas sprendimui. Kadangi "Apache Spark" yra ne pilnai srautinis, o mikro-paketinis (angl. micro-batching) sprendimas, todėl vartotojas turi apsirašyti kokio dydžio paketais bus renkami duomenys \cite{shoro2015big}. \par
 
-"Apache Flink" parašytos programos yra aukšto abstrakcijos lygmens. "Apache Flink" sprendimas pats užsiima resursų distribucija, todėl programuotojui lieka tik parašyti veikianti kodą, o sistema pati susitvarkys su paralelizmu \cite{flinkdoc}. Tačiau tai reiškia, kad su šiuo sprendimu parašytos programos nepavyks optimizuoti taip pat gerai kaip žemo abstrakcijos lygmens sprendimus. \par
+"Apache Flink" parašytos programos yra aukšto abstrakcijos lygmens. "Apache Flink" sprendimas pats užsiima resursų distribucija, todėl programuotojui lieka tik parašyti veikianti kodą, o sistema pati susitvarkys su paralelizmu \cite{flinkdoc}. Tačiau tai reiškia, kad su šiuo sprendimu parašytos programos nepavyks optimizuoti taip pat gerai kaip žemo abstrakcijos lygmens sistemos. \par
 
 "Heron" sprendimas turi skirtingus API, kurie naudoja skirtingus abstrakcijos lygius, kuriuos galima rinktis pagal tinkamumą sprendžiamai problemai. Darbo rašymo metu "Heron" turi 4 skirtingus API:
 \begin{itemize}
@@ -337,7 +337,7 @@ Pagal atlikta analizę, sudaryta \ref{table:comparer} lentelė. Iš šių keturi
 \begin{itemize}
     \item Apdorojimo greičiu, svarbu, kad duomenys būtų apdorojami kai tik patenka į sistemą, todėl turi būti žemas uždelstumas.
     \item Tiksliai vieną kartą apdorojimu, kadangi norint gauti tikslius rodiklių duomenis turi neišsikreipti pirminių rodiklių duomenų aibė apdorojimo metu.
-    \item Žemu abstrakcijos lygiu, nes tai leidžia generuoti iš anksto optimizuotus srautinio apdorojimo sprendimus.  
+    \item Žemu abstrakcijos lygiu, nes tai leidžia generuoti iš anksto optimizuotas srautinio apdorojimo sistemas.  
 \end{itemize} 
 
 \begin{table}[!htbp]
@@ -616,15 +616,26 @@ Sukurtas koncepcinis sprendimas įrodo, jog sugeneruotos srautinio apdorojimo si
     \item Apibrėžtas rodiklių duomenų modelis ir galimi duomenų struktūros pokyčiai.
     \item Atlikta srautinio apdorojimo sprendimų "Apache Storm", "Apache Spark", "Apache Flink" ir "Heron" analizė ir analizės rezultatas apibendrintai pateiktas pagal analizuotas savybes. 
     \item Sudaryta srautinio apdorojimo sistemos architektūra tinkama spręsti rodiklių apdorojimo uždavinį su "Heron" srautinių apdorojimo sprendimu. 
-    \item Remiantis pasiūlyta architektūra sukurtas koncepcinis sprendimas \url{http://gitlab.com}.
-    \item Siekiant nustatyti ar srautinio apdorojimo architektūra atitinka apsibrėžtas savybes, aprašyti bandymams naudojami rodiklių duomenų modeliai ir jų pagalba atliktas srautinės rodiklių duomenų apdorojimo sistemos generavimo eksperimentas. 
+    \item Siekiant nustatyti ar srautinio apdorojimo architektūra atitinka apsibrėžtas savybes:
+    \begin{itemize}
+        \item Aprašyti bandymams naudojami rodiklių duomenų modeliai.
+        \item Sukurtas koncepcinis sprendimas \url{http://gitlab.com} generuojantis srautinio apdorojimo sistemas pagal aprašytą architektūrą.
+        \item Su koncepciniu sprendimu atliktas srautinės rodiklių duomenų apdorojimo sistemos generavimo eksperimentas. 
+    \end{itemize} 
 \end{enumerate}
 
 \sectionnonum{Išvados}
-\begin{itemize}
-    \item Išvada 1
-    \item Išvada 2 
-\end{itemize}
+\begin{enumerate}
+    \item Rodiklių duomenų modelis turi susidaryti iš trijų dalių:
+    \begin{itemize}
+        \item Pirminio rakto - rodiklių duomenų grupavimui
+        \item Apribojimų rinkinio - pirminių rodiklių duomenų filtravimui
+        \item Rodiklių rinkinio, kur rodiklių tarpusavio priklausomybės sudaro priklausomybių medį - rodiklių apdorojimo specifikacijai.
+    \end{itemize}
+    \item Rodiklių duomenis apdorojančioms srautinio apdorojimo sistemom generuoti geriausiai tinka "Heron" srautinio apdorojimo sprendimas, nes rodiklių duomenų apdorojimui svarbus žemas uždelstumas, kad būtų užtikrintas apdorojimo greitis, tiksliai vieną kartą apdorojimas, kad nebūtų prarandami duomenys apdorojimo metu ir žemas abstrakcijos lygis, kad būtų galima generuoti optimizuotas srautinio apdorojimo sistemas.
+    \item Rodiklių duomenų uždaviniui spręsti srautinių apdorojimo sistemų kūrimui gali būti naudojamas srautinio apdorojimo sistemų generavimas, kadangi tai suteikia galimybę kurti srautinio apdorojimo sistemas iš deklaratyviai aprašyto rodiklių duomenų modelio.
+    \item Eksperimento būdų įrodyta, jog siūlomas srautinio apdorojimo sistemų generavimas pagal deklaratyvų rodiklių duomenų modelį gali būti įgyvendinamas. Sugeneruotos srautinio apdorojimo sistemos atitinka apsibrėžtas savybės, kurių reikia rodiklių duomenų apdorojimui. Įrodyta, jog srautinių apdorojimo sistemų generavimas "Heron" srautinio apdorojimo sprendimui yra tinkamas rodiklių duomenų apdorojimo uždaviniui spręsti.  
+\end{enumerate}
 
 \printbibliography[heading=bibintoc] 
 
