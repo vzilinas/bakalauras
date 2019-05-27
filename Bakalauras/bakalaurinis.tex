@@ -44,7 +44,7 @@
 \setcounter{page}{2}
 
 \sectionnonumnocontent{Santrauka}
-Šį darbą sudaro teorinė ir eksperimentinė dalis. Teorinėje dalyje apibrėžiamas rodiklis, jo struktūra ir struktūros pokyčiai. Apibrėžiami kokie yra įmanomi pokyčiai ir kaip eksperimentinėje dalyje kuriamas sprendimas prie pokyčių prisitaikys. Specifikuojama duomenų struktūra ir duomenų struktūrų apjungimo ir skirtumo operacijas. Apibrėžiamas srautinis apdorojimas ir pasirenkama sistema, kuri bus naudojama eksperimentinėje dalyje. Remiantis gautais rezultatais
+Šį darbą sudaro teorinė ir eksperimentinė dalys. Teorinėje dalyje apibrėžiamas rodiklis, jo struktūra ir struktūros pokyčiai. Apibrėžiami kokie yra įmanomi pokyčiai ir kaip eksperimentinėje dalyje kuriamas sprendimas prie pokyčių prisitaikys. Specifikuojama duomenų struktūra ir duomenų struktūrų apjungimo ir skirtumo operacijas. Apibrėžiamas srautinis apdorojimas ir pasirenkama sistema, kuri bus naudojama eksperimentinėje dalyje. Remiantis gautais rezultatais
 nustatoma, kad šiam uždaviniui spręsti pasirenkama "Heron" srautinio apdorojimo sistema. Remiantis pasirinkta srautinio apdorojimo sistema ir apibrėžta rodiklių duomenų struktūra, eksperimentui nusprendžiama generuoti srautinio apdorojimo modulius parašytus "Python" programavimo kalba. Eksperimentinėje dalyje remiantis pasiūlyta architektūra realizuojama bandomoji sistemos versija. Atliekant skirtingų kiekių rodiklių duomenų ir rodiklių duomenų pokyčių simuliaciją stebėjimais analizuojamas šios sistemos tinkamumas apibrėžtam uždaviniui spręsti. Gauti tyrimų rezultatai lyginami, pateikiamos išvados. Taip įrodoma, kad toks sprendimas gali būti įgyvendinamas ir kad kodo generavimas ir srautinio apdorojimo sistema "Heron" yra tinkamas sprendimas kintančių rodiklių uždaviniui spręsti.
 \raktiniaizodziai{srautinis apdorojimas, kodo generavimas, rodiklis, rodiklio duomens pokyčiai}   
 
@@ -104,12 +104,11 @@ Uždaviniai:
 
 \section{Rodiklių duomenys}
 
-Rodiklių duomenys - pasikartojančių įvykių parametrus aprašančius duomenys. Rodiklių duomenys pasižymi tuo, jog tik surinkti ir apdoroti tampa aktualus. Taip pat rodikliai yra nepastovūs, jų struktūra gali būti keičiama - atsirasti naujų savybių, kurias reikia surinkti arba yra pašalinamos jau esamos savybės. Rodiklių duomenys yra renkami ir analizuojami labai skirtingiems poreikiams - visur kur reikalinga statistika ir apdorojami didelį kiekiai duomenų yra naudojami rodikliai: tai gali būti įmonės vedamą "Microsoft Excel" skaičiuoklė, kurioje užrašyta kiek buvo mokėta už elektrą kiekvienais metais per paskutinius 10 metų arba juodosios skylės nuotrauka padaryta koreliuojant didelio duomenų kiekį iš 8 skirtingų teleskopu ir gauti rodikliai rodo taškus ant paveikslėlio, kurio dydis yra \(10^{12}\) kartų mažesnis nei pradiniai duomenys \cite{akiyama2019first}. \par    
-Pirmiausiai turime apibrėžti bendrą rodiklių duomenų modelį, kurio pagalba galėtume apibrėžti rodiklius. 
+Rodiklių duomenys - pasikartojančių įvykių parametrus aprašančius duomenys. Rodiklių duomenys pasižymi tuo, jog tik surinkti ir apdoroti tampa aktualus. Taip pat rodikliai yra nepastovūs, jų struktūra gali būti keičiama - atsirasti naujų savybių, kurias reikia surinkti arba yra pašalinamos jau esamos savybės. Rodiklių duomenys yra renkami ir analizuojami labai skirtingiems poreikiams - visur kur reikalinga statistika ir apdorojami didelį kiekiai duomenų yra naudojami rodikliai: tai gali būti įmonės vedamą "Microsoft Excel" skaičiuoklė, kurioje užrašyta kiek buvo mokėta už elektrą kiekvienais metais per paskutinius 10 metų arba juodosios skylės nuotrauka padaryta koreliuojant didelio duomenų kiekį iš 8 skirtingų teleskopu ir gauti rodikliai rodo taškus ant paveikslėlio, kurio dydis yra \(10^{12}\) kartų mažesnis nei pradiniai duomenys \cite{akiyama2019first}.
 
 \subsection{Pirminiai rodiklių duomenys}
 
-Rodiklių duomenys yra gaunami apdorojus pirminius rodiklių duomenis, kurie susidaro iš raktų ir reikšmių žodyno (\ref{img:duomenys} pav.), kur raktas gali būti tik tekstinio tipo, o reikšmė - tekstas arba skaičius. Duomenų raktai ir raktų kiekis gali nesutapti, vieni žodynai gali turėti daugiau raktų-reikšmių elementų, kitų raktai gali būti visiškai nesusiję su apdorojamais rodikliais. \par 
+Rodiklių duomenys yra gaunami apdorojus pirminius rodiklių duomenis, kurie susidaro iš raktų ir reikšmių žodyno (\ref{img:duomenys} pav.), kur raktas gali būti tik tekstinio tipo, o reikšmė - tekstas arba skaičius. Pirminių rodiklių duomenų raktai ir raktų kiekis gali nesutapti - žodynai gali turėti daugiau raktų arba žodyno reikšmės gali būti nereikalingos einamojo rodiklio išskaičiavimui. \par 
 Kadangi pirminiai rodiklių duomenys gali būti gaunami iš skirtingų šaltinių, skirtingais laikais, todėl kuriamas sprendimas turi galėti priimti duomenis asinchroniškai ir iš skirtingų šaltinių, o sprendimas realiu laiku turi sugebėti apdoroti reikiamus duomenis, o nereikalingus atmesti. 
 
 \begin{figure}[H]
@@ -121,7 +120,7 @@ Kadangi pirminiai rodiklių duomenys gali būti gaunami iš skirtingų šaltini�
 
 \subsection{Rodiklių duomenų modelis}
 
-Norit apdoroti daug skirtingų rodiklių turime apsibrėžti bendrą rodiklių duomenų modelį (\ref{img:rodiklio_apibrezimas} pav.), pagal kurį bus generuojamos srautinio duomenų apdorojimo sistemos. Siūlomas apibrėžimas susidaro iš trijų dalių: 
+Norint apdoroti daug skirtingų rodiklių apsibrėžiamas bendrą rodiklių duomenų modelį (\ref{img:rodiklio_apibrezimas} pav.), pagal kurį bus generuojamos srautinio duomenų apdorojimo sistemos. Siūlomas apibrėžimas susidaro iš trijų dalių: 
 \begin{itemize}
     \item Rodiklių duomenų pirminis raktas sudarytas iš pirminių rodiklių duomenų raktų rinkinio.
     \item Pirminių rodiklių duomenų reikšmių srities apribojimai.
@@ -231,12 +230,12 @@ Apdorotų rodiklių rezultatai gauti iš pirminių rodiklių duomenų gali būti
 
 \subsection{Rodiklių duomenų struktūros kitimas}
 
-Rodiklių duomenų struktūra gali būti keičiama laikui bėgant. Buhalterijos srityje tai gali būti dėl naujo įstatymo, kuris pakeičia kažkurių rodiklių skaičiavimo formulę. Tai gali būti naujos rūšies išmaniųjų namų sensorius, kuriuo duomenys norima irgi rinkti, kad galėtume matyti pilną vaizdą. Statistikos srityje gali atsirasti poreikis išskaidyti tam tikrus rodiklius į mažesnes dalis, pavyzdžiui rinkti ne migracijos rodiklį kaip vieną, o atskirai emigraciją ir imigraciją. \par
-Pagal mūsų aprašyta rodiklių duomenų modelį, mes taip pat turime apsibrėžti kas gali keistis:
+Rodiklių duomenų struktūra gali būti keičiama laikui bėgant. Buhalterijos srityje tai gali įvykti dėl naujo įstatymo, kuris pakeičia tam tikrų rodiklių išskaičiavimą. Išmaniuosiuose namuose tai gali būti naujas išmaniųjų namų sensorius. Statistikos srityje tai gali būti poreikis išskaidyti tam tikrus rodiklius į mažesnius rodiklius -  rinkti ne migracijos rodiklį kaip vieną, o atskirai emigraciją ir imigraciją. \par
+Šiame darbe rodiklių duomenų struktūrų pokyčiai apribojami taip:
 \begin{itemize}
-    \item Pirminis raktas negali keistis, nes naujos reikšmės tampa nepalyginamos su anksčiau surinktomis. Tarkim buvo renkami rodikliai metinių duomenų, o pagal poreikius reikia rinkti mėnesinius duomenis, ir lyginimas su anksčiau surinktais tampa neįmanomas. Todėl bet kokius pirminio raktus pokyčius turime laikyti nauju rodikliu. 
-    \item Apribojimai gali keistis, tačiau šie pokyčiai turi turėti prasmę ir naudojami tik tam, kad būtų išlaikytos tos pačios pirminių rodiklių duomenų aibės. Tarkime mums reikėjo apdoroti duomenis iš visų skyrių išskyrus administraciją ir tokiam uždaviniui buvo sukurtas apribojimas - \(\textit{"Skyriaus pavadinimas" != "Administracija"}\). Tačiau po laiko dalis administracijos skyriaus atsiskyrė ir susikūrė naujas HR skyrius. Norint, kad būtų išlaikyta apdorotų rodiklių lyginimo prasmė, nauji apribojimai atrodys taip: \(\textit{"Skyriaus pavadinimas"!="Administracija"}, \textit{"Skyriaus pavadinimas"!="HR"}\)
-    \item Rodikliai ir išvestiniai rodikliai gali būti keičiami: rodiklių medžio viršūnės gali būti pridedamos ir pašalinamos. Operacijos su rodikliais neturi įtakoti kitų rodiklių būsenos ir modelį. Tarkime jog skaičiavome pajamas naudodami formulę: \[\textit{Pajamos = Atlyginimas + Premijos}\] Ir pagal šią formulę buvo sukurtas toks rodiklių medis: 
+    \item Pirminis raktas negali keistis, nes naujos reikšmės tampa nepalyginamos su anksčiau surinktomis. Tarkim buvo renkami rodikliai metinių duomenų, o pagal poreikius reikia rinkti mėnesinius duomenis, ir lyginimas su anksčiau surinktais tampa neįmanomas. Todėl bet kokius pirminio raktus pokyčius turi būti laikomi nauju rodikliu. 
+    \item Apribojimai gali keistis, tačiau šie pokyčiai turi būti naudojami tik tam, kad būtų išlaikytos pradinės apdorojamų pirminių rodiklių duomenų aibės. Tarkime yra poreikis apdoroti duomenis iš visų skyrių išskyrus administraciją ir tokiam uždaviniui buvo sukurtas apribojimas - \(\textit{"Skyriaus pavadinimas" != "Administracija"}\). Tačiau po laiko dalis administracijos skyriaus atsiskyrė ir susikūrė naujas HR skyrius. Siekiant, kad būtų išlaikyta apdorotų rodiklių lyginimo prasmė, nauji apribojimai atrodys taip: \(\textit{"Skyriaus pavadinimas"!="Administracija"}, \textit{"Skyriaus pavadinimas"!="HR"}\)
+    \item Rodikliai ir išvestiniai rodikliai gali būti keičiami - nauji rodikliai pridedami, o seni pašalinami. Šie pokyčiai gali būti daromi bet kurioje rodiklių tarpusavio priklausomybės medžio vietoje. Rodiklių pokyčiai neturi daryti įtaką kitų rodiklių skaičiavimams. Tarkime, jog  pajamas skaičiuojamos naudojant formulę: \[\textit{Pajamos = Atlyginimas + Premijos}\]. Pagal tai sugeneruotas toks medis: 
     \[	
         \begin{tikzpicture}[sibling distance=7em,	
             every node/.style = {shape=rectangle, rounded corners,	
@@ -247,7 +246,7 @@ Pagal mūsų aprašyta rodiklių duomenų modelį, mes taip pat turime apsibrė�
                     child { node {Premijos} } ;	
         \end{tikzpicture} 	
     \]\par
-     Po tam tikro laiko atsirado poreikis pajamas skaičiuoti pagal formulę: \[\textit{Pajamos = Atlyginimas + Premijos + Komandiruočių dienpinigiai}\] Pagal naują formulę rodiklių medis turės atrodyti taip: 
+     Po tam tikro laiko atsirado poreikis pajamas skaičiuoti pagal formulę: \[\textit{Pajamos = Atlyginimas + Premijos + Komandiruočių dienpinigiai}\] Naujas rodiklių medis atrodys taip: 
      \[	
         \begin{tikzpicture}[sibling distance=7em,	
             every node/.style = {shape=rectangle, rounded corners,	
@@ -266,7 +265,7 @@ Pagal mūsų aprašyta rodiklių duomenų modelį, mes taip pat turime apsibrė�
 
 \subsection{Srautinis duomenų apdorojimas} \label{strprocess}
 
-Siekiant apžvelgti modernius srautinio duomenų apdorojimo sprendimus turime apsibrėžti jų savybes.
+Siekiant apžvelgti modernius srautinio duomenų apdorojimo sprendimus šiame skyriuje apsibrėžiamos jų savybes.
 2005 metais Michael Stonebraker apibrėžė 8 taisykles realaus laiko (angl. real-time) srautinio duomenų apdorojimo architektūrai \cite{stonebraker20058}:
 \begin{enumerate}[label=\arabic*]
     \item taisyklė: Duomenys turi judėti. Žemo uždelstumo užtikrinimui sistema turi apdoroti duomenis nenaudojant duomenų saugojimo operacijų. 
@@ -355,7 +354,7 @@ Pagal atlikta analizę, sudaryta \ref{table:comparer} lentelė. Iš šių keturi
     \end{center}
 \end{table}\par
 
-Pagal analizę (\ref{table:comparer} lentelė.) ir apsibrėžtus reikalavimus mūsų sprendžiamam uždaviniui tinkamiausias srautinio apdorojimo sprendimas yra "Heron". \par
+Pagal analizę (\ref{table:comparer} lentelė.) ir apsibrėžtus reikalavimus darbe sprendžiamam uždaviniui tinkamiausias srautinio apdorojimo sprendimas yra "Heron". \par
 
 \section{Srautinio duomenų apdorojimo sistemų architektūra}
 
@@ -364,8 +363,8 @@ Pagal analizę (\ref{table:comparer} lentelė.) ir apsibrėžtus reikalavimus m�
 \subsection{Srautinio apdorojimo sistemos komponentai}
 "Heron" sprendimui parašytos srautinio apdorojimo sistemos susidaro iš trijų tipų komponentų:
 \begin{itemize}
-    \item "Spout" komponentų - duomenų įeigos komponentai. Gali būti daugiau nei vienas, jeigu yra daugiau nei vienas duomenų šaltiniai, pavyzdžiui, žinučių eilė ir duomenų bazė.
-    \item "Bolt" komponentų - duomenų apdorojimo komponentai. Gali būti daugiau nei vienas. Gali gauti duomenis iš "Spout" komponentų ir iš kitų "Bolt" komponentų.
+    \item "Spout" - duomenų įeigos komponentas. Gali būti daugiau nei vienas, jeigu yra daugiau nei vienas duomenų šaltiniai, pavyzdžiui, žinučių eilė ir duomenų bazė.
+    \item "Bolt" - duomenų apdorojimo komponentas. Gali būti daugiau nei vienas. Gali gauti duomenis iš "Spout" komponentų ir iš kitų "Bolt" komponentų.
     \item "Topology" aprašo skirto aprašyti srautinio apdorojimo sistemos pavadinimą, konfigūracijas (pristatymo semantika, kontrolinių saugojimo tašku intervalas ir t.t.) ir specifikuoti, kaip tarpusavyje sujungti "Spout" ir "Bolt" komponentai ir jų paralelizmo lygis. 
 \end{itemize}
 Konkretus pavyzdys srautinio apdorojimo sistemos atrodo taip:
@@ -397,7 +396,7 @@ Srautinio apdorojimo sistemos sudarytos pagal deklaratyvų rodiklių duomenų mo
     \end{itemize}
     \item "Topology" aprašas, kuriame aprašomos "Spout" ir "Bolt" komponentų jungimaisi tarpusavyje pagal priklausomybių medžiu iš rodiklių duomenų modelio.
 \end{enumerate}
-Pavyzdžiui, jei turime rodiklį:     
+Pavyzdžiui, jei rodiklis atrodo taip:     
 \[
     \begin{tikzpicture}[sibling distance=10em,
         level distance=2cm,
@@ -411,7 +410,7 @@ Pavyzdžiui, jei turime rodiklį:
                 child { node {Migracija} } 	
                 child { node {Gyventojų kiekis} }; 	
     \end{tikzpicture} 	
-\]
+\]\par
 "Heron" sprendimui sukurta srautinio apdorojimo sistema atrodys taip:
 \begin{figure}[H]
     \centering
@@ -474,13 +473,13 @@ Sistemų generavimo komponentas - programa sukurta su ".NET core" biblioteka, ne
     \item Tikrinama ar jau egzistuoja tokia srautinio apdorojimo sistema. Tai daroma kreipiantis į duomenų bazę ir tikrinant, ar egzistuoja įrašų, kurių raktai sutampa su generuojamos sistemos pavadinimu.
     \item Jei egzistuoja:
         \begin{enumerate}
-            \item Sustabdome veikiančią sistemą. Tai darome kviesdami stabdymo komandą per Ubuntu operacinės terminalą.
-            \item Iš duomenų bazės traukiame jau apdorotus rodiklių duomenis ir juos perduodame į generavimo dalį.
+            \item Sustabdoma veikianti sistemą. Tai vykdoma kviečiant stabdymo komandą per Ubuntu operacinės sistemos terminalą.
+            \item Iš duomenų bazės ištraukiami jau apdorotus rodiklių duomenis ir perduodami į generavimo dalį.
         \end{enumerate} 
-    \item Generuojamas srautinio apdorojimo sistemos įeigos "Spout" tipo komponentą. Jame įrašomas žinučių eilės grupės pavadinimą, sąlygas pirminių rodiklių duomenims pagal apribojimus ir pirminiam rodikliui sugeneruojamas unikalus identifikatorius, kurio pagalba išvestinių rodiklių apdorojimo komponentas išskaičiuoja duomenis teisinga tvarka.
-    \item Pagal rodiklius rekursyviai generuojami duomenų apdorojimo "Bolt" tipo komponentai. Jeigu toks komponentas jau egzistuoja, sugeneruotas kodas yra užpildomas rezultatais gautais iš duomenų bazės. 
-    \item Generuojamas sistemos "Topology" tipo aprašą, kuriame įrašyta komponentų jungimosi tarpusavyje logiką ir kitos sistemos konfigūracijas. 
-    \item Visos sugeneruotas kodas talpinamas į vieną aplanką ir sukompiliuojamas "Pants" programinės įrangos pagalba.
+    \item Generuojamas srautinio apdorojimo sistemos įeigos "Spout" tipo komponentą. Jame įrašomas žinučių eilės grupės pavadinimą, sąlygas pirminių rodiklių duomenims pagal apribojimus ir pirminių rodiklių duomeniui sugeneruojamas unikalus identifikatorius, kurio pagalba išvestinių rodiklių apdorojimo komponentas vykdo išskaičiavimus duomenis teisinga tvarka.
+    \item Pagal rodiklius generuojami duomenų apdorojimo "Bolt" tipo komponentai. Jeigu generuojamas komponentas jau egzistuoja, sugeneruotas rodiklio apdorojimo "Bolt" tipo komponento kodas užpildomas rezultatais gautais iš duomenų bazės. 
+    \item Generuojamas sistemos "Topology" tipo aprašas, kuriame įrašyta komponentų jungimosi tarpusavyje logiką ir kitos sistemos konfigūracijas. 
+    \item Visas sugeneruotas kodas talpinamas į vieną aplanką ir sukompiliuojamas "Pants" programinės įrangos pagalba.
     \item Sukompiliuota sistema pateikiama į srautinio apdorojimo programą.
 \end{enumerate}
 
@@ -493,7 +492,7 @@ Sistemų generavimo komponentas - programa sukurta su ".NET core" biblioteka, ne
 
 \subsubsection{Apdorotų rodiklių duomenų bazė}
 
-Duomenų bazė koncepciniam sprendime saugo apdorotus rodiklių duomenis. Kadangi reikia turėti apdorotus išvestinių ir pagrindinių rodiklių duomenis, visi srautinio apdorojimo sistemų komponentai yra prijungti prie duomenų bazės ir apdoroję duomenis talpina juos į duomenų bazę perrašydami ten jau esamus. Duomenys iš duomenų bazės naudojami dviem poreikiam: 
+Duomenų bazė koncepciniam sprendime saugo apdorotus rodiklių duomenis. Norint saugoti apdorotus išvestinių ir pagrindinių rodiklių duomenis, visi srautinio apdorojimo sistemų komponentai yra prijungti prie duomenų bazės ir apdoroję duomenis talpina juos į duomenų bazę perrašydami ten jau esamus. Duomenys iš duomenų bazės naudojami dviem poreikiam: 
 \begin{enumerate}
     \item Gauti apdorotus rodiklių duomenis. Siunčiant užklausą su srautinio apdorojimo sistemos pavadinimu į koncepciniam sprendime sukurta tašką  gražinamas atsakymas su apdorotais rodikliais. 
     \item Srautinio apdorojimo sistemų generavimo komponentas rezultatų duomenų gavimui. Kadangi po rodiklių pridėjimo arba pašalinimo apdorojimas turi vykti toliau, po srautinio apdorojimo sistemos sustabdymo, kodo generavimo komponentas trauks rezultatus ir dės juos į atnaujintos srautinio apdorojimo sistemos nepakitusius komponentus.   
@@ -519,7 +518,7 @@ Taip pat norint eksperimentų atlikimui yra reikalinga programinė įranga:
 
 \subsection{Eksperimentas}
 
-Eksperimento vykdymui sudarytas rodiklių duomenų uždavinys: turime išmanaus ofiso sensorius - drėgmės, temperatūros, šviesos. Norima surinkti valandinius dienos (nuo 8 valandos iki 20 valandos) pagal kabineto numerį rodiklius. Taip pat norima apskaičiuoti išvestinį juntamosios temperatūros rodiklį pagal formulę\cite{anderson2013methods}: 
+Eksperimento vykdymui sudarytas rodiklių duomenų uždavinys: išmanus ofisas turi sensorius - drėgmės, temperatūros, šviesos. Poreikis surinkti valandinius dienos (nuo 8 valandos iki 20 valandos) pagal kabineto numerį rodiklius. Taip pat norima apskaičiuoti išvestinį juntamosios temperatūros rodiklį pagal formulę\cite{anderson2013methods}: 
 \[\textit{Juntamoji temperatūra} = \textit{Temperatūra} – (0.55 * (1 –\>\frac{\textit{Drėgmė}}{1000}) * (\textit{Temperatūra} – 14.5))\]
 Taip pat tarkime, kad po laiko buvo nuspręsta pridėti naują bendro pojūčio išvestini rodikli, kuris išskaičiuojamas taip: 
 \[\textit{Bendras pojūtis} = \frac{\textit{Šviesumas}}{75} * \frac{\textit{Juntamoji temperatūra}}{25} \]
