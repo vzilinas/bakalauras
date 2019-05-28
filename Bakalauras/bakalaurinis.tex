@@ -44,8 +44,8 @@
 \setcounter{page}{2}
 
 \sectionnonumnocontent{Santrauka}
-Šį darbą sudaro teorinė ir eksperimentinė dalys. Teorinėje dalyje apibrėžiamas rodiklis, jo struktūra ir struktūros pokyčiai. Apibrėžiami kokie yra įmanomi pokyčiai ir kaip eksperimentinėje dalyje kuriamas sprendimas prie pokyčių prisitaikys. Specifikuojama duomenų struktūra ir duomenų struktūrų apjungimo ir skirtumo operacijas. Apibrėžiamas srautinis apdorojimas ir pasirenkama sistema, kuri bus naudojama eksperimentinėje dalyje. Remiantis gautais rezultatais
-nustatoma, kad šiam uždaviniui spręsti pasirenkama "Heron" srautinio apdorojimo sistema. Remiantis pasirinkta srautinio apdorojimo sistema ir apibrėžta rodiklių duomenų struktūra, eksperimentui nusprendžiama generuoti srautinio apdorojimo modulius parašytus "Python" programavimo kalba. Eksperimentinėje dalyje remiantis pasiūlyta architektūra realizuojama bandomoji sistemos versija. Atliekant skirtingų kiekių rodiklių duomenų ir rodiklių duomenų pokyčių simuliaciją stebėjimais analizuojamas šios sistemos tinkamumas apibrėžtam uždaviniui spręsti. Gauti tyrimų rezultatai lyginami, pateikiamos išvados. Taip įrodoma, kad toks sprendimas gali būti įgyvendinamas ir kad kodo generavimas ir srautinio apdorojimo sistema "Heron" yra tinkamas sprendimas kintančių rodiklių uždaviniui spręsti.
+Šį darbą sudaro teorinė ir eksperimentinė dalys. Teorinėje dalyje apibrėžiamas rodiklis, jo struktūra ir struktūros pokyčiai. Apibrėžiami, kokie yra įmanomi pokyčiai ir kaip eksperimentinėje dalyje kuriamas sprendimas prisitaikys prie pokyčių. Specifikuojama duomenų struktūra ir duomenų struktūrų apjungimo ir skirtumo operacijas. Apibrėžiamas srautinis apdorojimas ir pasirenkama sistema, kuri bus naudojama eksperimentinėje dalyje. Remiantis gautais rezultatais
+nustatoma, kad šiam uždaviniui spręsti pasirenkama "Heron" srautinio apdorojimo sistema. Remiantis pasirinkta srautinio apdorojimo sistema ir apibrėžta rodiklių duomenų struktūra, eksperimentui nusprendžiama generuoti srautinio apdorojimo sistemas, parašytus "Python" programavimo kalba. Eksperimentinėje dalyje remiantis pasiūlyta architektūra realizuojama bandomoji sistemos versija. Atliekant skirtingų kiekių rodiklių duomenų ir rodiklių duomenų pokyčių simuliaciją stebėjimais analizuojamas šios sistemos tinkamumas apibrėžtam uždaviniui spręsti. Gauti tyrimų rezultatai lyginami, pateikiamos išvados. Taip įrodoma, kad toks sprendimas gali būti įgyvendinamas ir kad kodo generavimas ir srautinio apdorojimo sistema "Heron" yra tinkamas sprendimas kintančių rodiklių uždaviniui spręsti.
 \raktiniaizodziai{srautinis apdorojimas, kodo generavimas, rodiklis, rodiklio duomens pokyčiai}   
 
 \sectionnonumnocontent{Summary}
@@ -56,35 +56,35 @@ This work consists of a theoretical and an experimental part. Theoretical part d
 
 \sectionnonum{Įvadas}
  
-Šiame darbe yra nagrinėjamas rodiklių duomenų apdorojimas ir kuriamas koncepcinis sprendimas galintis prisitaikyti, kai keičiama rodiklių duomenų struktūrą. Rodiklių duomenimis vadinkime pasikartojančių įvykių parametrus aprašančius duomenis. Pavyzdžiui, įvairių matuoklių – temperatūros, resursų suvartojimo – fiksuojamus rodmenis, kasmėnesinius veiklos indikatorius, tokius kaip veiklos finansines ataskaitas ar veiklos procesų indikatorius. Taip pat rodiklių struktūra gali būti keičiama laikui bėgant: objektų atributų taksonomija (pvz. mirties priežasčių sąrašas, finansinių sąskaitų sąrašas) arba įrašo atributų sąrašai. Surenkamu rodiklių duomenų kiekis visada didėja, taip pat ir duomenų kiekis, kuriuos reikia apdoroti pagal rodiklius auga, todėl standartiniai sprendimai, pavyzdžiui, reliacinės duomenų bazės netinka dėl ilgos apdorojimo trukmės. Rodiklių duomenų bazės pasižymi tuo, kad duomenys į jas patenka iš daug skirtingų tiekėjų ir patekimo laikas tarp tiekėjų nėra sinchronizuojamas, o suagreguotą informaciją vartotojai gali užklausti bet kurio metu. Todėl šiame darbe bus nagrinėjamas srautinis duomenų apdorojimas, kuris patenkančius duomenis apdoros realiu laiku, ir saugos jau apdorotus. \par
-Realaus laiko duomenų apdorojimas (angl. Real-time data processing) yra jau senai nagrinėjamas, kaip vienas iš būdų apdoroti didelių kiekių duomenis (angl. Big data). Vienas iš realaus laiko apdorojimo sprendimų yra srautinis duomenų apdorojimas. Srautinis duomenų apdorojimas (angl. stream processing) – lygiagrečių programų kūrimo modelis, pasireiškiantis sintaksiškai sujungiant nuoseklius skaičiavimo komponentus srautais, kad kiekvienas komponentas galėtų skaičiuoti savarankiškai \cite{shortstreamproc}. Darbe yra analizuojamos jau egzistuojančias srautinio apdorojimo sistemų programas pagal srautinio apdorojimo programų savybes aprašytas Michael Stonebraker, pasirenkama vieną srautinio apdorojimo programa ir pagal ją sukuriamas koncepcinis sprendimas. 
+Šiame darbe yra nagrinėjamas rodiklių duomenų apdorojimas ir kuriamas koncepcinis sprendimas, galintis prisitaikyti, kai keičiama rodiklių duomenų struktūra. Rodiklių duomenimis vadinkime pasikartojančių įvykių parametrus aprašančius duomenis. Pavyzdžiui, įvairių matuoklių – temperatūros, resursų suvartojimo – fiksuojamus rodmenis, kasmėnesinius veiklos indikatorius, tokius kaip veiklos finansines ataskaitas ar veiklos procesų indikatorius. Taip pat rodiklių struktūra gali būti keičiama laikui bėgant: objektų atributų taksonomija (pvz., mirties priežasčių sąrašas, finansinių sąskaitų sąrašas) arba įrašo atributų sąrašai. Surenkamų rodiklių duomenų kiekis visada didėja, taip pat ir duomenų kiekis, kuriuos reikia apdoroti pagal rodiklius, auga, todėl standartiniai sprendimai, pavyzdžiui, reliacinės duomenų bazės, netinka dėl ilgos apdorojimo trukmės. Rodiklių duomenų bazės pasižymi tuo, kad duomenys į jas patenka iš daug skirtingų tiekėjų ir patekimo laikas tarp tiekėjų nėra sinchronizuojamas, o suagreguotą informaciją vartotojai gali užklausti bet kurio metu. Todėl šiame darbe bus nagrinėjamas srautinis duomenų apdorojimas, kuris patenkančius duomenis apdoros realiu laiku ir saugos jau apdorotus. \par
+Realaus laiko duomenų apdorojimas (angl. Real-time data processing) yra jau senai nagrinėjamas kaip vienas iš būdų apdoroti didelių kiekių duomenis (angl. Big data). Vienas iš realaus laiko apdorojimo sprendimų yra srautinis duomenų apdorojimas. Srautinis duomenų apdorojimas (angl. stream processing) – lygiagrečių programų kūrimo modelis, pasireiškiantis sintaksiškai sujungiant nuoseklius skaičiavimo komponentus srautais, kad kiekvienas komponentas galėtų skaičiuoti savarankiškai \cite{shortstreamproc}. Darbe yra analizuojamos jau egzistuojantys srautinio apdorojimo sprendimai pagal srautinio apdorojimo programų savybes aprašytas Michael Stonebraker ir pasirenkama vieną srautinio apdorojimo programa, pagal kurią sukuriamas koncepcinis sprendimas. 
 \par
-Kadangi rodikliai laikui bėgant gali būti keičiami reikia, kad sprendimas, galėtų prisitaikyti prie pokyčių. Yra keli būdai kaip tai tokie sprendimai gali būti kuriami:
+Kadangi rodikliai laikui bėgant gali būti keičiami, reikia, kad sprendimas galėtų prisitaikyti prie pokyčių. Yra keli būdai kaip tokie sprendimai gali būti kuriami:
 \begin{itemize}
-    \item Rankinio atnaujinimo sprendimas. Sukuriamas sprendimas pagal esamus reikalavimus, o atsiradus naujiems reikalavimams būtų kuriamos naujos arba keičiamos esamas apdorojimo sistemos. 
+    \item Rankinio atnaujinimo sprendimas. Sukuriamas sprendimas pagal esamus reikalavimus, o atsiradus naujiems reikalavimams būtų kuriamos naujos arba keičiamos esamos apdorojimo sistemos. 
     \item Universalus sprendimas. Sukuriamas universalus parametrizuojamas sprendimas ir pritaikomas užduotims nustatant parametrus.
     \item Kodo generavimo sprendimas. Sukuriamas sprendimas, kuris generuoja srautinio duomenų apdorojimo sistemas pagal iš anksto aprašytą struktūrą.  
 \end{itemize}   
-Tinkamas sprendimas turi būti išrinktas pagal sprendžiamą problemą. Jei nėra numatomas kitimas, pagal ką turi būti apdorojami duomenys, tai galima pasirinkti ir rankinio apdorojimo sprendimą, kadangi nėra didelės tikimybės, kad teks keisti sprendimą. Toks sprendimas tiktų apdorojant išmaniųjų skaitiklių duomenis \cite{skaitikliai}. Universalus sprendimas taip pat gali būti tinkamas jei pirminiai rodiklių duomenis yra specifiški ir yra poreikis juos visus apdoroti. Toks sprendimas gali būti aktualus apdorojant duomenis iš sensorių, kurie matuoja namų būsena (temperatūra, drėgmę ir t.t.) ir bet koks naujas sensorius taip pat turi būti prijungtas ir apdorotas \cite{yang2017iot}. Šiame darbe buvo norima nagrinėti kodo generavimo sprendimo tinkamumą užduotims. \par
-Pagal Jack Herrington 2003 metų knygą "Code Generation in Action" kodo generavimas - tai rašymas programinės įrangos, kuri rašys reikiamą programinę įrangą problemai spręsti. Tai daroma tokiais atvejais, kai sprendžiama problema reikalauja daug rankinio darbo, kurį įmanoma automatizuoti. Kuo didesnio sprendimo reikalauja uždavinys tuo patraukliau tampa naudoti kodo generavimą sprendimo kūrimui. Kodo generavimas suteikia tokius privalumus: 
+Jei nėra numatomas kitimas, pagal ką turi būti apdorojami duomenys, tai galima pasirinkti ir rankinio apdorojimo sprendimą, kadangi nėra didelės tikimybės, kad teks keisti sprendimą. Toks sprendimas tiktų apdorojant išmaniųjų skaitiklių duomenis \cite{skaitikliai}. Universalus sprendimas taip pat gali būti tinkamas, jei pirminiai rodiklių duomenis yra specifiški ir yra poreikis juos visus apdoroti. Toks sprendimas gali būti aktualus apdorojant duomenis iš sensorių, kurie matuoja namų būseną (temperatūrą, drėgmę ir t.t.) ir bet koks naujas sensorius taip pat turi būti prijungtas ir apdorotas \cite{yang2017iot}. \par
+Pagal Jack Herrington 2003 metų knygą "Code Generation in Action" kodo generavimas - tai rašymas programinės įrangos, kuri rašys reikiamą programinę įrangą problemai spręsti. Tai daroma tokiais atvejais, kai sprendžiama problema reikalauja daug rankinio darbo, kurį įmanoma automatizuoti. Kuo didesnio sprendimo reikalauja uždavinys, tuo patraukliau tampa naudoti kodo generavimą sprendimo kūrimui. Kodo generavimas suteikia tokius privalumus: 
 \begin{itemize}
     \item Architektūrinį nuoseklumą: 
     \begin{itemize}
         \item Verčia programuotojus labiau mąstyti apie architektūrą.
         \item Jei sunku "priversti" generatorių generuoti reikiamą kodą, problema gali būti architektūroje.
-        \item Geros dokumentacijos buvimas sumažina problemą, kai nariai palieką projektą.
+        \item Geros dokumentacijos buvimas sumažina problemą, kai nariai palieka projektą.
     \end{itemize}
     \item Abstrakciją:
     \begin{itemize}
         \item Programuotojai galės kurti naujus šablonus, kurie leis esamą funkcionalumą pritaikyti kitomis kalbomis, sprendimais daug paprasčiau negu rankomis parašytą kodą.
         \item Verslo analitikai gali apžvelgti ir patvirtinti sprendimo abstrakciją.
-        \item Abstrakcija padės paprasčiau paruošti dokumentacija, testavimo atvejus, produkto palaikymo medžiagą ir t.t.  
+        \item Abstrakcija padės paprasčiau paruošti dokumentaciją, testavimo atvejus, produkto palaikymo medžiagą ir t.t.  
     \end{itemize}
-    \item Aukštą komandos moralę - rašomas kodas bus nuoseklus ir kokybiškas todėl kels komandos pasitikėjimą.
-    \item Tinkamas sprendimas Judriajam programavimui, kadangi kodo generavimo kuriami sprendimai yra lankstesni, tai leidžia ateityje juos lengviau keisti ir atnaujinti.   
+    \item Aukštą komandos moralę - rašomas kodas bus nuoseklus ir kokybiškas, todėl kels komandos pasitikėjimą savimi.
+    \item Tinkamas sprendimas judriajam (angl. agile) programavimui, kadangi kodo generavimo kuriami sprendimai yra lankstesni, tai leidžia ateityje juos lengviau keisti ir atnaujinti.   
 \end{itemize} 
 Kodo generavimas tampa tikrai naudingas tada, kai jis naudojamas didelių kiekių rankiniam kodavimui pakeisti \cite{herrington2003code}. \par
-Darbe nagrinėjamas architektūra ir koncepcinis sprendimas generuojantis srautinio apdorojimo sistemas pagal rodiklių duomenų modelius. Rodiklių duomenis apdorojantis koncepcinis sprendimas turi pasižymėti tokiomis savybėmis: 
+Darbe nagrinėjami architektūra ir koncepcinis sprendimas, generuojantis srautinio apdorojimo sistemas pagal rodiklių duomenų modelius. Rodiklių duomenis apdorojantis koncepcinis sprendimas turi pasižymėti tokiomis savybėmis: 
 \begin{itemize}
     \item Srautinių apdorojimo sistemų generavimas pagal deklaratyvų aprašymą.
     \item Galimybė keisti esamas apdorojimo sistemas, kai pakeičiamas rodiklių duomenų modelis.
@@ -104,11 +104,11 @@ Uždaviniai:
 
 \section{Rodiklių duomenys}
 
-Rodiklių duomenys - pasikartojančių įvykių parametrus aprašantys duomenys. Rodiklių duomenys pasižymi tuo, jog tik surinkti ir apdoroti tampa aktualūs. Rodikliai yra nepastovus - jų struktūra gali būti keičiama gali atsirasti naujų savybių, kurias reikia surinkti, arba yra pašalinamos jau esamos savybės. Rodiklių duomenys yra renkami ir analizuojami labai skirtingiems poreikiams - visur kur reikalinga statistika ir apdorojami dideli kiekiai duomenų yra naudojami rodikliai: tai gali būti įmonės vedamą "Microsoft Excel" skaičiuoklė, kurioje užrašyta kiek buvo mokėta už elektrą kiekvienais metais per paskutinius 10 metų arba juodosios skylės nuotrauka padaryta koreliuojant didelio duomenų kiekį iš 8 skirtingų teleskopu ir gauti rodikliai rodo taškus ant paveikslėlio, kurio dydis yra \(10^{12}\) kartų mažesnis nei pradiniai duomenys \cite{akiyama2019first}.
+Rodiklių duomenys - pasikartojančių įvykių parametrus aprašantys duomenys. Rodiklių duomenys pasižymi tuo, jog tik surinkti ir apdoroti tampa aktualūs. Rodikliai yra nepastovus - jų struktūra gali būti keičiama gali atsirasti naujų savybių, kurias reikia surinkti, arba yra pašalinamos jau esamos savybės. Rodiklių duomenys yra renkami ir analizuojami labai skirtingiems poreikiams - visur kur reikalinga statistika ir apdorojami dideli kiekiai duomenų yra naudojami rodikliai: tai gali būti įmonės vedama "Microsoft Excel" skaičiuoklė, kurioje užrašyta kiek buvo mokėta už elektrą kiekvienais metais per paskutinius 10 metų arba juodosios skylės nuotrauka, padaryta koreliuojant didelį duomenų kiekį iš 8 skirtingų teleskopų, ir gauti rodikliai rodo taškus ant paveikslėlio, kurio dydis yra \(10^{12}\) kartų mažesnis nei pradiniai duomenys \cite{akiyama2019first}.
 
 \subsection{Pirminiai rodiklių duomenys}
 
-Rodiklių duomenys yra gaunami apdorojus pirminius rodiklių duomenis, kurie susidaro iš raktų ir reikšmių žodyno (\ref{img:duomenys} pav.). Raktas gali būti tik tekstinio tipo, o reikšmė - tekstas arba skaičius. Pirminių rodiklių duomenų raktai ir raktų kiekis gali nesutapti - žodynas gali turėti daugiau raktų nei reikia arba žodyno reikšmės gali būti nereikalingos einamojo rodiklio išskaičiavimui. \par 
+Rodiklių duomenys yra gaunami apdorojus pirminius rodiklių duomenis, kurie susidaro iš raktų ir reikšmių žodyno (\ref{img:duomenys} pav.). Raktas gali būti tik tekstinio tipo, o reikšmė - tekstas arba skaičius. Pirminių rodiklių duomenų raktai ir raktų kiekis gali nesutapti - žodynas gali turėti daugiau raktų nei reikia arba žodyno reikšmės gali būti nereikalingos einamojo rodiklio apskaičiavimui. \par 
 Kadangi pirminiai rodiklių duomenys gali būti gaunami iš skirtingų šaltinių, skirtingais laikais, todėl kuriamas sprendimas turi galėti priimti duomenis asinchroniškai ir iš skirtingų šaltinių, o sprendimas realiu laiku turi sugebėti apdoroti reikiamus duomenis, o nereikalingus atmesti. 
 
 \begin{figure}[H]
@@ -122,7 +122,7 @@ Kadangi pirminiai rodiklių duomenys gali būti gaunami iš skirtingų šaltini�
 
 Apibrėžiamas bendras rodiklių duomenų modelis (\ref{img:rodiklio_apibrezimas} pav.), pagal kurį bus generuojamos srautinio duomenų apdorojimo sistemos. Siūlomas apibrėžimas susidaro iš trijų dalių: 
 \begin{itemize}
-    \item Rodiklių duomenų pirminis raktas sudarytas iš pirminių rodiklių duomenų raktų rinkinio.
+    \item Rodiklių duomenų pirminis raktas, sudarytas iš pirminių rodiklių duomenų raktų rinkinio.
     \item Pirminių rodiklių duomenų reikšmių srities apribojimai.
     \item Rodikliai. 
 \end{itemize}
@@ -135,32 +135,32 @@ Apibrėžiamas bendras rodiklių duomenų modelis (\ref{img:rodiklio_apibrezimas
 
 \subsubsection{Pirminis raktas}
 
-Rodiklio apdorojimo apibrėžimo dalis nusako pirminių rodiklių raktų rinkinį - reikšmių pagal kurias grupuojami apdoroti duomenys. Pavyzdžiui:
+Rodiklio apdorojimo apibrėžimo dalis nusako pirminių rodiklių raktų rinkinį - reikšmių, pagal kurias grupuojami apdoroti duomenys. Pavyzdžiui:
 \begin{itemize}
-    \item Statistikos srityje: norint surinkti duomenis aprašančius \textbf{skirtingų savivaldybių} nekilnojamo turto kainas pagal \textbf{metus}, raktų rinkinys atrodys taip: \[\{\textit{"Savivaldybė", "Metai"}\}\]
-    \item Sensoriniai duomenys: norint surinkti vienos dienos duomenis aprašančius \textbf{skirtingų sensorių} parodymus \textbf{kiekvieną valandą}, \textbf{kiekvienam ofiso kabinetui}, raktų rinkinys atrodys taip: \[\{\textit{"Sensoriaus tipas", "Valanda", Kabineto Numeris}\}\] 
-    \item Buhalterijoje: norint apdoroti duomenis parodančius \textbf{skyrių} patirtas išlaidas \textbf{kiekvieną mėnesį}, raktų rinkinys atrodys taip: \[\{\textit{"Skyriaus pavadinimas", "Mėnesis"}\}\] 
+    \item Statistikos srityje: norint surinkti duomenis, aprašančius \textbf{skirtingų savivaldybių} nekilnojamo turto kainas pagal \textbf{metus}, raktų rinkinys atrodys taip: \[\{\textit{"Savivaldybė", "Metai"}\}\]
+    \item Sensoriniai duomenys: norint surinkti vienos dienos duomenis, aprašančius \textbf{skirtingų sensorių} parodymus \textbf{kiekvieną valandą}, \textbf{kiekvienam ofiso kabinetui}, raktų rinkinys atrodys taip: \[\{\textit{"Sensoriaus tipas", "Valanda", Kabineto Numeris}\}\] 
+    \item Buhalterijoje: norint apdoroti duomenis, parodančius \textbf{skyrių} patirtas išlaidas \textbf{kiekvieną mėnesį}, raktų rinkinys atrodys taip: \[\{\textit{"Skyriaus pavadinimas", "Mėnuo"}\}\] 
 \end{itemize}  \par
-Raktų kiekis turi būti neribojamas, kadangi realiame pasaulyje yra neribotas kiekis duomenų pagal kuriuos galima grupuoti. Visų raktų reikšmių kiekių sandauga - apdorotų rodiklių duomenų pirminių raktų aibė. 
+Raktų kiekis turi būti neribojamas, kadangi realiame pasaulyje yra neribotas kiekis duomenų, pagal kuriuos galima grupuoti. Visų raktų reikšmių kiekių sandauga - apdorotų rodiklių duomenų pirminių raktų aibė. 
 
 \subsubsection{Pirminių rodiklių duomenų apribojimai}
 
-Rodiklio duomenų modelio dalis yra sudaryta iš rinkinio apribojimų, kurie aprašo kokie duomenys turi būti apdorojami. Apribojimai yra aprašomi predikatais. Pavyzdžiui:
+Rodiklio duomenų modelio dalis yra sudaryta iš rinkinio apribojimų, kurie aprašo kokie, duomenys turi būti apdorojami. Apribojimai yra aprašomi predikatais. Pavyzdžiui:
 \begin{itemize}
-    \item Statistikos srityje: norint surinkti žmonių, \textbf{vyresnių nei 60 metų} atlyginimus pagal kalendorinius metus, apribojimų sąrašas atrodys taip: \[\textit{"Amžius" > 59}\]
+    \item Statistikos srityje: norint surinkti žmonių, \textbf{vyresnių nei 60 metų}, atlyginimus pagal kalendorinius metus, apribojimų sąrašas atrodys taip: \[\textit{"Amžius" > 59}\]
     \item Sensoriniai duomenys: norint surinkti \textbf{tik savaitgalio} sensorių rodiklius, apribojimų sąrašas atrodys taip: \[\textit{"Savaitės Diena" > 5}, \textit{"Savaitės Diena" < 8}\]
     \item Buhalterijoje: norint apdoroti tam tikrus duomenis \textbf{tik "Marketingas" skyriaus} apribojimų sąrašas atrodys taip: \[\textit{"Skyriaus pavadinimas" == "Marketingas"}\] 
 \end{itemize} \par  
-Apribojimų skaičius gali būti bet koks (nuo 0 iki begalybės). Pirminiai rodiklių duomenys yra tinkami rodiklio išskaičiavimui, jei jų reikšmės priklauso apribojimų aibių sankirtai.  
+Apribojimų skaičius gali būti bet koks (nuo 0 iki begalybės). Pirminiai rodiklių duomenys yra tinkami rodiklio apskaičiavimui, jei jų reikšmės priklauso apribojimų aibių sankirtai.  
 
 \subsubsection{Rodikliai}
 
 Rodiklių duomenų modelio dalis sudaryta iš dviejų skirtingų tipų komponentų:
 \begin{itemize}
     \item Rodiklis - parametrai gaunami iš pirminių rodiklių duomenų. Jis yra sudarytas iš pavadinimo ir pirminių rodiklių duomenų rakto.
-    \item Išvestinis rodiklis - parametrai išskaičiuojami iš vieno ar daugiau rodiklių. Jis yra sudarytas iš pavadinimo ir transformacijos funkcijos, naudojančios rodiklius, nuo kurių priklauso išvestinis rodiklis. 
+    \item Išvestinis rodiklis - parametrai apskaičiuojami iš vieno ar daugiau rodiklių. Jis yra sudarytas iš pavadinimo ir transformacijos funkcijos, naudojančios rodiklius, nuo kurių priklauso išvestinis rodiklis. 
 \end{itemize}
-Rodiklių duomenų modelyje komponentų priklausomybės sudaro priklausomybių medį, kurio viršūnės - rodikliai, o briaunos - priklausomybės tarp rodiklių. Priklausomybių medyje kabančios (galinės) viršūnės visada bus rodiklio tipo, o visos kitos išvestinio rodiklio tipo.
+Rodiklių duomenų modelyje komponentų priklausomybės sudaro priklausomybių medį, kurio viršūnės - rodikliai, o briaunos - priklausomybės tarp rodiklių. Priklausomybių medyje kabančios (galinės) viršūnės visada bus rodiklio tipo, o visos kitos - išvestinio rodiklio tipo.
 Pavyzdžiui:
 \begin{itemize}
     \item Statistikos srityje: norint surinkti rodiklių duomenis aprašančius nekilnojamo turto kainas ir žmonių kaitą (\(\textit{Žmonių kaita} = (\textit{Gimstamumas - Mirtingumas}) + (\textit{Migracija} * \textit{Gyventojų kiekis}\)), renkamų rodiklių medžiai apsirašytų taip: 
@@ -201,7 +201,7 @@ Pavyzdžiui:
             \node{Šviesa};
         \end{tikzpicture} 	
     \]
-    \item Buhalterijoje: norint suskaičiuoti kiek įmonės darbuotojai uždirba pajamų (\(\textit{Pajamos} = (\textit{Atlyginimas}/1.7) + \textit{Premijos}\)) rodiklių medis bus toks: 
+    \item Buhalterijoje: norint suskaičiuoti, kiek įmonės darbuotojai uždirba pajamų (\(\textit{Pajamos} = (\textit{Atlyginimas}/1.7) + \textit{Premijos}\)), rodiklių medis bus toks: 
     \[	
         \begin{tikzpicture}[sibling distance=7em,	
             every node/.style = {shape=rectangle, rounded corners,	
@@ -217,7 +217,7 @@ Pavyzdžiui:
 
 \subsection{Rezultatų struktūra}
 
-Apdorotų rodiklių rezultatai gauti iš pirminių rodiklių duomenų gali būti pavaizduoti lentelę. Lentelės duomenų pirminis raktas yra sudarytas iš pirminių rodiklių duomenų reikšmių kombinacijos gautos pagal rodiklio modelio pirminį raktą. Rezultatų lentelės stulpeliuose aprašyti pirminis raktas ir išvestiniai rodikliai. Rezultatų lentelės kolonėlės susidaro iš apdorotų rodiklių duomenų.
+Apdorotų rodiklių rezultatai, gauti iš pirminių rodiklių duomenų, gali būti pavaizduoti lentelę. Lentelės duomenų pirminis raktas yra sudarytas iš pirminių rodiklių duomenų reikšmių kombinacijos, gautos pagal rodiklio modelio pirminį raktą. Rezultatų lentelės stulpeliuose aprašyti pirminis raktas ir išvestiniai rodikliai. Rezultatų lentelės kolonėlės susidaro iš apdorotų rodiklių duomenų.
 
 \begin{figure}[H]
     \centering
@@ -228,11 +228,11 @@ Apdorotų rodiklių rezultatai gauti iš pirminių rodiklių duomenų gali būti
 
 \subsection{Rodiklių duomenų struktūros kitimas}
 
-Laikui bėgant rodiklių duomenų struktūra gali būti keičiama. Buhalterijos srityje tai gali įvykti dėl naujo įstatymo, kuris pakeičia tam tikrų rodiklių išskaičiavimą. Išmaniuosiuose namuose tai gali būti naujas išmaniųjų namų sensorius. Statistikos srityje tai gali būti poreikis išskaidyti tam tikrus rodiklius į mažesnius rodiklius - rinkti ne migracijos rodiklį kaip vieną, o atskirai emigraciją ir imigraciją. \par
+Laikui bėgant rodiklių duomenų struktūra gali būti keičiama. Buhalterijos srityje tai gali įvykti dėl naujo įstatymo, kuris pakeičia tam tikrų rodiklių apskaičiavimą. Išmaniuosiuose namuose tai gali būti naujas išmaniųjų namų sensorius. Statistikos srityje tai gali būti poreikis išskaidyti tam tikrus rodiklius į smulkesnius rodiklius - rinkti ne migracijos rodiklį kaip vieną, o emigracijos ir imigracijos rodiklius atskirai. \par
 Šiame darbe rodiklių duomenų struktūrų pokyčiai apribojami taip:
 \begin{itemize}
-    \item Pirminis raktas negali būti keičiami, nes naujos reikšmės tampa nepalyginamos su anksčiau surinktomis. Pavyzdžiui, buvo renkami rodikliai metinių duomenų, o pagal poreikius reikia rinkti mėnesinius duomenis, ir lyginimas su anksčiau surinktais tampa neįmanomas. Todėl bet kokius pirminio rakto pokyčius turi būti laikomi nauju rodikliu. 
-    \item Apribojimai gali būti keičiami, tačiau šie pokyčiai turi būti naudojami tik tam, kad būtų išlaikytos pradinės apdorojamų pirminių rodiklių duomenų aibės. Pavyzdžiui, egzistuoja poreikis apdoroti duomenis iš visų skyrių išskyrus administraciją ir tokiam uždaviniui buvo sukurtas apribojimas - \(\textit{"Skyriaus pavadinimas" != "Administracija"}\). Bet po tam tikro laiko dalis administracijos skyriaus tapo buhalterijos skyriumi. Siekiant, kad būtų išlaikyta apdorotų rodiklių lyginimo prasmė, nauji apribojimai atrodys taip: \(\textit{"Skyriaus pavadinimas"!="Administracija"}, \textit{"Skyriaus pavadinimas"!="Buhalterijos"}\).
+    \item Pirminis raktas negali būti keičiami, nes naujos reikšmės tampa nepalyginamos su anksčiau surinktomis. Pavyzdžiui, buvo renkami metinių duomenų rodikliai, o pagal poreikius reikia rinkti mėnesinius duomenis, ir lyginimas su anksčiau surinktais tampa neįmanomas. Todėl bet kokie pirminio rakto pokyčiai turi būti laikomi nauju rodikliu. 
+    \item Apribojimai gali būti keičiami, tačiau šie pokyčiai turi būti naudojami tik tam, kad būtų išlaikytos pradinės apdorojamų pirminių rodiklių duomenų aibės. Pavyzdžiui, egzistuoja poreikis apdoroti duomenis iš visų skyrių, išskyrus administraciją, ir tokiam uždaviniui buvo sukurtas apribojimas - \(\textit{"Skyriaus pavadinimas" != "Administracija"}\). Bet po tam tikro laiko dalis administracijos skyriaus tapo buhalterijos skyriumi. Siekiant, kad būtų išlaikyta apdorotų rodiklių lyginimo prasmė, nauji apribojimai atrodys taip: \(\textit{"Skyriaus pavadinimas"!="Administracija"}, \textit{"Skyriaus pavadinimas"!="Buhalterijos"}\).
     \item Rodikliai ir išvestiniai rodikliai gali būti keičiami - nauji rodikliai pridedami, o seni pašalinami. Šie pokyčiai gali būti daromi bet kurioje rodiklių tarpusavio priklausomybės medžio vietoje. Rodiklių pokyčiai neturi daryti įtakos kitų rodiklių skaičiavimams. Pavyzdžiui, pajamos skaičiuojamos naudojant formulę: \[\textit{Pajamos = Atlyginimas + Premijos}\]. Pagal tai sugeneruotas toks medis: 
     \[	
         \begin{tikzpicture}[sibling distance=7em,	
@@ -263,16 +263,16 @@ Laikui bėgant rodiklių duomenų struktūra gali būti keičiama. Buhalterijos 
 
 \subsection{Srautinis duomenų apdorojimas} \label{strprocess}
 
-Siekiant apžvelgti modernius srautinio duomenų apdorojimo sprendimus šiame skyriuje apsibrėžiamos jų savybes.
-2005 metais Michael Stonebraker apibrėžė 8 taisykles realaus laiko (angl. real-time) srautinio duomenų apdorojimo architektūrai \cite{stonebraker20058}:
+Siekiant apžvelgti modernius srautinio duomenų apdorojimo sprendimus šiame skyriuje apsibrėžiamos jų savybės.
+Michael Stonebraker 2005 metais apibrėžė 8 taisykles realaus laiko (angl. real-time) srautinio duomenų apdorojimo architektūrai \cite{stonebraker20058}:
 \begin{enumerate}[label=\arabic*]
     \item taisyklė: Duomenys turi judėti. Žemo uždelstumo užtikrinimui sistema turi apdoroti duomenis nenaudojant duomenų saugojimo operacijų. 
     Taip pat sistema turi ne pati užklausti duomenų, o gauti juos iš kito šaltinio asinchroniškai. 
-    \item taisyklė: Duomenų transformacijos turi būti vykdomas SQL pobūdžio užklausomis. Žemo abstrakcijos lygmens srautinio apdorojimo sistemos reikalauja ilgesnio programavimo laiko ir brangesnio palaikymo. Tuo tarpu aukšto abstrakcijos lygmens sistema naudojanti SQL užklausas, kurias žino dauguma programuotojų ir yra naudojamos daugelyje skirtingų sistemų, leidžia efektyviau kurti srautinio apdorojimo sprendimus.
+    \item taisyklė: Duomenų transformacijos turi būti vykdomas SQL pobūdžio užklausomis. Žemo abstrakcijos lygmens srautinio apdorojimo sistemos reikalauja ilgesnio programavimo laiko ir brangesnio palaikymo. Tuo tarpu aukšto abstrakcijos lygmens sistema, naudojanti SQL užklausas, kurias žino dauguma programuotojų ir yra naudojamos daugelyje skirtingų sistemų, leidžia efektyviau kurti srautinio apdorojimo sprendimus.
     \item taisyklė: Architektūra turi susidoroti su duomenų netobulumais. Architektūra turi palaikyti galimybę nutraukti individualius skaičiavimus tam, kad neatsirastų blokuojančių operacijų, kurios sustabdo vieno modulio veikimą ir tuo pačiu visos architektūros veikimą. Taip pat ši architektūra turi sugebėti susidoroti su vėluojančiomis žinutėmis, pratęsiant laiko tarpą, per kurį ta žinutė turi ateiti.
     \item taisyklė: Architektūra turi būti deterministinė. Kiekvieną kartą apdorojant tuos pačius duomenis rezultatai turi būti gaunami tokie patys.
-    \item taisyklė: Architektūra turi gebėti apdoroti išsaugotus duomenis ir realiu laiku gaunamus duomenis. Sistema parašyta su tokia architektūra turi galėti apdoroti jau esančius duomenis taip pat kaip ir naujai ateinančius. Toks reikalavimas buvo aprašytas, nes atsirado poreikis nepastebimai perjungti apdorojimą iš istorinių duomenų į realiu laiku ateinančius duomenis automatiškai.
-    \item taisyklė: Architektūra turi užtikrinti duomenų saugumą ir apdorojimo prieinamumą. Kadangi sistema turi apdoroti didelius kiekius duomenų, architektūra klaidos atveju, turi sugebėti persijungti į atsarginę sistemą ir tęsti darbą toliau. Taip pat tokios klaidos atveju atsarginė sistema turi būti apdorojusi visus duomenis ir sugebėti iš karto priimti naujus duomenis, o ne apdoroti duomenis iš pradžių.
+    \item taisyklė: Architektūra turi gebėti apdoroti išsaugotus duomenis ir realiu laiku gaunamus duomenis. Sistema, parašyta su tokia architektūra, turi galėti apdoroti jau esančius duomenis taip pat, kaip ir naujai ateinančius. Toks reikalavimas buvo aprašytas, nes atsirado poreikis nepastebimai perjungti apdorojimą iš istorinių duomenų į realiu laiku ateinančius duomenis automatiškai.
+    \item taisyklė: Architektūra turi užtikrinti duomenų saugumą ir apdorojimo prieinamumą. Kadangi sistema turi apdoroti didelius kiekius duomenų, architektūra klaidos atveju turi sugebėti persijungti į atsarginę sistemą ir tęsti darbą toliau. Taip pat tokios klaidos atveju atsarginė sistema turi būti apdorojusi visus duomenis ir sugebėti iš karto priimti naujus duomenis, o ne apdoroti duomenis iš pradžių.
     \item taisyklė: Architektūra turi užtikrinti sugebėjimą paskirstyti sistemos darbus automatiškai. Srautinio apdorojimo sistemos turi palaikyti kelių procesoriaus gijų operacijas. Taip pat sistema turi galėti veikti ant kelių kompiuterių vienu metu ir prireikus paskirstyti resursus pagal galimybes.
     \item taisyklė: Architektūra turi apdoroti ir atsakyti akimirksniu. Anksčiau minėtos taisyklės nėra svarbios, jeigu sistema nesugeba greitai susidoroti su dideliu kiekiu naujų duomenų. Todėl turi būti naudojamas ne tik teisingas ir greitas srautinio apdorojimo sprendimas, bet ir gerai optimizuota sistema.
 \end{enumerate}\par 
@@ -281,56 +281,56 @@ Todėl norint sužinoti tam tikro srautinio duomenų apdorojimo sprendimo tinkam
 
 Norime nustatyti srautinio apdorojimo sistemų savybes pagal:
 \begin{itemize}
-    \item Pristatymo semantika (angl. delivery semantics) - apibrėžia pagal kokį modelį bus pristatyti duomenys. Egzistuoja trys semantikos \cite{ensar20}: 
+    \item Pristatymo semantiką (angl. delivery semantics) - apibrėžia, pagal kokį modelį bus pristatyti duomenys. Egzistuoja trys semantikos \cite{ensar20}: 
     \begin{itemize}
-        \item Bent vieną kartą (angl. at-least-once) užtikrina, kad duomenys bus apdoroti bent kartą, bet gali atsirasti dublikatų. 
-        \item Ne daugiau vieno karto (angl. at-most-once) užtikrina, kad duomenys bus apdoroti daugiausiai tik vieną kartą, bet gali atsirasti praradimų. 
-        \item Tiksliai vieną kartą (angl. exactly-once) užtikrina, kad duomenys bus apdoroti tik vieną kartą ir klaidos bus suvaldytos.
+        \item Bent vieną kartą (angl. at-least-once) - užtikrina, kad duomenys bus apdoroti bent kartą, bet gali atsirasti dublikatų. 
+        \item Ne daugiau vieno karto (angl. at-most-once) - užtikrina, kad duomenys bus apdoroti daugiausia tik vieną kartą, bet gali atsirasti praradimų. 
+        \item Tiksliai vieną kartą (angl. exactly-once) - užtikrina, kad duomenys bus apdoroti tik vieną kartą, ir klaidos bus suvaldytos.
     \end{itemize}
-    \item Uždelstumas (angl. latency) - apibrėžia laikų sumą - kiek laiko trūko viena operacija ir kiek laiko ši operacija turėjo laukti eilėje kol bus pabaigtos kitos operacijos \cite{karimov2018benchmarking}.
-    \item Pralaidumas (angl. throughput) - apibrėžia kiek pavyks įvykdyti operacijų per tam tikrą laiko tarpą.
+    \item Uždelstumas (angl. latency) - apibrėžia laikų sumą - kiek laiko truko viena operacija ir kiek laiko ši operacija turėjo laukti eilėje kol bus pabaigtos kitos operacijos \cite{karimov2018benchmarking}.
+    \item Pralaidumas (angl. throughput) - apibrėžia, kiek pavyks įvykdyti operacijų per tam tikrą laiko tarpą.
     \item Abstrakcijos lygmuo (angl. abstraction) - apibrėžia kokio lygmens programavimo sąsają pateikia sprendimas.
 \end{itemize}
-Tam išnagrinėsime ir palyginsime, kaip šitas savybes išpildo keturi egzistuojantys srautinio apdorojimo sprendimai - "Apache Storm", "Apache Spark", "Apache Flink" ir "Heron".
+Tuo tikslu išnagrinėsime ir palyginsime, kaip šitas savybes atitinka keturi egzistuojantys srautinio apdorojimo sprendimai - "Apache Storm", "Apache Spark", "Apache Flink" ir "Heron".
 
 \subsection{Pristatymo semantika}
-"Apache Spark" ir "Apache Flink" sprendimų pristatymo semantika yra tiksliai vieną kartą (angl. exactly-once), tai reiškia, kad visi duomenys bus apdoroti tik vieną kartą. Tačiau tam, kad užtikrinti šią semantiką sprendimas sunaudoja daug resursų, kadangi reikia užtikrinti, kad operacija bus vykdoma būtent vieną kartą kiekviename srautinio apdorojimo žingsnyje: duomenų gavime, kuris stipriai priklauso nuo duomenų šaltinio, duomenų transformacijos, kurią turi įvykdyti srautinio apdorojimo sprendimas, ir duomenų saugojime, tai turi būti užtikrinta sprendimo ir naudojamos saugyklos \cite{zhang20}.\par
+"Apache Spark" ir "Apache Flink" sprendimų pristatymo semantika yra tiksliai vieną kartą (angl. exactly-once), tai reiškia, kad visi duomenys bus apdoroti tik vieną kartą. Tačiau tam, kad būtų užtikrinta ši semantika, sprendimas sunaudoja daug resursų, kadangi reikia užtikrinti, kad operacija bus vykdoma būtent vieną kartą kiekviename srautinio apdorojimo žingsnyje: duomenų gavime, kuris stipriai priklauso nuo duomenų šaltinio, duomenų transformacijoje, kurią turi įvykdyti srautinio apdorojimo sprendimas, ir duomenų saugojime; tai turi būti užtikrinta sprendimo ir naudojamos saugyklos \cite{zhang20}.\par
 
 "Apache Storm" pristatymo semantika yra bent vieną kartą (angl. at-least-once), tai reiškia, kad į šį sprendimą siunčiami duomenys bus visada apdoroti, tačiau kartais gali būti apdoroti kelis kartus \cite{prithi20}. Jei uždavinys nereikalauja tiksliai vieno karto apdorojimo, tai geriau rinktis bent vieną kartą ar ne daugiau vieno karto semantikas, kadangi jos neturi papildomų apsaugų, kurios reikalingos tiksliai vieno karto apdorojimui, ir todėl veikia greičiau \cite{zhang20}. \par
 
-"Heron" sprendimų pristatymo semantika gali būti keičiama, programuotojas kuriantis srautinio apdorojimo sistemą šiam sprendimui aprašo kokio tipo pristatymo semantikos kuriama sistema reikalauja \cite{delivery-semantics}.
+"Heron" sprendimų pristatymo semantika gali būti keičiama, programuotojas, kuriantis srautinio apdorojimo sistemą, šiam sprendimui aprašo, kokio tipo pristatymo semantikos kuriama sistema reikalauja \cite{delivery-semantics}.
 
 \subsection{Uždelstumas}
 
-Uždelstumas - laiko trukmė, kuri parodo kaip greitai sprendimas įvykdo vieną operaciją, nuo jos patekimo į eilę iki šios operacijos apdorojimo pabaigos. Pagal \cite{Lopez2016APC} aprašytus Martin Andreoni Lopez "Apache Storm", "Apache Spark" ir "Apache Flink" bandymus galima matyti, kad būtent "Apache Storm" turi mažiausią uždelstumą. Kadangi parinkus tinkamą paralelizmo parametrą šis sprendimas su užduotimi susidorojo net iki 15 kartų greičiau. Antroje vietoje liko "Apache Flink", o po jos "Apache Spark". \par
+Uždelstumas - laiko trukmė, kuri parodo kaip greitai sprendimas įvykdo vieną operaciją, nuo jos patekimo į eilę iki šios operacijos apdorojimo pabaigos. Pagal \cite{Lopez2016APC} aprašytus Martin Andreoni Lopez "Apache Storm", "Apache Spark" ir "Apache Flink" bandymus galima matyti, kad būtent "Apache Storm" turi mažiausią uždelstumą. Parinkus tinkamą paralelizmo parametrą šis sprendimas su užduotimi susidorojo net iki 15 kartų greičiau. Antroje vietoje liko "Apache Flink", o po jos - "Apache Spark". \par
 
-"Heron" sprendimas yra sukurtas siekiant pagerinti "Apache Storm" sprendimo greitaveika, todėl jo uždelstumas yra dar mažesnis nei "Apache Storm" \cite{Kulkarni:2015:THS:2723372.2742788}.
+"Heron" sprendimas yra sukurtas siekiant pagerinti "Apache Storm" sprendimo greitaveiką, todėl jo uždelstumas yra dar mažesnis nei "Apache Storm" \cite{Kulkarni:2015:THS:2723372.2742788}.
 
 \subsection{Pralaidumas}
 
-Pralaidumas apibrėžia kokį kiekį procesų sprendimas gali įvykdyti per tam tikrą laiko tarpą. 2016 metais Sanket Chintapalli išmatavo "Apache Storm", "Apache Spark" ir "Apache Flink" sprendimų pralaidumą ir uždelstumą bei palygino rezultatus. Kaip ir anksčiau manyta, "Apache Spark" turėjo aukščiausia pralaidumą iš visų, kadangi jis vienintelis duomenis apdoroja mikro-paketais\cite{chintapalli2016benchmarking}. Antroje vietoje liko "Apache Flink", kuris yra subalansuotas pralaidumo atžvilgiu ir paskutinis liko "Apache Storm", kuris turi žemą uždelstumą, todėl nukenčia pralaidumas. "Heron" tuo tarpu turi aukštesnį pralaidumą ir žemesnį uždelstumą nei "Apache Storm" \cite{TwitterHeron}. 
+Pralaidumas apibrėžia kokį kiekį procesų sprendimas gali įvykdyti per tam tikrą laiko tarpą. Sanket Chintapalli 2016 metais išmatavo "Apache Storm", "Apache Spark" ir "Apache Flink" sprendimų pralaidumą ir uždelstumą bei palygino rezultatus. Kaip ir anksčiau manyta, "Apache Spark" turėjo aukščiausią pralaidumą iš visų, kadangi jis vienintelis duomenis apdoroja mikro-paketais\cite{chintapalli2016benchmarking}. Antroje vietoje liko "Apache Flink", kuris yra subalansuotas pralaidumo atžvilgiu, ir paskutinis liko "Apache Storm", kuris turi žemą uždelstumą, todėl nukenčia pralaidumas. "Heron" tuo tarpu turi aukštesnį pralaidumą ir žemesnį uždelstumą nei "Apache Storm" \cite{TwitterHeron}. 
 
 \subsection{Abstrakcijos lygmuo}
 
 "Apache Storm" parašytos sistemos yra žemo abstrakcijos lygmens, tai reiškia, kad turi būti aprašyti visi srautinio apdorojimo moduliai: 
-setSpouts(..), kuriame nustatoma duomenų įeiga ir koks bus paralelizmo lygis, setBolt(..), kuriame nustatomi apdorojimo moduliai, kokius duomenis gaus iš prieš tai buvusio modulio ir paralelizmo lygis. Kiekvieno modulio execute() metodas aprašo, kaip šis modulis turi apdoroti duomenis \cite{tutpoint}. Šio sprendimo programų kūrimo laikas užtruks ilgiau negu kitiems sprendimams su aukštu abstrakcijos lygmeniu, tačiau žemas abstrakcijos leidžia rašyti daug greičiau veikiančias sistemas, kadangi programuotojas turi pilną kontrolę. \par
+setSpouts(..), kuriame nustatoma duomenų įeiga ir koks bus paralelizmo lygis, setBolt(..), kuriame nustatomi apdorojimo moduliai, kokius duomenis gaus iš prieš tai buvusio modulio ir paralelizmo lygis. Kiekvieno modulio execute() metodas aprašo, kaip šis modulis turi apdoroti duomenis \cite{tutpoint}. Šio sprendimo programų kūrimo laikas užtruks ilgiau negu kitų sprendimų su aukštu abstrakcijos lygmeniu, tačiau žemas abstrakcijos leidžia rašyti daug greičiau veikiančias sistemas, kadangi programuotojas turi pilną kontrolę. \par
 
-"Apache Spark" parašytos programos yra aukšto abstrakcijos lygmens. Sistemos aprašomos funkciškai, todėl kodo rašymas trunka daug trumpiau ir jį yra daug lengviau skaityti. Tačiau prarandama galimybė optimizuoti ir paralelizmo klausimas paliekamas sprendimui. Kadangi "Apache Spark" yra ne pilnai srautinis, o mikro-paketinis (angl. micro-batching) sprendimas, todėl vartotojas turi apsirašyti kokio dydžio paketais bus renkami duomenys \cite{shoro2015big}. \par
+"Apache Spark" parašytos programos yra aukšto abstrakcijos lygmens. Sistemos aprašomos funkciškai, todėl kodo rašymas trunka daug trumpiau ir jį yra daug lengviau skaityti. Tačiau prarandama galimybė optimizuoti ir paralelizmo klausimas paliekamas sprendimui. Kadangi "Apache Spark" yra ne pilnai srautinis, o mikro-paketinis (angl. micro-batching) sprendimas, todėl vartotojas turi apsirašyti, kokio dydžio paketais bus renkami duomenys \cite{shoro2015big}. \par
 
 "Apache Flink" parašytos programos yra aukšto abstrakcijos lygmens. "Apache Flink" sprendimas pats užsiima resursų distribucija, todėl programuotojui lieka tik parašyti veikianti kodą, o sistema pati susitvarkys su paralelizmu \cite{flinkdoc}. Tačiau tai reiškia, kad su šiuo sprendimu parašytos programos nepavyks optimizuoti taip pat gerai kaip žemo abstrakcijos lygmens sistemos. \par
 
 "Heron" sprendimas turi skirtingus API, kurie naudoja skirtingus abstrakcijos lygius, kuriuos galima rinktis pagal tinkamumą sprendžiamai problemai. Darbo rašymo metu "Heron" turi 4 skirtingus API:
 \begin{itemize}
     \item "Heron Streamlet API" - aukšto abstrakcijos lygmens API, rašomas su "Java" programavimo kalba. Panaši sintaksė į "Apache Flink" rašomų sprendimų.
-    \item "Heron ECO API" - eksperimentinis aukšto abstrakcijos lygmens API, rašomas su "Java" programavimo kalba. Skiriasi nuo "Heron Streamlet API", nes modulių apdorojimo eiliškumas apsirašo YAML formatų, kas leidžia keisti sukurtos srautinio duomenų apdorojimo programos struktūrą nekeičiant kodo.
+    \item "Heron ECO API" - eksperimentinis aukšto abstrakcijos lygmens API, rašomas su "Java" programavimo kalba. Skiriasi nuo "Heron Streamlet API", nes modulių apdorojimo eiliškumas apsirašo YAML formatu, kas leidžia keisti sukurtos srautinio duomenų apdorojimo programos struktūrą nekeičiant kodo.
     \item "Heron Topology API for Java" - žemo abstrakcijos lygmens API, rašomas su "Java" programavimo kalba. Rašomas identiškas kodas, kaip ir "Apache Storm", kadangi "Heron" sprendimas buvo sukurtas siekiant pagerinti "Apache Storm".
-    \item "Heron Topology API for Python" - žemo abstrakcijos lygmens API, rašomas su "Python" programavimo kalba. Su šiuo API kuriami srautinio apdorojimo sprendimai yra panašus į "Apache Storm", tik su "Python" programavimo kalbos privalumais.
+    \item "Heron Topology API for Python" - žemo abstrakcijos lygmens API, rašomas su "Python" programavimo kalba. Su šiuo API kuriamos srautinio apdorojimo sistemos yra panašios į "Apache Storm" sistemas, tik su "Python" programavimo kalbos privalumais.
 \end{itemize}  
 
 
 \subsection{Apibendrinimas}
 
-Pagal atlikta analizę, sudaryta \ref{table:comparer} lentelė. Iš šių keturių sprendimų pasirinktas vienas, kuris labiausiai tinka rodiklių duomenų srautinio apdorojimo sistemų generavimui, pagal aprašytas savybes. Tinkamas sprendimas turi pasižymėti: 
+Pagal atlikta analizę sudaryta \ref{table:comparer} lentelė. Iš šių keturių sprendimų pasirinktas vienas, kuris labiausiai tinka rodiklių duomenų srautinio apdorojimo sistemų generavimui pagal aprašytas savybes. Tinkamas sprendimas turi pasižymėti: 
 \begin{itemize}
     \item Apdorojimo greičiu, svarbu, kad duomenys būtų apdorojami kai tik patenka į sistemą, todėl turi būti žemas uždelstumas.
     \item Tiksliai vieną kartą apdorojimu, kadangi norint gauti tikslius rodiklių duomenis turi neišsikreipti pirminių rodiklių duomenų aibė apdorojimo metu.
@@ -356,21 +356,21 @@ Pagal analizę (\ref{table:comparer} lentelė.) ir apsibrėžtus reikalavimus da
 
 \section{Srautinio duomenų apdorojimo sistemų architektūra}
 
-Šiame skyriuje apžvelgiamas srautinio apdorojimo sistemų rašymas "Heron" sprendimui ir srautinio apdorojimo sistemų generavimas pagal deklaratyviai aprašyta rodiklių duomenų modelį.
+Šiame skyriuje apžvelgiamas srautinio apdorojimo sistemų rašymas "Heron" sprendimui ir srautinio apdorojimo sistemų generavimas pagal deklaratyviai aprašytą rodiklių duomenų modelį.
 
 \subsection{Srautinio apdorojimo sistemos komponentai}
 "Heron" sprendimui parašytos srautinio apdorojimo sistemos susideda iš pateiktų komponentų tipų:
 \begin{itemize}
     \item "Spout" - duomenų įeigos komponentai, kurių gali būti daugiau nei vienas, jeigu yra daugiau duomenų šaltinių. Pavyzdžiui, žinučių eilės "Spout" komponentas ir duomenų bazės "Spout" komponentas.
     \item "Bolt" - duomenų apdorojimo komponentai, kurių gali būti daugiau nei vienas. Šie komponentai gali gauti duomenis iš "Spout" komponentų ir iš kitų tokio pačio tipo komponentų.
-    \item "Topology" - srautinio apdorojimo sistemos konfigūracijos komponentas, kuris visada yra vienas. "Topology" komponentas skirtas nustatyti srautinio apdorojimo sistemos pavadinimą ir sistemos konfigūracijas (pristatymo semantika, kontrolinių saugojimo tašku intervalas ir t.t.) bei specifikuoti, kaip tarpusavyje yra sujungti "Spout" ir "Bolt" komponentai. 
+    \item "Topology" - srautinio apdorojimo sistemos konfigūracijos komponentas, kuris visada yra vienas. "Topology" komponentas skirtas nustatyti srautinio apdorojimo sistemos pavadinimą ir sistemos konfigūracijas (pristatymo semantika, kontrolinių saugojimo taškų intervalas ir t.t.) bei specifikuoti, kaip tarpusavyje yra sujungti "Spout" ir "Bolt" komponentai. 
 \end{itemize}\par
 Konkretus pavyzdys srautinio apdorojimo sistemos atrodo taip:
-reikalinga srautinio apdorojimo sistema, kuriai bus siunčiami sakiniai, o ji gražins žodyną su žodžių dažniu. Vienas iš būdų įgyvendinti tokią sistemą (\ref{img:system-example} pav.) yra:
+reikalinga srautinio apdorojimo sistema, kuriai bus siunčiami sakiniai, o ji grąžins žodyną su žodžių dažniu. Vienas iš būdų įgyvendinti tokią sistemą (\ref{img:system-example} pav.) yra:
 \begin{itemize}
-    \item Įeigos "Spout" komponentas gaunantis sakinius iš žinučių eilės ir perduodantis (angl. emit) sakinius toliau.
-    \item Skaidymo "Bolt" komponentas gaunamus sakinius suskaidantis į žodžius ir perduodantis juos toliau.
-    \item Skaičiavimo "Bolt" komponentas saugantis pasikartojančių žodžių žodyną, kur raktas yra žodis, o reikšmė - kiek kartų pasikartojo. Gavęs žodį jis padidina jo skaitiklį žodyne ir perduoda žodyną į "Rezultatų" žinučių eilę.
+    \item Įeigos "Spout" komponentas, gaunantis sakinius iš žinučių eilės ir perduodantis (angl. emit) sakinius toliau.
+    \item Skaidymo "Bolt" komponentas, gaunamus sakinius suskaidantis į žodžius ir perduodantis juos toliau.
+    \item Skaičiavimo "Bolt" komponentas, saugantis pasikartojančių žodžių žodyną, kur raktas yra žodis, o reikšmė - kiek kartų pasikartojo. Gavęs žodį, jis padidina jo skaitiklį žodyne ir perduoda žodyną į "Rezultatų" žinučių eilę.
 \end{itemize}
 \begin{figure}[H]
     \centering
@@ -380,19 +380,19 @@ reikalinga srautinio apdorojimo sistema, kuriai bus siunčiami sakiniai, o ji gr
 \end{figure}
 
 \subsection{Srautinio apdorojimo sistemų sudarymas pagal rodiklių duomenų modelį}
-Srautinio apdorojimo sistemos sudarytos pagal deklaratyvų rodiklių duomenų modelį atrodo taip:
+Srautinio apdorojimo sistemos, sudarytos pagal deklaratyvų rodiklių duomenų modelį atrodo taip:
 \begin{enumerate}
     \item "Spout" tipo įeigos komponentas. Šis komponentas aprašo priminių rodiklių duomenų filtravimo predikatus ir pirminį raktą. 
     \item "Bolt" tipo komponentai, kurie sudaryti pagal rodiklių duomenų modelio rodiklius. Kiekvienam rodikliui turi būti vienas "Bolt" tipo komponentas. "Bolt" komponentai gali būti dviejų tipų:
     \begin{itemize}
         \item Paprastų rodiklių "Bolt" komponentai, kurie atsakingi už pirminių rodiklių duomenų apdorojimą.
-        \item Išvestiniai rodiklių "Bolt" komponentai, kurie atsakingi už duomenų, gautų iš paprastų arba išvestinių rodiklių "Bolt" komponentų, transformaciją. Transformacijos - bet kokie iš anksto aprašyti nuoseklus veiksmai su duomenų rinkiniu gražinantys vieną rezultatą. Pavyzdžiui: norint sudaryto išvestinį rodiklį, kuris skaičiuoja dviejų pirminių rodiklių sumą turi būti:
+        \item Išvestiniai rodiklių "Bolt" komponentai, kurie atsakingi už duomenų, gautų iš paprastų arba išvestinių rodiklių "Bolt" komponentų, transformaciją. Transformacijos - bet kokie iš anksto aprašyti nuoseklūs veiksmai su duomenų rinkiniu, gražinantys vieną rezultatą. Pavyzdžiui: norint sudaryti išvestinį rodiklį, kuris skaičiuoja dviejų pirminių rodiklių sumą, turi būti:
         \begin{itemize}
-            \item Iš anksto aprašyta funkcija "suma", kuri priima du skaičius ir gražina vieną.
+            \item Iš anksto aprašyta funkcija "suma", kuri priima du skaičius ir grąžina vieną.
             \item Rodiklio modelyje užrašyta transformacija - suma(rodiklis1, rodiklis2).
         \end{itemize} 
     \end{itemize}
-    \item "Topology" aprašas, kuriame "Spout" ir "Bolt" komponentų sąjungos tarpusavyje specifikuojamos pagal priklausomybių medžį gautą iš rodiklių duomenų modelio.
+    \item "Topology" aprašas, kuriame specifikuojamos "Spout" ir "Bolt" komponentų sąjungos pagal priklausomybių medį gautą iš rodiklių duomenų modelio.
 \end{enumerate}\par
 Pavyzdžiui, jei rodiklis atrodo taip:     
 \[
@@ -421,7 +421,7 @@ Pavyzdžiui, jei rodiklis atrodo taip:
 
 \subsection{Eksperimento tikslas}
 
-Eksperimento tikslas - sukurti koncepcinį sprendimą, kurio pagalba patikrinti, ar sudaryta architektūra išpildo šias savybes:
+Eksperimento tikslas - sukurti koncepcinį sprendimą, kurio pagalba patikrinti, ar sudaryta architektūra atitinka šias savybes:
 \begin{itemize}
     \item Srautinių apdorojimo sistemų generavimas pagal deklaratyvų aprašymą.
     \item Galimybė keisti esamas apdorojimo sistemas, kai pakeičiamas rodiklių duomenų modelis.
@@ -429,7 +429,7 @@ Eksperimento tikslas - sukurti koncepcinį sprendimą, kurio pagalba patikrinti,
     \item Išvestinių rodiklių apdorojimas pagal iš anksto apibrėžtas funkcijas.
 \end{itemize}  
 
-\noindent Siekiant patikrinti sudarytos architektūros savybes buvo atlikti šie bandymai:
+\noindent Siekiant patikrinti sudarytos architektūros savybes, buvo atlikti šie bandymai:
 \begin{enumerate}
     \item Sukurtas pavyzdinis rodiklių duomenų modelis, aprašytas deklaratyviai ir pateiktas į koncepcinį sprendimą.
     \item Atnaujintas rodiklių duomenų modelis (pridėtas naujas išvestinis rodiklis) ir pateiktas į koncepcinį sprendimą.
@@ -437,7 +437,7 @@ Eksperimento tikslas - sukurti koncepcinį sprendimą, kurio pagalba patikrinti,
 
 \subsection{Eksperimento vykdymo aplinka}
 
-Kompiuterio, kuriame buvo vykdomas eksperimentas specifikacijos:
+Kompiuterio, kuriame buvo vykdomas eksperimentas, specifikacijos:
 \begin{itemize}
     \item Procesorius - Intel Core i7-7700k 4,50GHz.
     \item Sisteminis diskas -  512 GB SSD.
@@ -447,10 +447,10 @@ Kompiuterio, kuriame buvo vykdomas eksperimentas specifikacijos:
 
 \subsection{Koncepcinis sprendimas}
 
-Siekiant nustatyti sudarytos architektūros savybes sukurtas koncepcinis sprendimas (\ref{img:concept} pav.). Sudarytas iš šių pagrindinių komponentų:
+Siekiant nustatyti sudarytos architektūros savybes sukurtas koncepcinis sprendimas (\ref{img:concept} pav.). Jis sudarytas iš šių pagrindinių komponentų:
 \begin{itemize}
-    \item Sistemų generavimo komponentas - programa generuojanti srautinio apdorojimo sistemas.
-    \item Duomenų bazės komponentas - duomenų bazė sauganti rodiklių duomenų apdorojimo rezultatus.
+    \item Sistemų generavimo komponentas - programa, generuojanti srautinio apdorojimo sistemas.
+    \item Duomenų bazės komponentas - duomenų bazė, sauganti rodiklių duomenų apdorojimo rezultatus.
     \item Srautinio apdorojimo sprendimas - programinė įranga, kurioje veikia sugeneruotos srautinio apdorojimo sistemos.
 \end{itemize}
 
@@ -468,13 +468,13 @@ Sistemų generavimo komponentas - programa sukurta su ".NET core" biblioteka, ne
 
 \begin{enumerate}
     \item Gaunamas rodiklių duomenų modelis.
-    \item Tikrinama ar jau egzistuoja tokia srautinio apdorojimo sistema. Tai daroma kreipiantis į duomenų bazę ir tikrinant, ar egzistuoja įrašų, kurių raktai sutampa su generuojamos sistemos pavadinimu.
+    \item Tikrinama, ar jau egzistuoja tokia srautinio apdorojimo sistema. Tai daroma kreipiantis į duomenų bazę ir tikrinant, ar egzistuoja įrašų, kurių raktai sutampa su generuojamos sistemos pavadinimu.
     \item Jei egzistuoja:
         \begin{enumerate}
-            \item Sustabdoma veikianti sistemą. Tai vykdoma kviečiant stabdymo komandą per Ubuntu operacinės sistemos terminalą.
-            \item Iš duomenų bazės ištraukiami jau apdorotus rodiklių duomenis ir perduodami į generavimo dalį.
+            \item Sustabdoma veikianti sistema. Tai vykdoma kviečiant stabdymo komandą per Ubuntu operacinės sistemos terminalą.
+            \item Iš duomenų bazės ištraukiami jau apdoroti rodiklių duomenys ir perduodami į generavimo dalį.
         \end{enumerate} 
-    \item Generuojamas srautinio apdorojimo sistemos įeigos "Spout" tipo komponentas. Jame įrašomas žinučių eilės grupės pavadinimą, sąlygos pirminių rodiklių duomenims pagal apribojimus ir pirminių rodiklių duomeniui sugeneruojamas unikalus identifikatorius, kurio pagalba išvestinių rodiklių apdorojimo komponentai vykdo transformacijas teisinga tvarka.
+    \item Generuojamas srautinio apdorojimo sistemos įeigos "Spout" tipo komponentas. Jame įrašomas žinučių eilės grupės pavadinimas, sąlygos pirminių rodiklių duomenims pagal apribojimus ir pirminių rodiklių duomeniui sugeneruojamas unikalus identifikatorius, kurio pagalba išvestinių rodiklių apdorojimo komponentai vykdo transformacijas teisinga tvarka.
     \item Pagal rodiklius generuojami duomenų apdorojimo "Bolt" tipo komponentai. Jeigu generuojamas komponentas jau egzistuoja, sugeneruotas rodiklio apdorojimo "Bolt" tipo komponento kodas užpildomas rezultatais gautais iš duomenų bazės. 
     \item Generuojamas sistemos "Topology" tipo aprašas, kuriame yra specifikuojamas komponentų tarpusavio jungimasis. 
     \item Visas sugeneruotas kodas talpinamas į vieną aplanką ir sukompiliuojamas.
@@ -490,20 +490,20 @@ Sistemų generavimo komponentas - programa sukurta su ".NET core" biblioteka, ne
 
 \subsubsection{Apdorotų rodiklių duomenų bazė}
 
-Duomenų bazė koncepciniam sprendime saugo apdorotus rodiklių duomenis. Norint saugoti apdorotus išvestinių ir pagrindinių rodiklių duomenis, visi srautinio apdorojimo sistemų komponentai yra prijungti prie duomenų bazės ir apdoroję duomenis talpina juos į duomenų bazę perrašydami ten jau esamus. Duomenys iš duomenų bazės naudojami dviem poreikiam: 
+Duomenų bazė koncepciniame sprendime saugo apdorotus rodiklių duomenis. Norint saugoti apdorotus išvestinių ir pagrindinių rodiklių duomenis, visi srautinio apdorojimo sistemų komponentai yra prijungti prie duomenų bazės ir apdoroję duomenis talpina juos į duomenų bazę perrašydami ten jau esamus. Duomenys iš duomenų bazės naudojami dviems poreikiams: 
 \begin{enumerate}
     \item Rezultatų gavimui - siunčiant užklausą su srautinio apdorojimo sistemos pavadinimu į koncepciniam sprendime sukurtą tašką. 
     \item Nepakitusių rodiklių "Bolt" komponentų generavimui. Kadangi po rodiklių pridėjimo arba pašalinimo apdorojimas turi vykti toliau, kodo generavimo komponentas naudoja esamus rezultatus nepakitusiu komponentų generavimui.   
 \end{enumerate}  
 
-Saugoti apdorotus duomenis buvo pasirinkta "Redis" duomenų bazę. Ji pasirinkta kadangi apdoroti rodiklių duomenis užima nedaug vietos, o labai svarbu greitai pasiekti ir įdėti duomenis. "Redis" duomenų bazių valdymo sistema tinka, nes duomenis saugomi operatyvioje atmintyje, kas leidžia duomenis ištraukti ir įdėti greičiau nei tradicinėse duomenų bazėse \cite{carlson2013redis}.\par
-Apdoroti rodikliai saugomi unikalioje eilėje pagal srautinės apdorojimo sistemos ir rodiklio pavadinimų kombinaciją. Pavyzdžiui: renkant darbuotojų atlyginimus per metus pagal uždarbio ir premijos kombinaciją, apdoroti rodiklių duomenys būtų saugomi pagal raktus: "darbuotojų-atlyginimas:uždarbis", "darbuotojų-atlyginimas:premijos" ir "darbuotojų-atlyginimas:atlyginimas"
+Saugoti apdorotus duomenis buvo pasirinkta "Redis" duomenų bazė. Ji pasirinkta, kadangi apdoroti rodiklių duomenys užima nedaug vietos, o labai svarbu greitai pasiekti ir įdėti duomenis. "Redis" duomenų bazių valdymo sistema tinka, nes duomenys saugomi operatyvioje atmintyje, o tai leidžia duomenis ištraukti ir įdėti greičiau nei tradicinėse duomenų bazėse \cite{carlson2013redis}.\par
+Apdoroti rodikliai saugomi unikalioje eilėje pagal srautinės apdorojimo sistemos ir rodiklio pavadinimų kombinaciją. Pavyzdžiui: renkant darbuotojų atlyginimus per metus pagal uždarbio ir premijos kombinaciją, apdoroti rodiklių duomenys būtų saugomi pagal raktus: "darbuotojų-atlyginimas:uždarbis", "darbuotojų-atlyginimas:premijos" ir "darbuotojų-atlyginimas:atlyginimas".
 
 \subsubsection{Papildoma programinė įranga}
 
 Koncepcinio sprendimo veikimui reikia papildomos programinės įrangos:
 \begin{itemize}
-    \item Žinučių eilės pagrindinis uždavinys - perduoti duomenis į srautinio apdorojimo sistemą. Žinučių eilės naudoja publikavimo-prenumeratos modelį (angl. publish-subscribe pattern), komponentai norintys gauti duomenis užsiregistruoja žinučių eilėje, o komponentai siunčiantis tiesiog perduoda juos į žinučių eilę. Taip yra įgyvendinamas asinchroninis bendravimas, komponentai perduoda duomenis į žinučių eilę, o komponentas norintis gauti duomenis gali juos pasiimti bet kuriuo momentu iš eilės. Koncepcinio sprendimo įgyvendinimui pasirinkta Apache Kafka žinučių eilė.
+    \item Žinučių eilės pagrindinis uždavinys - perduoti duomenis į srautinio apdorojimo sistemą. Žinučių eilės naudoja publikavimo-prenumeratos modelį (angl. publish-subscribe pattern), komponentai, norintys gauti duomenis, užsiregistruoja žinučių eilėje, o siunčiantys komponentai tiesiog perduoda juos į žinučių eilę. Taip yra įgyvendinamas asinchroninis bendravimas, komponentai perduoda duomenis į žinučių eilę, o komponentas, norintis gauti duomenis, gali juos pasiimti bet kuriuo momentu iš eilės. Koncepcinio sprendimo įgyvendinimui pasirinkta Apache Kafka žinučių eilė.
     \item Apache Kafka reikalauja Apache Zookeeper, kuris atsakingas už Apache Kafka žinučių eilės konfigūracijos valdymą.
     \item Sugeneruotos sistemos kompiliavimui naudojama "Pants" kompiliavimo sistema.
 \end{itemize}
@@ -518,7 +518,7 @@ Eksperimentų atlikimui yra reikalinga tokia programinė įranga:
 
 Eksperimento vykdymui sudarytas rodiklių duomenų uždavinys, kuriame apdorojami išmanaus ofiso sensorių - drėgmės, temperatūros, šviesos - rodikliai. Renkami kiekvienam kabinetui valandiniai rodikliai nuo 8 valandos iki 20 valandos. Taip pat reikia apskaičiuoti išvestinį juntamosios temperatūros rodiklį pagal formulę \cite{anderson2013methods}: 
 \[\textit{Juntamoji temperatūra} = \textit{Temperatūra} – (0.55 * (1 –\>\frac{\textit{Drėgmė}}{1000}) * (\textit{Temperatūra} – 14.5))\]
-Po tam tikro laiko pridėtas naujas bendro pojūčio išvestinį rodiklį, kuris skaičiuojamas taip: 
+Po tam tikro laiko pridėtas naujas bendro pojūčio išvestinį rodiklį, kuris apskaičiuojamas taip: 
 \[\textit{Bendras pojūtis} = \frac{\textit{Šviesumas}}{75} * \frac{\textit{Juntamoji temperatūra}}{25} \]
 
 \subsubsection{Pradiniai duomenys}
@@ -557,7 +557,7 @@ Atnaujintas rodiklių duomenų modelis atrodo taip:
             every node/.style = {shape=rectangle, rounded corners,	
                                 draw, align=center,	
                                 top color=white, bottom color=white}]	
-            \node{ Bendras pojutis \\Bendras-pojutis(Juntamoji temperatūra, Šviesumas)}
+            \node{ Bendras pojūtis \\Bendras-pojūtis(Juntamoji temperatūra, Šviesumas)}
                 child{ node {Juntamoji temperatūra\\Juntamoji-temperatūra(Drėgmė, Temperatūra)}
                         child { node {Drėgmė} }	
                         child { node {Temperatūra} } }
@@ -580,12 +580,12 @@ Atnaujintas rodiklių duomenų modelis atrodo taip:
 Eksperimentas buvo vykdomas tokia eiga:
 \begin{enumerate}
     \item Pradinių rodiklių duomenų modelis užrašomas JSON formatu (Priedas \ref{add:initial-json}) ir naudojant Postman programą paduodamas į sprendimą.
-    \item Atsidarius "Heron" sąsają naršyklėje matoma sugeneruotos srautinio apdorojimo sistemos diagramą (Priedas \ref{add:generated-system1}).
-    \item Su pirminių rodiklių duomenų siuntimo programa duomenis siunčiami į žinučių eilę.
-    \item Naršyklėje išsiunčiama užklausa į sprendimo duomenų prieigos tašką ir gaunami apdorotus rodiklių duomenys (Priedas \ref{add:generated-data1}).
+    \item Atsidarius "Heron" sąsają naršyklėje matoma sugeneruotos srautinio apdorojimo sistemos diagrama (Priedas \ref{add:generated-system1}).
+    \item Su pirminių rodiklių duomenų siuntimo programa duomenys siunčiami į žinučių eilę.
+    \item Naršyklėje išsiunčiama užklausa į sprendimo duomenų prieigos tašką ir gaunami apdoroti rodiklių duomenys (Priedas \ref{add:generated-data1}).
     \item Atnaujintas rodiklių duomenų modelis užrašomas JSON formatu (Priedas \ref{add:changed-json}) ir naudojant Postman programą paduodamas į sprendimą.
     \item Atnaujinus "Heron" sąsają naršyklėje matoma, jog atsinaujino srautinio apdorojimo sistemos diagrama (Priedas \ref{add:generated-system2}).
-    \item Naršyklėje siunčiama užklausa į sprendimo tašką ir gaunami apdoroti rodiklių duomenis, kuriuose jau galima matyti naujo rodiklio rezultatus(Priedas \ref{add:generated-data2}).
+    \item Naršyklėje siunčiama užklausa į sprendimo tašką ir gaunami apdoroti rodiklių duomenys, kuriuose jau galima matyti naujo rodiklio rezultatus (Priedas \ref{add:generated-data2}).
 \end{enumerate}
 
 \subsubsection{Eksperimento rezultatai}
@@ -593,7 +593,7 @@ Stebint eksperimentą gauti rezultatai:
 \begin{itemize}
     \item Sėkmingai sugeneruota srautinio apdorojimo sistema iš rodiklio duomenų modelio.
     \item Srautinio apdorojimo sistema sėkmingai apdorojo pirminius rodiklių duomenis pagal rodiklių duomenų modelį.
-    \item Išvestinių rodiklių "Bolt" komponentai teisingai išskaičiavo rezultatus pagal iš anksto aprašytas funkcijas naudojant duomenis iš daugiau nei vieno "Bolt" komponento.
+    \item Išvestinių rodiklių "Bolt" komponentai teisingai apskaičiavo rezultatus pagal iš anksto aprašytas funkcijas naudojant duomenis iš daugiau nei vieno "Bolt" komponento.
     \item Sėkmingai atnaujinta srautinio apdorojimo sistema pakeitus rodiklių duomenų modelį.
     \item Atnaujinus srautinio apdorojimo sistemą nepakeisti "Bolt" tipo komponentai toliau pratęsė rodiklių apdorojimą. 
 \end{itemize}
@@ -601,8 +601,8 @@ Stebint eksperimentą gauti rezultatai:
 
 Sukurtas koncepcinis sprendimas įrodo, jog sugeneruotos srautinio apdorojimo sistemos pagal rodiklių duomenų modelį atitinka šias savybes:
 \begin{itemize}
-    \item Išvestinių rodiklių išskaičiavimas iš daugiau nei vieno rodiklio kombinacijos.
-    \item Išvestinių rodiklių išskaičiavimas pagal iš anksto aprašytą transformaciją.
+    \item Išvestinių rodiklių apskaičiavimas iš daugiau nei vieno rodiklio kombinacijos.
+    \item Išvestinių rodiklių apskaičiavimas pagal iš anksto aprašytą transformaciją.
     \item Prisitaikymas prie rodiklių duomenų struktūros pokyčių. 
     \item Nepakitusių rodiklių apdorojimo pratęsimas po rodiklių duomenų struktūros pakeitimo.
 \end{itemize} 
@@ -611,12 +611,12 @@ Sukurtas koncepcinis sprendimas įrodo, jog sugeneruotos srautinio apdorojimo si
 
 \begin{enumerate}
     \item Apibrėžtas rodiklių duomenų modelis ir galimi rodiklių duomenų struktūros pokyčiai.
-    \item Atlikta srautinio apdorojimo sprendimų "Apache Storm", "Apache Spark", "Apache Flink" ir "Heron" analizė ir analizės rezultatas apibendrintai pateiktas pagal analizuotas savybes. 
-    \item Sudaryta srautinio apdorojimo sistemos architektūra tinkama spręsti rodiklių apdorojimo uždavinį su "Heron" srautinių apdorojimo sprendimu. 
+    \item Atlikta srautinio apdorojimo sprendimų "Apache Storm", "Apache Spark", "Apache Flink" ir "Heron" analizė, ir analizės rezultatas apibendrintai pateiktas pagal analizuotas savybes. 
+    \item Sudaryta srautinio apdorojimo sistemos architektūra tinkama spręsti rodiklių apdorojimo uždavinį su "Heron" srautinio apdorojimo sprendimu. 
     \item Nustatyta, jog srautinio apdorojimo sistemų architektūra atitinka apsibrėžtas savybes pagal eksperimento metu atliktus veiksmus:
     \begin{itemize}
         \item Aprašyti bandymams naudojami rodiklių duomenų modeliai .
-        \item Sukurtas koncepcinis sprendimas (\url{http://gitlab.com}) generuojantis srautinio apdorojimo sistemas pagal rodiklių duomenų modelį.
+        \item Sukurtas koncepcinis sprendimas (\url{http://gitlab.com}), generuojantis srautinio apdorojimo sistemas pagal rodiklių duomenų modelį.
         \item Atliktas srautinės rodiklių duomenų apdorojimo sistemos generavimo eksperimentas. 
     \end{itemize} 
 \end{enumerate}
@@ -625,13 +625,13 @@ Sukurtas koncepcinis sprendimas įrodo, jog sugeneruotos srautinio apdorojimo si
 \begin{enumerate}
     \item Bendras rodiklių duomenų modelis gali būti užrašytas skaidant jį į tris dalis:
     \begin{itemize}
-        \item Pirminis raktas - rodiklių duomenų grupavimui
-        \item Apribojimų rinkinys - pirminių rodiklių duomenų filtravimui
+        \item Pirminis raktas - rodiklių duomenų grupavimui.
+        \item Apribojimų rinkinys - pirminių rodiklių duomenų filtravimui.
         \item Rodiklių rinkinys, kur rodiklių tarpusavio priklausomybės sudaro priklausomybių medį - rodiklių apdorojimo specifikacijai.
     \end{itemize}
     \item Pagal padarytą šaltinių analizę rodiklių duomenis apdorojančioms srautinio apdorojimo sistemoms generuoti geriausiai tinka "Heron" srautinio apdorojimo sprendimas, nes rodiklių duomenų apdorojimui svarbus: žemas uždelstumas, kad būtų užtikrintas apdorojimo greitis; tiksliai vieną kartą pristatymo semantika, kad nebūtų prarandami duomenys apdorojimo metu; žemas abstrakcijos lygis, kad būtų galima generuoti optimizuotas srautinio apdorojimo sistemas.
-    \item Rodiklių duomenų uždaviniui spręsti srautinių apdorojimo sistemų kūrimui gali būti naudojamas srautinio apdorojimo sistemų generavimas, kadangi tai suteikia galimybę kurti srautinio apdorojimo sistemas iš deklaratyviai aprašyto rodiklių duomenų modelio.
-    \item Eksperimento būdų įrodyta, jog siūlomas srautinio apdorojimo sistemų generavimas pagal deklaratyvų rodiklių duomenų modelį gali būti įgyvendinamas. Sugeneruotos srautinio apdorojimo sistemos atitinka apsibrėžtas savybės, kurių reikia rodiklių duomenų apdorojimui. Įrodyta, jog srautinių apdorojimo sistemų generavimas "Heron" srautinio apdorojimo sprendimui yra tinkamas rodiklių duomenų apdorojimo uždaviniui spręsti.  
+    \item Rodiklių duomenų uždaviniui spręsti srautinio apdorojimo sistemų kūrimui gali būti naudojamas srautinio apdorojimo sistemų generavimas, kadangi tai suteikia galimybę kurti srautinio apdorojimo sistemas iš deklaratyviai aprašyto rodiklių duomenų modelio.
+    \item Eksperimento būdų įrodyta, jog siūlomas srautinio apdorojimo sistemų generavimas pagal deklaratyvų rodiklių duomenų modelį gali būti įgyvendinamas. Sugeneruotos srautinio apdorojimo sistemos atitinka apsibrėžtas savybes, kurių reikia rodiklių duomenų apdorojimui. Įrodyta, jog srautinių apdorojimo sistemų generavimas "Heron" srautinio apdorojimo sprendimui yra tinkamas rodiklių duomenų apdorojimo uždaviniui spręsti.  
 \end{enumerate}
 
 \printbibliography[heading=bibintoc] 
