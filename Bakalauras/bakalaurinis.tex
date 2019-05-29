@@ -509,7 +509,7 @@ Eksperimentų atlikimui yra reikalinga tokia programinė įranga:
 
 \subsection{Eksperimentas}
 
-Eksperimento vykdymui sudarytas rodiklių duomenų uždavinys, kuriame apdorojami išmanaus ofiso sensorių — drėgmės, temperatūros, šviesos — rodikliai. Renkami kiekvienam kabinetui valandiniai rodikliai nuo 8 valandos iki 20 valandos. Taip pat reikia apskaičiuoti išvestinį juntamosios temperatūros rodiklį pagal formulę \cite{anderson2013methods}: 
+Eksperimento vykdymui sudarytas rodiklių duomenų uždavinys, kuriame apdorojami išmanaus ofiso sensorių — drėgmės, temperatūros, šviesos — rodikliai. Renkami kiekvienam dienos metui (rytas, diena, vakaras) ir kiekvienam kabinetui išskyrus kabinetą, kurio numeris 100. Taip pat reikia apskaičiuoti išvestinį juntamosios temperatūros rodiklį pagal formulę \cite{anderson2013methods}: 
 \[\textit{Juntamoji temperatūra} = \textit{Temperatūra} – (0.55 * (1 –\>\frac{\textit{Drėgmė}}{1000}) * (\textit{Temperatūra} – 14.5))\]
 Po tam tikro laiko pridėtas naujas bendro pojūčio išvestinį rodiklį, kuris apskaičiuojamas taip: 
 \[\textit{Bendras pojūtis} = \frac{\textit{Šviesumas}}{75} * \frac{\textit{Juntamoji temperatūra}}{25} \]
@@ -517,8 +517,8 @@ Po tam tikro laiko pridėtas naujas bendro pojūčio išvestinį rodiklį, kuris
 \subsubsection{Pradiniai duomenys}
 \noindent Pradinis rodiklių duomenų modelis pagal uždavinį atrodo taip:
 \begin{itemize}
-    \item Pirminis raktas: \(\textit{„Valanda“, „Kabinetas“}\)
-    \item Pirminių rodiklių duomenų apribojimai: \(\textit{„Valanda“ > 7},\textit{„Valanda“ < 21}\) 
+    \item Pirminis raktas: \(\textit{„DienosMetas“, „Kabinetas“}\)
+    \item Pirminių rodiklių duomenų apribojimai: \(\textit{„Kabinetas“ != „100“}\) 
     \item Rodikliai:
     \[
         \begin{tikzpicture}[sibling distance=10em,
@@ -541,8 +541,8 @@ Po tam tikro laiko pridėtas naujas bendro pojūčio išvestinį rodiklį, kuris
 \end{itemize}
 Atnaujintas rodiklių duomenų modelis atrodo taip:
 \begin{itemize}
-    \item Pirminis raktas: \(\textit{„Valanda“, „Kabinetas“}\)
-    \item Pirminių rodiklių duomenų apribojimai: \(\textit{„Valanda“ > 7},\textit{„Valanda“ < 21}\) 
+    \item Pirminis raktas: \(\textit{„DienosMetas“, „Kabinetas“}\)
+    \item Pirminių rodiklių duomenų apribojimai: \(\textit{„Kabinetas“ != „100“}\) 
     \item Rodikliai:
     \[	
         \begin{tikzpicture}[sibling distance=13em,
@@ -561,8 +561,8 @@ Atnaujintas rodiklių duomenų modelis atrodo taip:
 
 \noindent Taip pat sugeneruoti pirminiai rodiklių duomenys naudojant \url{https://mockaroo.com/} įrankį (Priedas \ref{add:mockaroo}). Šių duomenų raktai atrodo taip:
 \begin{itemize}
-    \item Kabineto numeris — reikšmės iš aibės — 100, 101, 102, 103, 104.
-    \item Valanda — reikšmės nuo 0 iki 24.
+    \item Kabineto numeris — reikšmės iš aibės — 100, 101, 102, 103.
+    \item Dienos Metas — reikšmės iš aibės — RYTAS, DIENA, VAKARAS.
     \item Drėgmė — reikšmes nuo 0 iki 100.
     \item Temperatūra — reikšmės nuo 10 iki 30.
     \item Šviesumas — reikšmės nuo 0 iki 100.
@@ -646,25 +646,20 @@ Sukurtas eksperimentinis sprendimas įrodo, jog sugeneruotos srautinio apdorojim
     "VersionId": "1-416f51b5-2b8a-4cb0-9978-f713d5990c52",
     "PrimaryKey": [
         "RoomNumber",
-        "Hour"
+        "Daytime"
     ],
     "Filters": [
         {
-            "FieldName": "Hour",
-            "Value": 7,
-            "Operator": "MORE"
-        },
-        {
-            "FieldName": "Hour",
-            "Value": 21,
-            "Operator": "LESS"
+            "FieldName": "RoomNumber",
+            "Value": "100Room",
+            "Operator": "NEQU"
         }
     ],
     "Values": [
         {
             "Id": "5dbfcf52-bbce-4ec6-ad31-1cf0812b3106",
             "FieldName": "HeatIndex",
-            "Formula": "%65c89c44-f5c5-48d4-ba31-01e3d4b69e42% — (0.55 * (1 — (%117af450-3086-412f-90f5-ad63e1989d04%/1000)) * (%65c89c44-f5c5-48d4-ba31-01e3d4b69e42% — 14.5))",
+            "Formula": "%65c89c44-f5c5-48d4-ba31-01e3d4b69e42% - (0.55 * (1 - (%117af450-3086-412f-90f5-ad63e1989d04%/1000)) * (%65c89c44-f5c5-48d4-ba31-01e3d4b69e42% - 14.5))",
             "NextValues": [
                 {
                     "Id": "65c89c44-f5c5-48d4-ba31-01e3d4b69e42",
@@ -706,18 +701,13 @@ Sukurtas eksperimentinis sprendimas įrodo, jog sugeneruotos srautinio apdorojim
     "VersionId": "2-a4c42274-65e9-4e9d-863b-671d51d702cf",
     "PrimaryKey": [
         "RoomNumber",
-        "Hour"
+        "Daytime"
     ],
     "Filters": [
         {
-            "FieldName": "Hour",
-            "Value": 7,
-            "Operator": "MORE"
-        },
-        {
-            "FieldName": "Hour",
-            "Value": 21,
-            "Operator": "LESS"
+            "FieldName": "RoomNumber",
+            "Value": "100Room",
+            "Operator": "NEQU"
         }
     ],
     "Values": [
@@ -729,7 +719,7 @@ Sukurtas eksperimentinis sprendimas įrodo, jog sugeneruotos srautinio apdorojim
                 {
                     "Id": "5dbfcf52-bbce-4ec6-ad31-1cf0812b3106",
                     "FieldName": "HeatIndex",
-                    "Formula": "%65c89c44-f5c5-48d4-ba31-01e3d4b69e42% — (0.55 * (1 — (%117af450-3086-412f-90f5-ad63e1989d04%/1000)) * (%65c89c44-f5c5-48d4-ba31-01e3d4b69e42% — 14.5))",
+                    "Formula": "%65c89c44-f5c5-48d4-ba31-01e3d4b69e42% - (0.55 * (1 - (%117af450-3086-412f-90f5-ad63e1989d04%/1000)) * (%65c89c44-f5c5-48d4-ba31-01e3d4b69e42% - 14.5))",
                     "NextValues": [
                         {
                             "Id": "65c89c44-f5c5-48d4-ba31-01e3d4b69e42",
