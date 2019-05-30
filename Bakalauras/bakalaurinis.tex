@@ -56,7 +56,7 @@ This work consists of a theoretical and an experimental parts. Theoretical part 
 \sectionnonum{Įvadas}
  
 Šiame darbe yra nagrinėjamas rodiklių duomenų apdorojimas ir kuriamas eksperimentinis sprendimas, galintis prisitaikyti, kai keičiama rodiklių duomenų struktūra. Rodiklių duomenimis vadinkime pasikartojančių įvykių parametrus aprašančius duomenis. Pavyzdžiui, įvairių matuoklių – temperatūros, resursų suvartojimo – fiksuojamus rodmenis, kasmėnesinius veiklos indikatorius, tokius kaip veiklos finansines ataskaitas ar veiklos procesų indikatorius. Taip pat rodiklių struktūra gali būti keičiama laikui bėgant: objektų atributų taksonomija (pvz., mirties priežasčių sąrašas, finansinių sąskaitų sąrašas) arba įrašo atributų sąrašai. Surenkamų rodiklių duomenų kiekis visada didėja, taip pat ir duomenų kiekis, kuriuos reikia apdoroti pagal rodiklius, auga, todėl standartiniai sprendimai, pavyzdžiui, reliacinės duomenų bazės, netinka dėl ilgos apdorojimo trukmės. Rodiklių duomenų bazės pasižymi tuo, kad duomenys į jas patenka iš daug skirtingų tiekėjų ir patekimo laikas tarp tiekėjų nėra sinchronizuojamas, o suagreguotą informaciją vartotojai gali užklausti bet kurio metu. Todėl šiame darbe bus nagrinėjamas srautinis duomenų apdorojimas, kuris patenkančius duomenis apdoros realiu laiku ir saugos jau apdorotus. \par
-Realaus laiko duomenų apdorojimas (angl. Real-time data processing) yra jau senai nagrinėjamas kaip vienas iš būdų apdoroti didelių kiekių duomenis (angl. Big data). Vienas iš realaus laiko apdorojimo sprendimų yra srautinis duomenų apdorojimas. Srautinis duomenų apdorojimas (angl. stream processing) – lygiagrečių programų kūrimo modelis, pasireiškiantis sintaksiškai sujungiant nuoseklius skaičiavimo komponentus srautais, kad kiekvienas komponentas galėtų skaičiuoti savarankiškai \cite{shortstreamproc}. Darbe yra analizuojamos jau egzistuojantys srautinio apdorojimo sprendimai pagal srautinio apdorojimo programų savybes aprašytas Michael Stonebraker ir pasirenkama vieną srautinio apdorojimo programa, pagal kurią sukuriamas eksperimentinis sprendimas. 
+Realaus laiko duomenų apdorojimas (angl. Real-time data processing) yra jau senai nagrinėjamas kaip vienas iš būdų apdoroti didelių kiekių duomenis (angl. Big data). Vienas iš realaus laiko apdorojimo sprendimų yra srautinis duomenų apdorojimas. Srautinis duomenų apdorojimas (angl. stream processing) – lygiagrečių programų kūrimo modelis, pasireiškiantis sintaksiškai sujungiant nuoseklius skaičiavimo komponentus srautais, kad kiekvienas komponentas galėtų skaičiuoti savarankiškai \cite{shortstreamproc}. Darbe yra analizuojami jau egzistuojantys srautinio apdorojimo sprendimai pagal srautinio apdorojimo programų savybes aprašytas Michael Stonebraker, pasirenkamas vieną srautinio apdorojimo sprendimas ir su juo daromas eksperimentas. 
 \par
 Kadangi rodikliai laikui bėgant gali būti keičiami, reikia, kad sprendimas galėtų prisitaikyti prie pokyčių. Yra keli būdai kaip tokie sprendimai gali būti kuriami:
 \begin{itemize}
@@ -277,9 +277,9 @@ Michael Stonebraker 2005 metais apibrėžė 8 taisykles realaus laiko (angl. rea
     \item taisyklė: Architektūra turi apdoroti ir atsakyti akimirksniu. Anksčiau minėtos taisyklės nėra svarbios, jeigu sistema nesugeba greitai susidoroti su dideliu kiekiu naujų duomenų. Todėl turi būti naudojamas ne tik teisingas ir greitas srautinio apdorojimo sprendimas, bet ir gerai optimizuota sistema.
 \end{enumerate}\par 
 Todėl norint sužinoti tam tikro srautinio duomenų apdorojimo sprendimo tinkamumą uždaviniui reikia išanalizuoti jų savybes.   
-\subsection{Srautinio duomenų apdorojimo sistemos}
+\subsection{Srautinio duomenų apdorojimo sprendimai}
 
-Norime nustatyti srautinio apdorojimo sistemų savybes pagal:
+Norime nustatyti srautinio apdorojimo sprendimų savybes pagal:
 \begin{itemize}
     \item Pristatymo semantiką (angl. delivery semantics) — apibrėžia, pagal kokį modelį bus pristatyti duomenys. Egzistuoja trys semantikos \cite{ensar20}: 
     \begin{itemize}
@@ -317,7 +317,7 @@ setSpouts(..), kuriame nustatoma duomenų įeiga ir koks bus paralelizmo lygis, 
 
 „Apache Spark“ parašytos programos yra aukšto abstrakcijos lygmens. Sistemos aprašomos funkciškai, todėl kodo rašymas trunka daug trumpiau ir jį yra daug lengviau skaityti. Tačiau prarandama galimybė optimizuoti ir paralelizmo klausimas paliekamas sprendimui. Kadangi „Apache Spark“ yra ne pilnai srautinis, o mikro-paketinis (angl. micro-batching) sprendimas, todėl vartotojas turi apsirašyti, kokio dydžio paketais bus renkami duomenys \cite{shoro2015big}. \par
 
-„Apache Flink“ parašytos programos yra aukšto abstrakcijos lygmens. „Apache Flink“ sprendimas pats užsiima resursų distribucija, todėl programuotojui lieka tik parašyti veikianti kodą, o sistema pati susitvarkys su paralelizmu \cite{flinkdoc}. Tačiau tai reiškia, kad su šiuo sprendimu parašytos programos nepavyks optimizuoti taip pat gerai kaip žemo abstrakcijos lygmens sistemos. \par
+„Apache Flink“ parašytos programos yra aukšto abstrakcijos lygmens. „Apache Flink“ sprendimas pats užsiima resursų distribucija, todėl programuotojui lieka tik parašyti veikianti kodą, o sprendimas pats susitvarkys su paralelizmu \cite{flinkdoc}. Tačiau tai reiškia, kad su šiuo sprendimu parašytos programos nepavyks optimizuoti taip pat gerai kaip žemo abstrakcijos lygmens sistemos. \par
 
 „Heron“ sprendimas turi skirtingus API, kurie naudoja skirtingus abstrakcijos lygius, kuriuos galima rinktis pagal tinkamumą sprendžiamai problemai. Darbo rašymo metu „Heron“ turi 4 skirtingus API:
 \begin{itemize}
