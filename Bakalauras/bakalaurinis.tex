@@ -418,7 +418,7 @@ Tokį rodiklį apdorojančios sistemos architektūra „Heron“ sprendime turė
     \label{img:example}
 \end{figure}
 
-\section{Eksperimentas ir sukurto sprendimo savybės}
+\section{Eksperimentas}
 
 \subsection{Eksperimento tikslas}
 
@@ -591,16 +591,8 @@ Stebint eksperimentą gauti rezultatai:
     \item Sėkmingai atnaujinta srautinio apdorojimo sistema pakeitus rodiklių duomenų modelį.
     \item Atnaujinus srautinio apdorojimo sistemą nepakeisti „Bolt“ tipo komponentai toliau pratęsė rodiklių apdorojimą. 
 \end{itemize}
-\subsection{Sprendimo savybės}
-
-Sukurtas eksperimentinis sprendimas įrodo, jog sugeneruotos srautinio apdorojimo sistemos pagal rodiklių duomenų modelį atitinka šias savybes:
-\begin{itemize}
-    \item Išvestinių rodiklių apskaičiavimas iš daugiau nei vieno rodiklio kombinacijos.
-    \item Išvestinių rodiklių apskaičiavimas pagal iš anksto aprašytą transformaciją.
-    \item Prisitaikymas prie rodiklių duomenų struktūros pokyčių. 
-    \item Nepakitusių rodiklių apdorojimo pratęsimas po rodiklių duomenų struktūros pakeitimo.
-\end{itemize} 
 Taip pat atliekant eksperimentą buvo nustatyta, jog architektūra palaiko paralelinį skaičiavimą. Sustabdžius duomenų siuntimą į srautinio apdorojimo sprendimą „Bolt“ komponentai skaičiavimus baigia skirtingais laikais. Tai parodo, jog sprendimas, kuris naudoja sudarytą srautinio apdorojimo sistemos architektūrą, nepriklauso nuo rodiklių transformacijos sudėtingumo.
+
 \sectionnonum{Rezultatai}
 
 \begin{enumerate}
