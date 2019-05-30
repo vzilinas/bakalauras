@@ -44,11 +44,11 @@
 \setcounter{page}{2}
 
 \sectionnonumnocontent{Santrauka}
-Šį darbą sudaro teorinė ir eksperimentinė dalys. Teorinėje dalyje apibrėžiamas rodiklių duomenys ir rodiklių duomenų struktūros pokyčiai. Apibrėžiamas srautinis apdorojimas ir atlikus „Apache Storm“, „Apache Spark“, „Apache Flink“ ir „Heron“ srautinio apdorojimo sprendimų palyginimus pasirenkamas srautinio apdorojimo sprendimas, kuris bus naudojama eksperimentinėje dalyje. Remiantis padaryta analizę ir apsibrėžtomis savybėmis nustatoma, kad šiam uždaviniui tinkama „Heron“ srautinio apdorojimo sistema. Sudaroma srautinio apdorojimo sistemų sugeneruotu pagal apsibrėžta rodiklių duomenų modelį architektūra. Sudarytai architektūrai patikrinti daromas eksperimentas su sukurtu sprendimu. Atliekant rodiklių duomenų pokyčių simuliaciją stebėjimais analizuojamas šios sistemos tinkamumas apibrėžtam uždaviniui spręsti. Gauti tyrimų rezultatai lyginami, pateikiamos išvados. Taip įrodoma, kad toks sprendimas gali būti įgyvendinamas ir kad kodo generavimas ir srautinio apdorojimo sistema „Heron“ yra tinkamas sprendimas kintančių rodiklių uždaviniui spręsti.
+Šį darbą sudaro teorinė ir eksperimentinė dalys. Teorinėje dalyje apibrėžiamas rodiklių duomenys ir rodiklių duomenų struktūros pokyčiai. Apibrėžiamas srautinis apdorojimas ir atlikus „Apache Storm“, „Apache Spark“, „Apache Flink“ ir „Heron“ srautinio apdorojimo sprendimų palyginimą pasirenkamas srautinio apdorojimo sprendimas, kuris bus naudojama eksperimentinėje dalyje. Remiantis padaryta analizę ir apsibrėžtomis savybėmis nustatoma, kad šiam uždaviniui tinkama „Heron“ srautinio apdorojimo sistema. Sudaryta srautinio apdorojimo sistemų sugeneruotu pagal apsibrėžta rodiklių duomenų modelį architektūra. Sudarytai architektūrai patikrinti daromas eksperimentas su sukurtu sprendimu. Atliekant rodiklių duomenų pokyčių simuliaciją stebėjimais analizuojamas šios sistemos tinkamumas apibrėžtam uždaviniui spręsti. Gauti tyrimų rezultatai lyginami, pateikiamos išvados. Taip įrodoma, kad toks sprendimas gali būti įgyvendinamas ir kad kodo generavimas ir srautinio apdorojimo sistema „Heron“ yra tinkamas sprendimas keičiamų rodiklių uždaviniui spręsti.
 \raktiniaizodziai{srautinis apdorojimas, kodo generavimas, rodiklis, rodiklių duomenų pokyčiai}   
 
 \sectionnonumnocontent{Summary}
-This work consists of a theoretical and an experimental part. Theoretical part defines the indicator, its structure and changes in indicator structure. It define what changes are possible and how the developed solution in the experimental part will adapt to the changes, specifies the data structure and data structure merging and difference operations, defines stream processing and selects the system to be used in the experimental part. Based on the results it is determined that "Heron" stream processing system is chosen to solve this task. Based on the selected stream processing system and the defined data structure of indicator, it is decided to generate streaming modules written in "Python" programing language. In the experimental part, a pilot version of the system is implemented based on the proposed architecture. By doing the simulation using varying amounts of indicators and indicator changed, the suitability of this system for a defined task is tested. The results of this research are compared and conclusions are given. This demonstrates that such a solution can be implemented and that the code generation and streaming system "Heron" is the right solution to deal with the challenge of changing indicators.
+This work consists of a theoretical and an experimental parts. Theoretical part defines indicator data and changes of indicator data structure. Stream processing is defined and "Apache Storm", "Apache Spark", "Apache Flink" and "Heron" stream processing solutions are compared. Based on the results "Heron" stream processing system is chosen to solve this task. The architecture of the streaming systems generated according to the defined data model of data is created. A pilot version of the solution is created based on the proposed architecture. By doing the simulation of changes in indicator data structure, the suitability of this system for a defined task is tested. The results of this research are compared and conclusions are given. This demonstrates that such a solution can be implemented and that the code generation and streaming system "Heron" is the right solution to deal with the challenge of change in indicator structure.
 \keywords{stream processing, code generation, indicator, indactor data change}
 
 \tableofcontents
@@ -232,7 +232,8 @@ Laikui bėgant rodiklių duomenų struktūra gali būti keičiama. Buhalterijos 
 \begin{itemize}
     \item Pirminis raktas negali būti keičiami, nes naujos reikšmės tampa nepalyginamos su anksčiau surinktomis. Pavyzdžiui, buvo renkami metinių duomenų rodikliai, o pagal poreikius reikia rinkti mėnesinius duomenis, ir lyginimas su anksčiau surinktais tampa neįmanomas. Todėl bet kokie pirminio rakto pokyčiai turi būti laikomi nauju rodikliu. 
     \item Apribojimai gali būti keičiami, tačiau šie pokyčiai turi būti naudojami tik tam, kad būtų išlaikytos pradinės apdorojamų pirminių rodiklių duomenų aibės. Pavyzdžiui, egzistuoja poreikis apdoroti duomenis iš visų skyrių, išskyrus administraciją, ir tokiam uždaviniui buvo sukurtas apribojimas — \(\textit{„Skyriaus pavadinimas“ != „Administracija“}\). Bet po tam tikro laiko dalis administracijos skyriaus tapo buhalterijos skyriumi. Siekiant, kad būtų išlaikyta apdorotų rodiklių lyginimo prasmė, nauji apribojimai atrodys taip: \(\textit{„Skyriaus pavadinimas“!=„Administracija“}, \textit{„Skyriaus pavadinimas“!=„Buhalterijos“}\).
-    \item Rodikliai ir išvestiniai rodikliai gali būti keičiami — nauji rodikliai pridedami, o seni pašalinami. Šie pokyčiai gali būti daromi bet kurioje rodiklių tarpusavio priklausomybės medžio vietoje. Rodiklių pokyčiai neturi daryti įtakos kitų rodiklių skaičiavimams. Pavyzdžiui, pajamos skaičiuojamos naudojant formulę: \[\textit{Pajamos = Atlyginimas + Premijos}\] Pagal tai sugeneruotas toks medis: 
+    \item Rodikliai ir išvestiniai rodikliai gali būti keičiami — nauji rodikliai pridedami, o seni pašalinami. Šie pokyčiai gali būti daromi bet kurioje rodiklių tarpusavio priklausomybės medžio vietoje. Rodiklių pokyčiai neturi daryti įtakos kitų rodiklių skaičiavimams.
+    \par Pavyzdžiui, pajamos skaičiuojamos naudojant formulę: \[\textit{Pajamos = Atlyginimas + Premijos}\] Pagal tai sugeneruotas toks medis: 
     \[	
         \begin{tikzpicture}[sibling distance=7em,	
             every node/.style = {shape=rectangle, rounded corners,	
@@ -558,8 +559,8 @@ Atnaujintas rodiklių duomenų modelis atrodo taip:
         \end{tikzpicture} 	
     \]
 \end{itemize}
-
-\noindent Taip pat sugeneruoti pirminiai rodiklių duomenys naudojant \url{https://mockaroo.com/} įrankį (Priedas \ref{add:mockaroo}). Šių duomenų raktai atrodo taip:
+\pagebreak
+Taip pat sugeneruoti pirminiai rodiklių duomenys naudojant \url{https://mockaroo.com/} įrankį (Priedas \ref{add:mockaroo}). Šių duomenų raktai atrodo taip:
 \begin{itemize}
     \item Kabineto numeris — reikšmės iš aibės — 100, 101, 102, 103.
     \item Dienos Metas — reikšmės iš aibės — RYTAS, DIENA, VAKARAS.
@@ -599,25 +600,28 @@ Sukurtas eksperimentinis sprendimas įrodo, jog sugeneruotos srautinio apdorojim
     \item Prisitaikymas prie rodiklių duomenų struktūros pokyčių. 
     \item Nepakitusių rodiklių apdorojimo pratęsimas po rodiklių duomenų struktūros pakeitimo.
 \end{itemize} 
-
+Taip pat atliekant eksperimentą buvo nustatyta, jog architektūra palaiko paralelinį skaičiavimą. Sustabdžius duomenų siuntimą į srautinio apdorojimo sprendimą „Bolt“ komponentai skaičiavimus baigia skirtingais laikais. Tai parodo, jog sprendimas, kuris naudoja sudarytą srautinio apdorojimo sistemos architektūrą, nepriklauso nuo rodiklių transformacijos sudėtingumo.
 \sectionnonum{Rezultatai}
 
 \begin{enumerate}
     \item Apibrėžtas rodiklių duomenų modelis ir galimi rodiklių duomenų struktūros pokyčiai.
-    \item Atlikta srautinio apdorojimo sprendimų „Apache Storm“, „Apache Spark“, „Apache Flink“ ir „Heron“ analizė, ir analizės rezultatas apibendrintai pateiktas pagal analizuotas savybes. 
-    \item Sudaryta srautinio apdorojimo sistemos architektūra tinkama spręsti rodiklių apdorojimo uždavinį su „Heron“ srautinio apdorojimo sprendimu. 
-    \item Nustatyta, jog srautinio apdorojimo sistemų architektūra atitinka apsibrėžtas savybes pagal eksperimento metu atliktus veiksmus:
+    \item Atliktas srautinio apdorojimo sprendimų — „Apache Storm“, „Apache Spark“, „Apache Flink“ ir „Heron“ — palyginimas, ir pateikta analizės suvestinė. 
+    \item Sudaryta srautinio apdorojimo sistemos architektūra, kuri yra tinkama spręsti rodiklių apdorojimo uždavinį su „Heron“ srautinio apdorojimo sprendimu. 
+    \item Sukurtas eksperimentinis sprendimas (\url{https://git.mif.vu.lt/vyzi2849/stream-processing-generator}) ir jo pagalba nustatyta, jog srautinio apdorojimo sistemų architektūra atitinka apsibrėžtas savybes:
     \begin{itemize}
-        \item Aprašyti bandymams naudojami rodiklių duomenų modeliai .
-        \item Sukurtas eksperimentinis sprendimas (\url{http://gitlab.com}), generuojantis srautinio apdorojimo sistemas pagal rodiklių duomenų modelį.
-        \item Atliktas srautinės rodiklių duomenų apdorojimo sistemos generavimo eksperimentas. 
-    \end{itemize} 
+        \item Srautinių apdorojimo sistemų generavimas pagal deklaratyvų aprašymą.
+        \item Galimybė keisti esamas apdorojimo sistemas, kai pakeičiamas rodiklių duomenų modelis.
+        \item Išvestinių rodiklių gavimas iš daugiau nei vieno rodiklio transformacijos.
+        \item Išvestinių rodiklių apdorojimas pagal iš anksto apibrėžtas funkcijas.
+    \end{itemize}  
+    
 \end{enumerate}
 
 \sectionnonum{Išvados}
 \begin{enumerate}
-    \item Pagal padarytą šaltinių analizę rodiklių duomenis apdorojančioms srautinio apdorojimo sistemoms generuoti geriausiai tinka „Heron“ srautinio apdorojimo sprendimas, nes rodiklių duomenų apdorojimui svarbus: žemas uždelstumas, kad būtų užtikrintas apdorojimo greitis; tiksliai vieną kartą pristatymo semantika, kad nebūtų prarandami duomenys apdorojimo metu; žemas abstrakcijos lygis, kad būtų galima generuoti optimizuotas srautinio apdorojimo sistemas.
+    \item Pagal padarytą šaltinių analizę rodiklių duomenis apdorojančioms srautinio apdorojimo sistemoms generuoti tinka „Heron“ srautinio apdorojimo sprendimas, nes rodiklių duomenų apdorojimui svarbus: žemas uždelstumas, kad būtų užtikrintas apdorojimo greitis; tiksliai vieną kartą pristatymo semantika, kad nebūtų prarandami duomenys apdorojimo metu; žemas abstrakcijos lygis, kad būtų galima generuoti optimizuotas srautinio apdorojimo sistemas.
     \item Eksperimento būdų įrodyta, jog siūlomas srautinio apdorojimo sistemų generavimas pagal deklaratyvų rodiklių duomenų modelį gali būti įgyvendinamas. Sugeneruotos srautinio apdorojimo sistemos atitinka apsibrėžtas savybes, kurių reikia rodiklių duomenų apdorojimui. Įrodyta, jog srautinių apdorojimo sistemų generavimas „Heron“ srautinio apdorojimo sprendimui yra tinkamas rodiklių duomenų apdorojimo uždaviniui spręsti.  
+    \item Eksperimento metu nustatyta, jog sudaryta srautinio apdorojimo sistemos architektūra palaiko paralelinius skaičiavimus ir todėl sprendimas nepriklauso nuo „Bolt“ skaičiavimo sudėtingumo.
 \end{enumerate}
 
 \printbibliography[heading=bibintoc] 
@@ -687,11 +691,22 @@ Sukurtas eksperimentinis sprendimas įrodo, jog sugeneruotos srautinio apdorojim
 \end{figure}
 
 \section{Sugeneruotos srautinio apdorojimo sistemos rezultatai}\label{add:generated-data1}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{img/topology-data-1.png}
-    \label{img:generated-data}
-\end{figure}
+\begin{table}[H]
+    \begin{tabular}{|l|l|l|l|l|}
+    \hline
+    \rowcolor[HTML]{C0C0C0} 
+    Raktas     & Šviesumas                                                         & Drėgmė                                                            & Temperatūra                                                      & Juntamoji temperatūra                                               \\ \hline
+    101RYTAS   & \begin{tabular}[c]{@{}l@{}}Suma:119666\\ Kiekis:2263\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:114833\\ Kiekis:2435\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:47115\\ Kiekis:2371\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:77101.1\\ Kiekis:2290\end{tabular}  \\ \hline
+    101DIENA   & \begin{tabular}[c]{@{}l@{}}Suma:103408\\ Kiekis:1983\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:107138\\ Kiekis:2050\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:41534\\ Kiekis:2080\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:68657.23\\ Kiekis:2010\end{tabular} \\ \hline
+    101VAKARAS & \begin{tabular}[c]{@{}l@{}}Suma:105595\\ Kiekis:2091\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:98530\\ Kiekis:2109\end{tabular}  & \begin{tabular}[c]{@{}l@{}}Suma:44271\\ Kiekis:2177\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:74529.75\\ Kiekis:2175\end{tabular} \\ \hline
+    102RYTAS   & \begin{tabular}[c]{@{}l@{}}Suma:111895\\ Kiekis:2128\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:99639\\ Kiekis:2016\end{tabular}  & \begin{tabular}[c]{@{}l@{}}Suma:39654\\ Kiekis:2004\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:69890\\ Kiekis:2077\end{tabular}    \\ \hline
+    102DIENA   & \begin{tabular}[c]{@{}l@{}}Suma:117943\\ Kiekis:2302\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:124621\\ Kiekis:2261\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:46639\\ Kiekis:2276\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:81079.7\\ Kiekis:2365\end{tabular}  \\ \hline
+    102VAKARAS & \begin{tabular}[c]{@{}l@{}}Suma:90282\\ Kiekis:1731\end{tabular}  & \begin{tabular}[c]{@{}l@{}}Suma:94919\\ Kiekis:1819\end{tabular}  & \begin{tabular}[c]{@{}l@{}}Suma:35410\\ Kiekis:1756\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:61869.25\\ Kiekis:1814\end{tabular} \\ \hline
+    103RYTAS   & \begin{tabular}[c]{@{}l@{}}Suma:97362\\ Kiekis:2164\end{tabular}  & \begin{tabular}[c]{@{}l@{}}Suma:103507\\ Kiekis:2064\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:40542\\ Kiekis:2048\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:70168.2\\ Kiekis:2073\end{tabular}  \\ \hline
+    103DIENA   & \begin{tabular}[c]{@{}l@{}}Suma:92378\\ Kiekis:1879\end{tabular}  & \begin{tabular}[c]{@{}l@{}}Suma:94471\\ Kiekis:1847\end{tabular}  & \begin{tabular}[c]{@{}l@{}}Suma:38121\\ Kiekis:1919\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:65073.73\\ Kiekis:1916\end{tabular} \\ \hline
+    103VAKARAS & \begin{tabular}[c]{@{}l@{}}Suma:105595\\ Kiekis:2091\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:101889\\ Kiekis:2103\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:42007\\ Kiekis:2076\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:70967.3\\ Kiekis:2068\end{tabular}  \\ \hline
+    \end{tabular}
+\end{table}
 
 \section{Atnaujintas rodiklių duomenų modelis JSON formatu}\label{add:changed-json}
 \begin{lstlisting}
@@ -750,10 +765,21 @@ Sukurtas eksperimentinis sprendimas įrodo, jog sugeneruotos srautinio apdorojim
 \end{figure}
 
 \section{Atnaujintos srautinio apdorojimo sistemos rezultatai}\label{add:generated-data2}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{img/topology-data-2.png}
-    \label{img:generated-data}
-\end{figure}
+\begin{table}[H]
+    \begin{tabular}{|l|l|l|l|l|l|}
+    \hline
+    \rowcolor[HTML]{C0C0C0} 
+    Raktas     & Šviesumas                                                         & Drėgmė                                                            & Temperatūra                                                      & \begin{tabular}[x]{@{}c@{}}Juntamoji\\temperatūra \end{tabular}                                              & Bendra pojūtis                                              \\ \hline
+    101RYTAS   & \begin{tabular}[c]{@{}l@{}}Suma:120834\\ Kiekis:2282\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:115954\\ Kiekis:2459\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:47426\\ Kiekis:2388\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:77766.15\\ Kiekis:2296\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:5.65\\ Kiekis:40\end{tabular}  \\ \hline
+    101DIENA   & \begin{tabular}[c]{@{}l@{}}Suma:104169\\ Kiekis:1997\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:108007\\ Kiekis:2067\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:41923\\ Kiekis:2098\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:69196.5\\ Kiekis:2025\end{tabular}  & \begin{tabular}[c]{@{}l@{}}Suma:6.6\\ Kiekis:31\end{tabular}   \\ \hline
+    101VAKARAS & \begin{tabular}[c]{@{}l@{}}Suma:115994\\ Kiekis:2182\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:99423\\ Kiekis:2125\end{tabular}  & \begin{tabular}[c]{@{}l@{}}Suma:44762\\ Kiekis:2201\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:75197.95\\ Kiekis:2145\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:6.65\\ Kiekis:40\end{tabular}  \\ \hline
+    102RYTAS   & \begin{tabular}[c]{@{}l@{}}Suma:112858\\ Kiekis:2146\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:100588\\ Kiekis:2039\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:40034\\ Kiekis:2023\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:70383.5\\ Kiekis:2083\end{tabular}  & \begin{tabular}[c]{@{}l@{}}Suma:4.483\\ Kiekis:30\end{tabular} \\ \hline
+    102DIENA   & \begin{tabular}[c]{@{}l@{}}Suma:118956\\ Kiekis:2321\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:125430\\ Kiekis:2277\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:46972\\ Kiekis:2292\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:82100.9\\ Kiekis:2370\end{tabular}  & \begin{tabular}[c]{@{}l@{}}Suma:14.09\\ Kiekis:60\end{tabular} \\ \hline
+    102VAKARAS & \begin{tabular}[c]{@{}l@{}}Suma:91238\\ Kiekis:1749\end{tabular}  & \begin{tabular}[c]{@{}l@{}}Suma:95147\\ Kiekis:1827\end{tabular}  & \begin{tabular}[c]{@{}l@{}}Suma:35833\\ Kiekis:1777\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:62468.9\\ Kiekis:1821\end{tabular}  & \begin{tabular}[c]{@{}l@{}}Suma:4.48\\ Kiekis:34\end{tabular}  \\ \hline
+    103RYTAS   & \begin{tabular}[c]{@{}l@{}}Suma:98434\\ Kiekis:2189\end{tabular}  & \begin{tabular}[c]{@{}l@{}}Suma:104604\\ Kiekis:2087\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:40912\\ Kiekis:2065\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:70852.6\\ Kiekis:2082\end{tabular}  & \begin{tabular}[c]{@{}l@{}}Suma:4.06\\ Kiekis:40\end{tabular}  \\ \hline
+    103DIENA   & \begin{tabular}[c]{@{}l@{}}Suma:93000\\ Kiekis:1893\end{tabular}  & \begin{tabular}[c]{@{}l@{}}Suma:95544\\ Kiekis:1867\end{tabular}  & \begin{tabular}[c]{@{}l@{}}Suma:38529\\ Kiekis:1938\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:65618.15\\ Kiekis:1933\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:4.83\\ Kiekis:33\end{tabular}  \\ \hline
+    103VAKARAS & \begin{tabular}[c]{@{}l@{}}Suma:106695\\ Kiekis:2115\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:102732\\ Kiekis:2121\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:42451\\ Kiekis:2100\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:71619.88\\ Kiekis:2087\end{tabular} & \begin{tabular}[c]{@{}l@{}}Suma:5.72\\ Kiekis:39\end{tabular}  \\ \hline
+    \end{tabular}
+    \end{table}
 
 \end{document}

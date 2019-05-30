@@ -6,7 +6,7 @@ import string
 producer = KafkaProducer(bootstrap_servers='192.168.0.100:9092')
 with open('departament-expenditure-indicator-data.json') as json_file:  
     data = json.load(json_file)
-    while True:
+    for i in xrange(1000):
         for x in data:
             time.sleep(.001)
             json_data = json.dumps(x).encode('utf-8')
